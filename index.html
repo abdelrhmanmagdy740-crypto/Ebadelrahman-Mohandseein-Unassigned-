@@ -58,7 +58,7 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     }
 
-    /* كارت تسجيل الدخول المطابق للتصميم */
+    /* كارت تسجيل الدخول */
     .auth-wrapper {
       max-width: 460px;
       margin: 50px auto;
@@ -122,7 +122,7 @@
       color: #fff;
     }
 
-    /* حقل الباسورد باللون الفاتح والنقاط */
+    /* حقل الباسورد باللون الفاتح */
     input.custom-pass-input {
       width: 100%;
       padding: 13px 16px;
@@ -243,7 +243,16 @@
       overflow-y: auto;
     }
 
-    /* الجداول العامة وأدوات البحث */
+    /* ستايل شريط التمرير للجداول */
+    .zone-table-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .zone-table-container::-webkit-scrollbar-thumb {
+      background: #24304f;
+      border-radius: 4px;
+    }
+
+    /* الجداول العامة */
     .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
     .search-input { min-width: 260px; flex: 2; padding: 12px 14px; background: var(--bg-inner); border: 1px solid var(--border); border-radius: 8px; color: #fff; outline: none; }
     .filter-select { flex: 1; min-width: 150px; padding: 12px 14px; background: var(--bg-inner); border: 1px solid var(--border); border-radius: 8px; color: #fff; outline: none; }
@@ -326,7 +335,7 @@
       </div>
     </div>
 
-    <!-- الشاشة الرئيسية: لوحة المتابعة -->
+    <!-- الشاشة الرئيسية -->
     <div id="main-dashboard" class="hidden">
       
       <!-- إحصائيات سريعة من واقع الشيت -->
@@ -357,24 +366,37 @@
             <span style="font-size: 12px; color: var(--text-muted);">محسوب من واقع عمود الـ Feedback مقارنة بإجمالي مناديب المنطقة</span>
           </div>
 
-          <!-- فلتر اختيار اليوم للتقرير -->
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <label style="margin: 0; font-size: 13px; color: var(--text-muted); font-weight: bold;">اليوم المعروض:</label>
-            <select id="report-day-select" style="width: auto; padding: 6px 14px; font-size: 13px; background: var(--bg-inner); border: 1px solid var(--border); color:#fff; border-radius: 8px;" onchange="renderSupervisorReport()">
-              <option value="today">اليوم (Today)</option>
-              <option value="tomorrow">الغد (Tomorrow)</option>
-              <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
-            </select>
+          <!-- شريط الفلاتر للتقرير (فلتر اليوم + فلتر المشرف الجديد) -->
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            
+            <!-- فلتر المشرف المضاف -->
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label style="margin: 0; font-size: 13px; color: var(--text-muted); font-weight: bold;">المشرف:</label>
+              <select id="report-supervisor-select" style="width: auto; padding: 6px 14px; font-size: 13px; background: var(--bg-inner); border: 1px solid var(--border); color:#fff; border-radius: 8px;" onchange="renderSupervisorReport()">
+                <option value="all">كل المشرفين</option>
+              </select>
+            </div>
+
+            <!-- فلتر اختيار اليوم -->
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label style="margin: 0; font-size: 13px; color: var(--text-muted); font-weight: bold;">اليوم المعروض:</label>
+              <select id="report-day-select" style="width: auto; padding: 6px 14px; font-size: 13px; background: var(--bg-inner); border: 1px solid var(--border); color:#fff; border-radius: 8px;" onchange="renderSupervisorReport()">
+                <option value="today">اليوم (Today)</option>
+                <option value="tomorrow">الغد (Tomorrow)</option>
+                <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
+              </select>
+            </div>
+
           </div>
         </div>
 
         <!-- شبكة كروت المناطق -->
         <div id="zones-container" class="zones-grid">
-          <!-- تضاف كروت المناطق هنا بالجافاسكريبت -->
+          <!-- كروت المناطق -->
         </div>
       </div>
 
-      <!-- الجدول العام والتفصيلي للطيارين -->
+      <!-- الجدول العام والتفصيلي -->
       <div class="card">
         <div class="table-header-tools">
           <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث بالاسم، الـ ID، أو الهاتف..." onkeyup="renderTable()">
@@ -506,6 +528,7 @@
         const data = await res.json();
         ridersData = data || [];
         populateSupervisors();
+        populateReportSupervisors(); // ملء فلتر مشرفي التقرير
         renderTable();
         if (currentRole === "admin") {
           renderSupervisorReport();
@@ -538,6 +561,33 @@
       });
     }
 
+    /* دالة تغذية قائمة المشرفين في تقرير الآدمن من عمود Feedback */
+    function populateReportSupervisors() {
+      const feedbackSvSet = new Set();
+      ridersData.forEach(r => {
+        const fb = (r.feedback || '').trim();
+        if (fb && fb !== '-' && fb !== '') {
+          feedbackSvSet.add(fb);
+        }
+      });
+
+      const repSelect = document.getElementById('report-supervisor-select');
+      if (!repSelect) return;
+      const currentSelected = repSelect.value;
+      repSelect.innerHTML = '<option value="all">كل المشرفين</option>';
+
+      Array.from(feedbackSvSet).sort((a, b) => a.localeCompare(b, 'ar')).forEach(sv => {
+        const opt = document.createElement('option');
+        opt.value = sv;
+        opt.innerText = sv;
+        repSelect.appendChild(opt);
+      });
+
+      if (feedbackSvSet.has(currentSelected)) {
+        repSelect.value = currentSelected;
+      }
+    }
+
     function updateStats(filteredData) {
       document.getElementById('total-riders').innerText = filteredData.length;
       document.getElementById('today-published').innerText = filteredData.filter(r => (r.today || '').toUpperCase().includes('PUBLISHED')).length;
@@ -552,12 +602,14 @@
       return 'badge-default';
     }
 
+    /* دالة رسم تقرير كروت المناطق مع الفلترة حسب المشرف واليوم */
     function renderSupervisorReport() {
       const container = document.getElementById('zones-container');
       if (!container) return;
       container.innerHTML = '';
 
       const dayField = document.getElementById('report-day-select').value;
+      const selectedSupervisor = (document.getElementById('report-supervisor-select') ? document.getElementById('report-supervisor-select').value : 'all');
       
       const zonesMap = {};
 
@@ -574,24 +626,28 @@
           };
         }
 
-        zonesMap[zone].totalRidersInZone += 1;
         const isPublished = status.includes('PUBLISHED') || status.includes('EVALUATED');
-        if (isPublished) {
-          zonesMap[zone].totalPublishedInZone += 1;
-        }
 
         if (feedbackSv && feedbackSv !== '-' && feedbackSv !== '') {
-          if (!zonesMap[zone].supervisors[feedbackSv]) {
-            zonesMap[zone].supervisors[feedbackSv] = {
-              name: feedbackSv,
-              published: 0,
-              total: 0
-            };
+          // إذا كان هناك فلتر مشرف محدد، نأخذ فقط المشرف المطلوب
+          if (selectedSupervisor === 'all' || feedbackSv === selectedSupervisor) {
+            zonesMap[zone].totalRidersInZone += 1;
+            if (isPublished) {
+              zonesMap[zone].totalPublishedInZone += 1;
+            }
+
+            if (!zonesMap[zone].supervisors[feedbackSv]) {
+              zonesMap[zone].supervisors[feedbackSv] = {
+                name: feedbackSv,
+                published: 0,
+                total: 0
+              };
+            }
+            if (isPublished) {
+              zonesMap[zone].supervisors[feedbackSv].published += 1;
+            }
+            zonesMap[zone].supervisors[feedbackSv].total += 1;
           }
-          if (isPublished) {
-            zonesMap[zone].supervisors[feedbackSv].published += 1;
-          }
-          zonesMap[zone].supervisors[feedbackSv].total += 1;
         }
       });
 
@@ -605,6 +661,7 @@
         const zoneData = zonesMap[zoneName];
         const zoneThemeColor = getZoneColor(zoneName, index);
 
+        // حساب نسبة المنطقة الإجمالية
         const overallZoneRate = zoneData.totalRidersInZone > 0
           ? Math.round((zoneData.totalPublishedInZone / zoneData.totalRidersInZone) * 100)
           : 0;
@@ -639,7 +696,7 @@
         });
 
         if (svList.length === 0) {
-          rowsHtml = '<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 15px;">لا يوجد Feedback مسجل لهذه المنطقة.</td></tr>';
+          rowsHtml = '<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 15px;">لا توجد بيانات لهذا المشرف في المنطقة.</td></tr>';
         }
 
         card.innerHTML = `
