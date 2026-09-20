@@ -205,6 +205,37 @@
         </div>
       </div>
 
+      <!-- تقرير المشرفين المخصص للمسؤول العام فقط -->
+      <div id="admin-report-card" class="card hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px;">
+          <div>
+            <h3 style="margin: 0; font-size: 16px; color: var(--cyan);">📊 تقرير أداء ونسب المشرفين (خاص بالمسؤول)</h3>
+            <span style="font-size: 12px; color: var(--text-muted);">محسوب من واقع عمود الـ Feedback لحالات اليوم</span>
+          </div>
+          <span style="background: rgba(0, 180, 216, 0.1); border: 1px solid var(--cyan); color: var(--cyan); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold;">
+            تقرير مباشر
+          </span>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr style="text-align: center;">
+                <th style="text-align: center;">اليوم</th>
+                <th style="text-align: right;">اسم المشرف (Feedback)</th>
+                <th style="text-align: center; color: var(--success);">PUBLISHED & EVALUATED</th>
+                <th style="text-align: center; color: var(--danger);">NOT CHOSEN</th>
+                <th style="text-align: center;">إجمالي المناديب</th>
+                <th style="text-align: center; color: var(--cyan);">النسبة (%)</th>
+              </tr>
+            </thead>
+            <tbody id="supervisor-report-tbody">
+              <!-- يتم ملؤها ديناميكياً -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- أدوات الفلترة والبحث -->
       <div class="card">
         <div class="table-header-tools">
@@ -253,6 +284,7 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp0wtmh4YXFihShMs10ducOyrF1ZH9VmZ6NDSNdFHZUlnCCa8ZbHo_I-NShvg7ZXaS/exec";
 
     let ridersData = [];
+    let currentRole = ""; // تخزين دور المستخدم (admin أو office)
 
     function showAdminLogin() {
       document.getElementById('office-login-box').classList.add('hidden');
@@ -268,6 +300,7 @@
       const office = document.getElementById('office-name').value;
       const pass = document.getElementById('office-pass').value;
       if (pass === "1234") {
+        currentRole = "office";
         enterDashboard(office);
       } else {
         alert("كلمة المرور غير صحيحة (التجريبية: 1234)");
@@ -277,6 +310,7 @@
     function loginAdmin() {
       const pass = document.getElementById('admin-pass').value;
       if (pass === "admin123") {
+        currentRole = "admin";
         enterDashboard("المسؤول العام");
       } else {
         alert("كلمة مرور المسؤول غير صحيحة (التجريبية: admin123)");
@@ -289,10 +323,20 @@
       document.getElementById('main-dashboard').classList.remove('hidden');
       document.getElementById('user-pill').classList.remove('hidden');
       document.getElementById('current-user-name').innerText = "👤 " + title;
+
+      // التحكم في ظهور بطاقة تقرير المشرفين للآدمن فقط
+      const adminReport = document.getElementById('admin-report-card');
+      if (currentRole === "admin") {
+        adminReport.classList.remove('hidden');
+      } else {
+        adminReport.classList.add('hidden');
+      }
+
       fetchData();
     }
 
     function logout() {
+      currentRole = "";
       document.getElementById('main-dashboard').classList.add('hidden');
       document.getElementById('user-pill').classList.add('hidden');
       showOfficeLogin();
@@ -309,6 +353,9 @@
         ridersData = data || [];
         populateSupervisors();
         renderTable();
+        if (currentRole === "admin") {
+          renderSupervisorReport();
+        }
       } catch (err) {
         console.error(err);
         spinner.innerText = "⚠️ تعذر جلب البيانات. تأكد من إعدادات النشر في Apps Script.";
@@ -349,6 +396,72 @@
       if (val.includes('PUBLISHED')) return 'badge-published';
       if (val.includes('NOT CHOSEN')) return 'badge-not-chosen';
       return 'badge-default';
+    }
+
+    /* دالة حساب وعرض تقرير المشرفين بحسب Feedback */
+    function renderSupervisorReport() {
+      const reportTbody = document.getElementById('supervisor-report-tbody');
+      if (!reportTbody) return;
+      reportTbody.innerHTML = '';
+
+      const summary = {};
+
+      ridersData.forEach(r => {
+        // قراءة المشرف من عمود Feedback
+        const feedbackSv = (r.feedback || '').trim();
+        if (!feedbackSv || feedbackSv === '-' || feedbackSv === '') return;
+
+        const todayStatus = (r.today || '').toUpperCase();
+
+        if (!summary[feedbackSv]) {
+          summary[feedbackSv] = {
+            day: "اليوم",
+            supervisor: feedbackSv,
+            publishedEvaluated: 0,
+            notChosen: 0,
+            total: 0
+          };
+        }
+
+        // فحص الحالات
+        if (todayStatus.includes('PUBLISHED') || todayStatus.includes('EVALUATED')) {
+          summary[feedbackSv].publishedEvaluated += 1;
+        } else if (todayStatus.includes('NOT CHOSEN')) {
+          summary[feedbackSv].notChosen += 1;
+        }
+
+        summary[feedbackSv].total += 1;
+      });
+
+      const rows = Object.values(summary);
+
+      if (rows.length === 0) {
+        reportTbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 15px;">لا توجد بيانات Feedback مسجلة لحساب النسب.</td></tr>';
+        return;
+      }
+
+      rows.forEach(item => {
+        const rate = item.total > 0 ? Math.round((item.publishedEvaluated / item.total) * 100) : 0;
+        
+        let rateColor = 'var(--danger)';
+        if (rate >= 70) rateColor = 'var(--success)';
+        else if (rate >= 40) rateColor = 'var(--warning)';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align: center; color: var(--text-muted);">${item.day}</td>
+          <td style="text-align: right; font-weight: 700; color: #fff;">${item.supervisor}</td>
+          <td style="text-align: center; font-weight: bold; color: var(--success);">${item.publishedEvaluated}</td>
+          <td style="text-align: center; font-weight: bold; color: var(--danger);">${item.notChosen}</td>
+          <td style="text-align: center; font-weight: bold; color: var(--text);">${item.total}</td>
+          <td style="text-align: center;">
+            <span style="border: 1px solid ${rateColor}; color: ${rateColor}; padding: 3px 12px; border-radius: 6px; font-weight: 800; background: rgba(255,255,255,0.03);">
+              ${rate}%
+            </span>
+          </td>
+        `;
+        reportTbody.appendChild(tr);
+      });
     }
 
     function renderTable() {
