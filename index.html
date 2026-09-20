@@ -18,7 +18,7 @@
       --text: #f1f5f9;
       --text-muted: #94a3b8;
       --border: #232f48;
-      --table-border: #334155; /* خطوط جدول عريضة وواضحة */
+      --table-border: #334155;
       --success: #34d399;
       --danger: #f87171;
       --warning: #fbbf24;
@@ -39,7 +39,7 @@
       --text: #1e293b;
       --text-muted: #64748b;
       --border: #cbd5e1;
-      --table-border: #94a3b8; /* خطوط جدول واضحة في الفاتح */
+      --table-border: #94a3b8;
       --success: #059669;
       --danger: #e11d48;
       --warning: #d97706;
@@ -49,13 +49,13 @@
     }
 
     * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
-    body { background: var(--bg-main); color: var(--text); margin: 0; padding: 0; min-height: 100vh; }
+    body { background: var(--bg-main); color: var(--text); margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden; }
 
     /* شريط التنقل العلوي */
     .navbar {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border);
-      padding: 12px 28px;
+      padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -63,6 +63,8 @@
       top: 0;
       z-index: 100;
       box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      flex-wrap: wrap;
+      gap: 12px;
     }
     .brand-box { display: flex; align-items: center; gap: 12px; }
     .brand-logo {
@@ -71,10 +73,10 @@
       display: flex; align-items: center; justify-content: center;
       font-weight: 900; font-size: 20px; color: #fff;
     }
-    .brand-title { font-size: 17px; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .brand-title { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.2; }
     .brand-sub { font-size: 12px; color: var(--cyan); font-weight: 600; }
 
-    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .nav-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
     .theme-toggle-btn {
       background: var(--bg-inner);
@@ -105,13 +107,19 @@
       white-space: nowrap;
     }
 
-    .container { max-width: 1400px; margin: 25px auto; padding: 0 15px; }
+    /* توسيع العرض الكامل للصفحة مع مراعاة الشاشات الكبيرة والصغيرة */
+    .container { 
+      width: 98%; 
+      max-width: 1800px; 
+      margin: 15px auto; 
+      padding: 0 10px; 
+    }
 
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 22px;
+      padding: 20px;
       margin-bottom: 20px;
       box-shadow: 0 4px 18px rgba(0,0,0,0.04);
     }
@@ -119,12 +127,13 @@
     /* كارت تسجيل الدخول */
     .auth-wrapper {
       max-width: 450px;
-      margin: 50px auto;
+      margin: 40px auto;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 35px 30px;
+      padding: 30px 24px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      width: 100%;
     }
     .auth-icon { font-size: 48px; text-align: center; margin-bottom: 12px; line-height: 1; }
     .auth-title { text-align: center; margin: 0 0 8px 0; font-size: 24px; font-weight: 800; color: var(--text); }
@@ -221,6 +230,8 @@
       background: rgba(0, 0, 0, 0.02);
       border-radius: 8px;
       border-right: 4px solid var(--cyan);
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .stats-block-header .zone-title-tag {
       font-size: 13px;
@@ -231,7 +242,7 @@
     }
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 12px;
     }
     .stat-card {
@@ -245,7 +256,7 @@
     .stat-val { font-size: 22px; font-weight: 800; color: var(--text); margin-top: 4px; }
     .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 
-    /* كروت المناطق */
+    /* كروت تقرير المناطق */
     .day-section-block { margin-bottom: 25px; }
     .day-section-title {
       font-size: 14px;
@@ -260,7 +271,7 @@
       border-radius: 8px;
       border-right: 4px solid var(--cyan);
     }
-    .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 16px; align-items: start; }
+    .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
     .zone-column-card {
       background: var(--bg-card);
       border-radius: 10px;
@@ -291,21 +302,50 @@
     .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; }
 
     /* أدوات الفلترة */
-    .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
-    .search-input { min-width: 240px; flex: 2; padding: 9px 12px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 7px; color: var(--text); outline: none; font-size: 13px; }
-    .filter-select { flex: 1; min-width: 140px; padding: 9px 12px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 7px; color: var(--text); outline: none; font-size: 13px; }
+    .table-header-tools { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      gap: 10px; 
+      flex-wrap: wrap; 
+      margin-bottom: 18px; 
+    }
+    .search-input { 
+      min-width: 220px; 
+      flex: 2; 
+      padding: 9px 12px; 
+      background: var(--input-bg); 
+      border: 1px solid var(--border); 
+      border-radius: 7px; 
+      color: var(--text); 
+      outline: none; 
+      font-size: 13px; 
+    }
+    .filter-select { 
+      flex: 1; 
+      min-width: 140px; 
+      padding: 9px 12px; 
+      background: var(--input-bg); 
+      border: 1px solid var(--border); 
+      border-radius: 7px; 
+      color: var(--text); 
+      outline: none; 
+      font-size: 13px; 
+    }
     
-    /* الجداول العامة وتنسيق الخطوط العريضة والتوسيط */
+    /* الجداول العامة وتوسيع العرض وإظهار اسم المشرف بالكامل */
     .table-container { 
+      width: 100%;
       overflow-x: auto; 
       border-radius: 10px; 
       border: 2px solid var(--table-border); 
       background: var(--bg-card);
+      -webkit-overflow-scrolling: touch;
     }
     table { 
       width: 100%; 
       border-collapse: collapse; 
-      text-align: center; /* توسيط نصوص الجدول بالكامل */
+      text-align: center; 
       font-size: 12px; 
       white-space: nowrap; 
     }
@@ -322,7 +362,7 @@
 
     td { 
       padding: 10px 12px; 
-      text-align: center; /* توسيط محتوى الخلية */
+      text-align: center; 
       border-top: 2px solid var(--table-border); 
       border-left: 2px solid var(--table-border); 
       color: var(--text); 
@@ -330,10 +370,17 @@
     td:last-child { border-left: none; }
     tbody tr:hover { background: var(--table-hover); }
 
-    /* ستايل الخلية القابلة للنسخ */
+    /* تحديد حد أدنى للعرض لمنع اقتطاع الأعمدة والأسماء */
+    .col-sv { min-width: 150px; font-weight: 700; }
+    .col-fb { min-width: 140px; }
+    .col-name { min-width: 250px; font-weight: 700; }
+    .col-area { min-width: 130px; }
+    .col-phone { min-width: 130px; }
+    .col-badge { min-width: 110px; }
+    .col-id { min-width: 90px; }
+
     .copyable {
       cursor: pointer;
-      position: relative;
       user-select: none;
     }
     .copyable:hover {
@@ -348,7 +395,7 @@
     .badge-not-chosen { background: rgba(248, 113, 113, 0.14); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.35); }
     .badge-default { background: rgba(148, 163, 184, 0.1); color: var(--text-muted); border: 1px solid var(--border); }
 
-    /* توست التنبيه بالنسخ */
+    /* توست التنبيه */
     #copy-toast {
       position: fixed;
       bottom: 25px;
@@ -377,6 +424,33 @@
 
     .loading-state { text-align: center; padding: 35px; color: var(--cyan); font-size: 15px; font-weight: bold; }
     .hidden { display: none !important; }
+
+    /* تعديلات التجاوب مع شاشات الموبايل (Responsive Media Queries) */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 10px 14px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .table-header-tools {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-input, .filter-select, .btn-excel {
+        width: 100%;
+        min-width: 100%;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .zones-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -397,7 +471,7 @@
     <div class="nav-actions">
       <button class="theme-toggle-btn" onclick="toggleTheme()" title="تغيير المظهر">🌙</button>
 
-      <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px;">
+      <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
         <span id="last-update-time" class="last-update-tag">🕒 جاري التحميل...</span>
         <button class="btn btn-outline" onclick="fetchData()">🔄 تحديث البيانات</button>
         <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 600;"></span>
@@ -522,7 +596,7 @@
         </div>
       </div>
 
-      <!-- أدوات الفلترة والجدول العام للطيارين (مع الخطوط العريضة والتوسيط) -->
+      <!-- أدوات الفلترة والجدول العام للطيارين -->
       <div class="card">
         <div class="table-header-tools">
           <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث بالاسم، الـ ID، أو الهاتف..." onkeyup="renderTable()">
@@ -550,19 +624,19 @@
           <table>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>الاسم</th>
-                <th>المنطقة</th>
-                <th>الهاتف</th>
-                <th>اليوم (Today)</th>
-                <th>الغد (Tomorrow)</th>
-                <th>الغد لاحقاً</th>
-                <th>Feedback</th>
-                <th>المشرف (S.V)</th>
+                <th class="col-id">ID</th>
+                <th class="col-name">الاسم</th>
+                <th class="col-area">المنطقة</th>
+                <th class="col-phone">الهاتف</th>
+                <th class="col-badge">اليوم (Today)</th>
+                <th class="col-badge">الغد (Tomorrow)</th>
+                <th class="col-badge">الغد لاحقاً</th>
+                <th class="col-fb">Feedback</th>
+                <th class="col-sv">المشرف (S.V)</th>
               </tr>
             </thead>
             <tbody id="riders-tbody">
-              <!-- صفوف الطيارين مع التوسيط والخطوط العريضة -->
+              <!-- صفوف الطيارين -->
             </tbody>
           </table>
           <div id="loading-spinner" class="loading-state">⏳ جاري جلب البيانات من Google Sheets...</div>
@@ -1045,7 +1119,6 @@
       });
     }
 
-    /* دالة رسم الجدول مع التوسيط الكامل والخطوط العريضة وقابلية النسخ للنص بالكامل */
     function renderTable() {
       const tbody = document.getElementById('riders-tbody');
       tbody.innerHTML = '';
@@ -1067,25 +1140,25 @@
         const svVal = r.supervisor || '';
 
         tr.innerHTML = `
-          <td class="copyable" onclick="copyToClipboard('${idVal}', event)" title="انقر لنسخ الـ ID" style="font-weight: bold; color: var(--cyan);">${idVal}</td>
-          <td class="copyable" onclick="copyToClipboard('${nameVal}', event)" title="انقر لنسخ الاسم"><strong>${nameVal}</strong></td>
-          <td class="copyable" onclick="copyToClipboard('${areaVal}', event)" title="انقر لنسخ المنطقة">${areaVal}</td>
-          <td class="copyable" onclick="copyToClipboard('${phoneVal}', event)" title="انقر لنسخ الهاتف">
+          <td class="copyable col-id" onclick="copyToClipboard('${idVal}', event)" title="انقر لنسخ الـ ID" style="font-weight: bold; color: var(--cyan);">${idVal}</td>
+          <td class="copyable col-name" onclick="copyToClipboard('${nameVal}', event)" title="انقر لنسخ الاسم"><strong>${nameVal}</strong></td>
+          <td class="copyable col-area" onclick="copyToClipboard('${areaVal}', event)" title="انقر لنسخ المنطقة">${areaVal}</td>
+          <td class="copyable col-phone" onclick="copyToClipboard('${phoneVal}', event)" title="انقر لنسخ الهاتف">
             <span style="direction: ltr; display: inline-block;">📞 ${phoneVal}</span>
           </td>
-          <td class="copyable" onclick="copyToClipboard('${todayVal}', event)" title="انقر للنسخ">
+          <td class="copyable col-badge" onclick="copyToClipboard('${todayVal}', event)" title="انقر للنسخ">
             <span class="badge ${getBadgeClass(r.today)}">${todayVal || '-'}</span>
           </td>
-          <td class="copyable" onclick="copyToClipboard('${tomorrowVal}', event)" title="انقر للنسخ">
+          <td class="copyable col-badge" onclick="copyToClipboard('${tomorrowVal}', event)" title="انقر للنسخ">
             <span class="badge ${getBadgeClass(r.tomorrow)}">${tomorrowVal || '-'}</span>
           </td>
-          <td class="copyable" onclick="copyToClipboard('${tomorrowLaterVal}', event)" title="انقر للنسخ">
+          <td class="copyable col-badge" onclick="copyToClipboard('${tomorrowLaterVal}', event)" title="انقر للنسخ">
             <span class="badge ${getBadgeClass(r.tomorrowLater)}">${tomorrowLaterVal || '-'}</span>
           </td>
-          <td class="copyable" onclick="copyToClipboard('${feedbackVal}', event)" title="انقر لنسخ الـ Feedback">
+          <td class="copyable col-fb" onclick="copyToClipboard('${feedbackVal}', event)" title="انقر لنسخ الـ Feedback">
             <span style="color: var(--warning); font-size: 12px; font-weight: bold;">${feedbackVal || '-'}</span>
           </td>
-          <td class="copyable" onclick="copyToClipboard('${svVal}', event)" title="انقر لنسخ اسم المشرف">
+          <td class="copyable col-sv" onclick="copyToClipboard('${svVal}', event)" title="انقر لنسخ اسم المشرف">
             <strong>${svVal || '-'}</strong>
           </td>
         `;
