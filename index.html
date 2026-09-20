@@ -244,7 +244,7 @@
     .stat-val { font-size: 24px; font-weight: 800; color: var(--text); margin-top: 5px; }
     .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 
-    /* كروت المناطق بالأسفل */
+    /* كروت المناطق بالأسفل (تم تكبيرها وعرضها بالكامل دون تقييد الارتفاع) */
     .day-section-block { margin-bottom: 30px; }
     .day-section-title {
       font-size: 15px;
@@ -259,7 +259,7 @@
       border-radius: 8px;
       border-right: 4px solid var(--cyan);
     }
-    .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+    .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; align-items: start; }
     .zone-column-card {
       background: var(--bg-inner);
       border-radius: 12px;
@@ -268,11 +268,12 @@
       flex-direction: column;
       border: 2px solid var(--border);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      height: auto;
     }
     .zone-column-card:hover { transform: translateY(-3px); }
     .zone-card-header {
       background: var(--header-bg);
-      padding: 12px 16px;
+      padding: 14px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -283,9 +284,17 @@
     .zone-total-rate { padding: 2px 8px; border-radius: 4px; font-weight: 800; }
     .zone-total-counts { color: var(--text-muted); font-size: 12px; }
     
-    .zone-table-container { max-height: 480px; overflow-y: auto; }
-    .zone-table-container::-webkit-scrollbar { width: 6px; }
-    .zone-table-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    /* جعل الجدول يتمدد بالكامل ليظهر كل المشرفين */
+    .zone-table-container {
+      width: 100%;
+      overflow-x: auto;
+      max-height: none !important;
+    }
+    .zone-table-container table td, 
+    .zone-table-container table th {
+      padding: 10px 12px;
+      font-size: 13px;
+    }
 
     /* الجداول العامة */
     .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
@@ -416,7 +425,7 @@
         </div>
       </div>
 
-      <!-- تقرير المشرفين والمناطق الملون للآدمن فقط -->
+      <!-- تقرير المشرفين والمناطق الملون للآدمن فقط (مكبر بالكامل) -->
       <div id="admin-report-card" class="card hidden">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
           <div>
@@ -445,7 +454,7 @@
         </div>
 
         <div id="zones-container">
-          <!-- كروت المناطق -->
+          <!-- كروت المناطق تتمدد تلقائياً -->
         </div>
       </div>
 
@@ -611,7 +620,7 @@
         if (currentRole === "admin") {
           renderSupervisorReport();
         }
-        updateLastRefreshTimestamp(); // تسجيل وقت التحديث الناجح
+        updateLastRefreshTimestamp();
       } catch (err) {
         console.error(err);
         spinner.innerText = "⚠️ تعذر جلب البيانات. تأكد من إعدادات النشر في Apps Script.";
@@ -666,7 +675,6 @@
       }
     }
 
-    /* تحديث شريط الإحصائيات المجمع بالإضافة إلى تقسيم داتا كل منطقة لوحدها */
     function updateStats(filteredData, selectedDayKey) {
       const dayNames = {
         today: "Today",
@@ -678,12 +686,10 @@
       const badgeEl = document.getElementById('selected-day-badge');
       if (badgeEl) badgeEl.innerText = `${dayTitle}`;
 
-      // 1. حساب الإجمالي المجمع لكافة المناطق
       const total = filteredData.length;
       let published = 0;
       let notChosen = 0;
 
-      // هيكل تجميع لكل منطقة على حدة
       const zoneStats = {};
 
       filteredData.forEach(r => {
@@ -711,7 +717,6 @@
 
       const totalRate = total > 0 ? Math.round((published / total) * 100) : 0;
 
-      // تحديث كروت الإجمالي العام
       document.getElementById('card-label-published').innerText = `${dayTitle}: PUBLISHED (المقبول)`;
       document.getElementById('card-label-not-chosen').innerText = `${dayTitle}: NOT CHOSEN (غير مختار)`;
       document.getElementById('card-label-rate').innerText = `${dayTitle}: نسبة الإسناد (%)`;
@@ -721,7 +726,6 @@
       document.getElementById('today-not-chosen').innerText = notChosen;
       document.getElementById('selected-day-rate').innerText = `${totalRate}%`;
 
-      // 2. بناء كروت إحصائيات كل منطقة منفصلة
       const zonesContainer = document.getElementById('zones-breakdown-stats');
       if (!zonesContainer) return;
       zonesContainer.innerHTML = '';
