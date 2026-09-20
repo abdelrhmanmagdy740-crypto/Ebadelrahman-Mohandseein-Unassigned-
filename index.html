@@ -205,23 +205,31 @@
         </div>
       </div>
 
-      <!-- تقرير المشرفين المخصص للمسؤول العام فقط -->
+      <!-- تقرير المشرفين والزون المخصص للمسؤول العام فقط -->
       <div id="admin-report-card" class="card hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 14px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
           <div>
-            <h3 style="margin: 0; font-size: 16px; color: var(--cyan);">📊 تقرير أداء ونسب المشرفين (خاص بالمسؤول)</h3>
-            <span style="font-size: 12px; color: var(--text-muted);">محسوب من واقع عمود الـ Feedback لحالات اليوم</span>
+            <h3 style="margin: 0; font-size: 16px; color: var(--cyan);">📊 تقرير إسناد المشرفين والزون (خاص بالمسؤول)</h3>
+            <span style="font-size: 12px; color: var(--text-muted);">حساب الإحصائيات حسب اليوم والمنطقة وعمود الـ Feedback</span>
           </div>
-          <span style="background: rgba(0, 180, 216, 0.1); border: 1px solid var(--cyan); color: var(--cyan); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold;">
-            تقرير مباشر
-          </span>
+
+          <!-- قائمة تحديد اليوم المطلوب حسابه -->
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <label style="margin: 0; font-size: 13px; color: var(--text-muted); font-weight: bold;">اختر اليوم للتقرير:</label>
+            <select id="report-day-select" style="width: auto; padding: 6px 12px; font-size: 13px;" onchange="renderSupervisorReport()">
+              <option value="today">اليوم (Today)</option>
+              <option value="tomorrow">الغد (Tomorrow)</option>
+              <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
+            </select>
+          </div>
         </div>
 
         <div class="table-container">
           <table>
             <thead>
               <tr style="text-align: center;">
-                <th style="text-align: center;">اليوم</th>
+                <th style="text-align: center;">اليوم المحدد</th>
+                <th style="text-align: center; color: var(--cyan);">المنطقة (الزون)</th>
                 <th style="text-align: right;">اسم المشرف (Feedback)</th>
                 <th style="text-align: center; color: var(--success);">PUBLISHED & EVALUATED</th>
                 <th style="text-align: center; color: var(--danger);">NOT CHOSEN</th>
@@ -236,7 +244,7 @@
         </div>
       </div>
 
-      <!-- أدوات الفلترة والبحث -->
+      <!-- أدوات الفلترة والبحث للجدول العام -->
       <div class="card">
         <div class="table-header-tools">
           <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث بالاسم، الـ ID، أو الهاتف..." onkeyup="renderTable()">
@@ -284,7 +292,7 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp0wtmh4YXFihShMs10ducOyrF1ZH9VmZ6NDSNdFHZUlnCCa8ZbHo_I-NShvg7ZXaS/exec";
 
     let ridersData = [];
-    let currentRole = ""; // تخزين دور المستخدم (admin أو office)
+    let currentRole = "";
 
     function showAdminLogin() {
       document.getElementById('office-login-box').classList.add('hidden');
@@ -324,7 +332,6 @@
       document.getElementById('user-pill').classList.remove('hidden');
       document.getElementById('current-user-name').innerText = "👤 " + title;
 
-      // التحكم في ظهور بطاقة تقرير المشرفين للآدمن فقط
       const adminReport = document.getElementById('admin-report-card');
       if (currentRole === "admin") {
         adminReport.classList.remove('hidden');
@@ -398,24 +405,36 @@
       return 'badge-default';
     }
 
-    /* دالة حساب وعرض تقرير المشرفين بحسب Feedback */
+    /* دالة حساب وعرض تقرير المشرفين والزون بحسب اليوم المحدد وعمود الـ Feedback */
     function renderSupervisorReport() {
       const reportTbody = document.getElementById('supervisor-report-tbody');
       if (!reportTbody) return;
       reportTbody.innerHTML = '';
 
+      const dayField = document.getElementById('report-day-select').value;
+      const dayLabels = {
+        today: "اليوم",
+        tomorrow: "الغد",
+        tomorrowLater: "الغد لاحقاً"
+      };
+      const dayLabel = dayLabels[dayField] || "اليوم";
+
       const summary = {};
 
       ridersData.forEach(r => {
-        // قراءة المشرف من عمود Feedback
         const feedbackSv = (r.feedback || '').trim();
         if (!feedbackSv || feedbackSv === '-' || feedbackSv === '') return;
 
-        const todayStatus = (r.today || '').toUpperCase();
+        const area = (r.area || 'غير محدد').trim();
+        const status = (r[dayField] || '').toUpperCase();
 
-        if (!summary[feedbackSv]) {
-          summary[feedbackSv] = {
-            day: "اليوم",
+        // المفتاح المجمع: المنطقة + المشرف
+        const groupKey = `${area}___${feedbackSv}`;
+
+        if (!summary[groupKey]) {
+          summary[groupKey] = {
+            day: dayLabel,
+            area: area,
             supervisor: feedbackSv,
             publishedEvaluated: 0,
             notChosen: 0,
@@ -423,22 +442,24 @@
           };
         }
 
-        // فحص الحالات
-        if (todayStatus.includes('PUBLISHED') || todayStatus.includes('EVALUATED')) {
-          summary[feedbackSv].publishedEvaluated += 1;
-        } else if (todayStatus.includes('NOT CHOSEN')) {
-          summary[feedbackSv].notChosen += 1;
+        if (status.includes('PUBLISHED') || status.includes('EVALUATED')) {
+          summary[groupKey].publishedEvaluated += 1;
+        } else if (status.includes('NOT CHOSEN')) {
+          summary[groupKey].notChosen += 1;
         }
 
-        summary[feedbackSv].total += 1;
+        summary[groupKey].total += 1;
       });
 
       const rows = Object.values(summary);
 
       if (rows.length === 0) {
-        reportTbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 15px;">لا توجد بيانات Feedback مسجلة لحساب النسب.</td></tr>';
+        reportTbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 15px;">لا توجد بيانات لهذا اليوم لحساب النسب.</td></tr>';
         return;
       }
+
+      // ترتيب العرض أبجدياً حسب المنطقة ثم اسم المشرف
+      rows.sort((a, b) => a.area.localeCompare(b.area, 'ar') || a.supervisor.localeCompare(b.supervisor, 'ar'));
 
       rows.forEach(item => {
         const rate = item.total > 0 ? Math.round((item.publishedEvaluated / item.total) * 100) : 0;
@@ -450,6 +471,7 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td style="text-align: center; color: var(--text-muted);">${item.day}</td>
+          <td style="text-align: center; font-weight: bold; color: var(--cyan);">${item.area}</td>
           <td style="text-align: right; font-weight: 700; color: #fff;">${item.supervisor}</td>
           <td style="text-align: center; font-weight: bold; color: var(--success);">${item.publishedEvaluated}</td>
           <td style="text-align: center; font-weight: bold; color: var(--danger);">${item.notChosen}</td>
