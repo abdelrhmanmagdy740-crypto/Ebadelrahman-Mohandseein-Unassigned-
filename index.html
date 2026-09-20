@@ -73,7 +73,6 @@
 
     .nav-actions { display: flex; align-items: center; gap: 10px; }
 
-    /* زر تغيير المظهر (Theme Toggle) */
     .theme-toggle-btn {
       background: var(--bg-inner);
       border: 1px solid var(--border);
@@ -87,13 +86,10 @@
       justify-content: center;
       font-size: 18px;
     }
-    .theme-toggle-btn:hover {
-      border-color: var(--cyan);
-    }
+    .theme-toggle-btn:hover { border-color: var(--cyan); }
 
     .container { max-width: 1400px; margin: 25px auto; padding: 0 15px; }
 
-    /* كروت المحتوى */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -197,6 +193,7 @@
     .btn-excel { background: #107c41; color: #fff; border: 1px solid #0e6b37; }
     .btn-excel:hover { background: #0b5e31; }
 
+    /* كروت الإحصائيات */
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
     .stat-card {
       background: var(--bg-inner); border: 1px solid var(--border);
@@ -205,7 +202,7 @@
     .stat-val { font-size: 26px; font-weight: 800; color: var(--text); margin-top: 5px; }
     .stat-label { font-size: 13px; color: var(--text-muted); }
 
-    /* شبكة كروت المناطق */
+    /* كروت المناطق */
     .day-section-block { margin-bottom: 30px; }
     .day-section-title {
       font-size: 15px;
@@ -248,10 +245,10 @@
     .zone-table-container::-webkit-scrollbar { width: 6px; }
     .zone-table-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-    /* الجداول */
+    /* الجداول العامة */
     .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
-    .search-input { min-width: 260px; flex: 2; padding: 12px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
-    .filter-select { flex: 1; min-width: 150px; padding: 12px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
+    .search-input { min-width: 240px; flex: 2; padding: 11px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
+    .filter-select { flex: 1; min-width: 140px; padding: 11px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
     
     .table-container { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
     table { width: 100%; border-collapse: collapse; text-align: right; font-size: 12px; white-space: nowrap; }
@@ -281,7 +278,6 @@
     </div>
     
     <div class="nav-actions">
-      <!-- زر تغيير الوضع النهاري واليومي -->
       <button class="theme-toggle-btn" onclick="toggleTheme()" title="تغيير المظهر">🌙</button>
 
       <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px;">
@@ -294,7 +290,7 @@
 
   <div class="container">
 
-    <!-- شاشة تسجيل الدخول: المكاتب -->
+    <!-- تسجيل الدخول للمكاتب -->
     <div id="office-login-box" class="auth-wrapper">
       <div class="auth-icon">🏢</div>
       <h2 class="auth-title">تسجيل الدخول للمكاتب</h2>
@@ -319,7 +315,7 @@
       </div>
     </div>
 
-    <!-- شاشة تسجيل الدخول: المسؤول -->
+    <!-- تسجيل الدخول للمسؤول -->
     <div id="admin-login-box" class="auth-wrapper hidden">
       <div class="auth-icon">🔐</div>
       <h2 class="auth-title">لوحة المسؤول</h2>
@@ -340,23 +336,23 @@
     <!-- الشاشة الرئيسية -->
     <div id="main-dashboard" class="hidden">
       
-      <!-- إحصائيات سريعة من واقع الشيت -->
+      <!-- إحصائيات سريعة وديناميكية من واقع اليوم المختار -->
       <div class="stats-grid">
         <div class="stat-card" style="border-right-color: #00b4d8;">
-          <div class="stat-label">إجمالي الطيارين المسجلين</div>
+          <div class="stat-label">إجمالي الطيارين (المسجلين)</div>
           <div class="stat-val" id="total-riders">0</div>
         </div>
         <div class="stat-card" style="border-right-color: #10b981;">
-          <div class="stat-label">Today: PUBLISHED (مقبول اليوم)</div>
+          <div class="stat-label" id="card-label-published">Today: PUBLISHED (المقبول)</div>
           <div class="stat-val" id="today-published">0</div>
         </div>
         <div class="stat-card" style="border-right-color: #ef4444;">
-          <div class="stat-label">Today: NOT CHOSEN (غير مختار)</div>
+          <div class="stat-label" id="card-label-not-chosen">Today: NOT CHOSEN (غير مختار)</div>
           <div class="stat-val" id="today-not-chosen">0</div>
         </div>
         <div class="stat-card" style="border-right-color: #f59e0b;">
-          <div class="stat-label">Tomorrow: PUBLISHED (مقبول غداً)</div>
-          <div class="stat-val" id="tomorrow-published">0</div>
+          <div class="stat-label" id="card-label-rate">Today: نسبة الإسناد (%)</div>
+          <div class="stat-val" id="selected-day-rate">0%</div>
         </div>
       </div>
 
@@ -369,7 +365,6 @@
           </div>
 
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-            
             <div style="display: flex; align-items: center; gap: 6px;">
               <label style="margin: 0; font-size: 13px; color: var(--text-muted); font-weight: bold;">المشرف:</label>
               <select id="report-supervisor-select" style="width: auto; padding: 6px 14px; font-size: 13px; background: var(--input-bg); border: 1px solid var(--border); color:var(--text); border-radius: 8px;" onchange="renderSupervisorReport()">
@@ -386,7 +381,6 @@
                 <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
               </select>
             </div>
-
           </div>
         </div>
 
@@ -395,22 +389,30 @@
         </div>
       </div>
 
-      <!-- الجدول العام والتفصيلي -->
+      <!-- أدوات الفلترة والجدول العام -->
       <div class="card">
         <div class="table-header-tools">
           <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث بالاسم، الـ ID، أو الهاتف..." onkeyup="renderTable()">
           
+          <!-- فلتر المشرف S.V -->
           <select id="supervisor-filter" class="filter-select" onchange="renderTable()">
             <option value="all">كل المشرفين (S.V)</option>
           </select>
 
+          <!-- فلتر اختيار اليوم للجدول والكروت العلوية -->
+          <select id="main-day-filter" class="filter-select" onchange="onMainDayFilterChange()">
+            <option value="today">اليوم (Today)</option>
+            <option value="tomorrow">الغد (Tomorrow)</option>
+            <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
+          </select>
+
+          <!-- فلتر حالات اليوم المختار -->
           <select id="today-filter" class="filter-select" onchange="renderTable()">
-            <option value="all">كل حالات اليوم</option>
-            <option value="PUBLISHED">PUBLISHED</option>
+            <option value="all">كل الحالات</option>
+            <option value="PUBLISHED">PUBLISHED & EVALUATED</option>
             <option value="NOT CHOSEN">NOT CHOSEN</option>
           </select>
 
-          <!-- زر سحب الداتا إكسيل أوفلاين -->
           <button class="btn btn-excel" onclick="exportToExcel()">📥 تصدير Excel</button>
         </div>
 
@@ -447,7 +449,6 @@
     let ridersData = [];
     let currentRole = "";
 
-    /* تشغيل الوضع المفضل المخزن مسبقاً */
     if (localStorage.getItem("dashboard_theme") === "light") {
       document.body.classList.add("light-mode");
     }
@@ -597,16 +598,44 @@
       }
     }
 
-    function updateStats(filteredData) {
-      document.getElementById('total-riders').innerText = filteredData.length;
-      document.getElementById('today-published').innerText = filteredData.filter(r => (r.today || '').toUpperCase().includes('PUBLISHED')).length;
-      document.getElementById('today-not-chosen').innerText = filteredData.filter(r => (r.today || '').toUpperCase().includes('NOT CHOSEN')).length;
-      document.getElementById('tomorrow-published').innerText = filteredData.filter(r => (r.tomorrow || '').toUpperCase().includes('PUBLISHED')).length;
+    /* دالة تحديث الكروت العلوية حسب اليوم المختار والبيانات المفلترة */
+    function updateStats(filteredData, selectedDayKey) {
+      const dayNames = {
+        today: "Today",
+        tomorrow: "Tomorrow",
+        tomorrowLater: "Tomorrow Later"
+      };
+      const dayTitle = dayNames[selectedDayKey] || "Today";
+
+      // تحديث مسميات الكروت العلوية ديناميكياً
+      document.getElementById('card-label-published').innerText = `${dayTitle}: PUBLISHED (المقبول)`;
+      document.getElementById('card-label-not-chosen').innerText = `${dayTitle}: NOT CHOSEN (غير مختار)`;
+      document.getElementById('card-label-rate').innerText = `${dayTitle}: نسبة الإسناد (%)`;
+
+      const total = filteredData.length;
+      let published = 0;
+      let notChosen = 0;
+
+      filteredData.forEach(r => {
+        const status = (r[selectedDayKey] || '').toUpperCase();
+        if (status.includes('PUBLISHED') || status.includes('EVALUATED')) {
+          published++;
+        } else if (status.includes('NOT CHOSEN')) {
+          notChosen++;
+        }
+      });
+
+      const rate = total > 0 ? Math.round((published / total) * 100) : 0;
+
+      document.getElementById('total-riders').innerText = total;
+      document.getElementById('today-published').innerText = published;
+      document.getElementById('today-not-chosen').innerText = notChosen;
+      document.getElementById('selected-day-rate').innerText = `${rate}%`;
     }
 
     function getBadgeClass(val) {
       val = (val || '').toUpperCase();
-      if (val.includes('PUBLISHED')) return 'badge-published';
+      if (val.includes('PUBLISHED') || val.includes('EVALUATED')) return 'badge-published';
       if (val.includes('NOT CHOSEN')) return 'badge-not-chosen';
       return 'badge-default';
     }
@@ -775,10 +804,15 @@
       }
     }
 
+    function onMainDayFilterChange() {
+      renderTable();
+    }
+
     function getFilteredRiders() {
       const q = document.getElementById('search-box').value.trim().toLowerCase();
       const svFilter = document.getElementById('supervisor-filter').value;
-      const todayFilter = document.getElementById('today-filter').value;
+      const selectedDay = document.getElementById('main-day-filter').value;
+      const statusFilter = document.getElementById('today-filter').value;
 
       return ridersData.filter(r => {
         const matchQuery = (r.name && r.name.toLowerCase().includes(q)) ||
@@ -786,9 +820,17 @@
                            (r.phone && r.phone.toLowerCase().includes(q));
         
         const matchSv = (svFilter === 'all') || (r.supervisor && r.supervisor.trim() === svFilter);
-        const matchToday = (todayFilter === 'all') || (r.today && r.today.toUpperCase().includes(todayFilter));
 
-        return matchQuery && matchSv && matchToday;
+        // فحص حالة اليوم المختار من قائمة الأيام
+        const dayVal = (r[selectedDay] || '').toUpperCase();
+        let matchStatus = true;
+        if (statusFilter === 'PUBLISHED') {
+          matchStatus = dayVal.includes('PUBLISHED') || dayVal.includes('EVALUATED');
+        } else if (statusFilter === 'NOT CHOSEN') {
+          matchStatus = dayVal.includes('NOT CHOSEN');
+        }
+
+        return matchQuery && matchSv && matchStatus;
       });
     }
 
@@ -796,6 +838,7 @@
       const tbody = document.getElementById('riders-tbody');
       tbody.innerHTML = '';
 
+      const selectedDay = document.getElementById('main-day-filter').value;
       const filtered = getFilteredRiders();
 
       filtered.forEach(r => {
@@ -814,10 +857,10 @@
         tbody.appendChild(tr);
       });
 
-      updateStats(filtered);
+      // تحديث الكروت العلوية بناءً على اليوم المختار
+      updateStats(filtered, selectedDay);
     }
 
-    /* دالة سحب وتصدير البيانات لشيت إكسيل أوفلاين مع دعم كامل للغة العربية */
     function exportToExcel() {
       const dataToExport = getFilteredRiders();
       if (!dataToExport || dataToExport.length === 0) {
@@ -825,9 +868,7 @@
         return;
       }
 
-      // تجهيز رؤوس الأعمدة
       const headers = ["ID", "الاسم", "المنطقة", "الهاتف", "اليوم (Today)", "الغد (Tomorrow)", "الغد لاحقاً", "Feedback", "المشرف (S.V)"];
-      
       let csvContent = headers.join(",") + "\r\n";
 
       dataToExport.forEach(row => {
@@ -845,7 +886,6 @@
         csvContent += rowData.join(",") + "\r\n";
       });
 
-      // إضافة BOM لدعم اللغة العربية في برنامج Excel
       const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
