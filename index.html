@@ -18,11 +18,12 @@
       --text: #f1f5f9;
       --text-muted: #94a3b8;
       --border: #232f48;
+      --table-border: #334155; /* خطوط جدول عريضة وواضحة */
       --success: #34d399;
       --danger: #f87171;
       --warning: #fbbf24;
       --input-bg: #0d1424;
-      --table-hover: rgba(255, 255, 255, 0.025);
+      --table-hover: rgba(255, 255, 255, 0.04);
       --badge-bg: rgba(255, 255, 255, 0.03);
     }
 
@@ -37,12 +38,13 @@
       --cyan: #0284c7;
       --text: #1e293b;
       --text-muted: #64748b;
-      --border: #e2e8f0;
+      --border: #cbd5e1;
+      --table-border: #94a3b8; /* خطوط جدول واضحة في الفاتح */
       --success: #059669;
       --danger: #e11d48;
       --warning: #d97706;
       --input-bg: #f8fafc;
-      --table-hover: rgba(0, 0, 0, 0.02);
+      --table-hover: rgba(0, 0, 0, 0.03);
       --badge-bg: rgba(0, 0, 0, 0.03);
     }
 
@@ -114,7 +116,7 @@
       box-shadow: 0 4px 18px rgba(0,0,0,0.04);
     }
 
-    /* تسجيل الدخول */
+    /* كارت تسجيل الدخول */
     .auth-wrapper {
       max-width: 450px;
       margin: 50px auto;
@@ -208,7 +210,7 @@
     .btn-excel { background: #059669; color: #fff; border: 1px solid #047857; }
     .btn-excel:hover { background: #047857; }
 
-    /* الإحصائيات */
+    /* شبكة كروت الإحصائيات */
     .stats-section-block { margin-bottom: 20px; }
     .stats-block-header {
       display: flex;
@@ -288,15 +290,44 @@
     .zone-table-container table td, 
     .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; }
 
-    /* الجداول العامة وإتاحة النسخ */
+    /* أدوات الفلترة */
     .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
     .search-input { min-width: 240px; flex: 2; padding: 9px 12px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 7px; color: var(--text); outline: none; font-size: 13px; }
     .filter-select { flex: 1; min-width: 140px; padding: 9px 12px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 7px; color: var(--text); outline: none; font-size: 13px; }
     
-    .table-container { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
-    table { width: 100%; border-collapse: collapse; text-align: right; font-size: 12px; white-space: nowrap; }
-    th { background: var(--bg-inner); padding: 9px 10px; color: var(--text-muted); font-weight: 700; border-bottom: 1px solid var(--border); }
-    td { padding: 8px 10px; border-top: 1px solid var(--border); color: var(--text); }
+    /* الجداول العامة وتنسيق الخطوط العريضة والتوسيط */
+    .table-container { 
+      overflow-x: auto; 
+      border-radius: 10px; 
+      border: 2px solid var(--table-border); 
+      background: var(--bg-card);
+    }
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      text-align: center; /* توسيط نصوص الجدول بالكامل */
+      font-size: 12px; 
+      white-space: nowrap; 
+    }
+    th { 
+      background: var(--bg-inner); 
+      padding: 12px 10px; 
+      color: var(--text-muted); 
+      font-weight: 800; 
+      text-align: center; 
+      border-bottom: 2px solid var(--table-border); 
+      border-left: 2px solid var(--table-border); 
+    }
+    th:last-child { border-left: none; }
+
+    td { 
+      padding: 10px 12px; 
+      text-align: center; /* توسيط محتوى الخلية */
+      border-top: 2px solid var(--table-border); 
+      border-left: 2px solid var(--table-border); 
+      color: var(--text); 
+    }
+    td:last-child { border-left: none; }
     tbody tr:hover { background: var(--table-hover); }
 
     /* ستايل الخلية القابلة للنسخ */
@@ -306,16 +337,15 @@
       user-select: none;
     }
     .copyable:hover {
-      background: rgba(56, 189, 248, 0.08);
-      border-radius: 4px;
+      background: rgba(56, 189, 248, 0.12);
     }
     .copyable:active {
       transform: scale(0.98);
     }
 
-    .badge { padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; display: inline-block; }
-    .badge-published { background: rgba(52, 211, 153, 0.12); color: var(--success); border: 1px solid rgba(52, 211, 153, 0.25); }
-    .badge-not-chosen { background: rgba(248, 113, 113, 0.12); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.25); }
+    .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
+    .badge-published { background: rgba(52, 211, 153, 0.14); color: var(--success); border: 1px solid rgba(52, 211, 153, 0.35); }
+    .badge-not-chosen { background: rgba(248, 113, 113, 0.14); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.35); }
     .badge-default { background: rgba(148, 163, 184, 0.1); color: var(--text-muted); border: 1px solid var(--border); }
 
     /* توست التنبيه بالنسخ */
@@ -492,7 +522,7 @@
         </div>
       </div>
 
-      <!-- أدوات الفلترة والجدول العام للطيارين -->
+      <!-- أدوات الفلترة والجدول العام للطيارين (مع الخطوط العريضة والتوسيط) -->
       <div class="card">
         <div class="table-header-tools">
           <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث بالاسم، الـ ID، أو الهاتف..." onkeyup="renderTable()">
@@ -532,7 +562,7 @@
               </tr>
             </thead>
             <tbody id="riders-tbody">
-              <!-- صفوف الطيارين مع خاصية النسخ بالنقر -->
+              <!-- صفوف الطيارين مع التوسيط والخطوط العريضة -->
             </tbody>
           </table>
           <div id="loading-spinner" class="loading-state">⏳ جاري جلب البيانات من Google Sheets...</div>
@@ -582,7 +612,6 @@
       return palette[index % palette.length];
     }
 
-    /* دالة النسخ إلى الحافظة بنقرة زر مع إظهار Toast */
     function copyToClipboard(text, event) {
       if (event) event.stopPropagation();
       const cleanText = (text || '').trim();
@@ -913,7 +942,7 @@
               <td style="text-align: center; font-weight: bold; color: ${rateColor};">${rate}%</td>
               <td style="text-align: center; color: var(--text-muted);">${sv.total}</td>
               <td style="text-align: center; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
-              <td style="text-align: right; font-weight: 600; color: var(--text);" class="copyable" onclick="copyToClipboard('${sv.name}', event)" title="انقر للنسخ">${sv.name}</td>
+              <td style="text-align: center; font-weight: 600; color: var(--text);" class="copyable" onclick="copyToClipboard('${sv.name}', event)" title="انقر للنسخ">${sv.name}</td>
             </tr>
           `;
         });
@@ -940,7 +969,7 @@
                   <th style="text-align: center; width: 60px;">%</th>
                   <th style="text-align: center; width: 70px;">Target</th>
                   <th style="text-align: center; width: 70px; color: ${zoneThemeColor};">مجدول</th>
-                  <th style="text-align: right;">المكتب / المشرف</th>
+                  <th style="text-align: center;">المكتب / المشرف</th>
                 </tr>
               </thead>
               <tbody>
@@ -1016,7 +1045,7 @@
       });
     }
 
-    /* دالة رسم الجدول مع تفعيل إمكانية النسخ لأي حقل بنقرة واحدة */
+    /* دالة رسم الجدول مع التوسيط الكامل والخطوط العريضة وقابلية النسخ للنص بالكامل */
     function renderTable() {
       const tbody = document.getElementById('riders-tbody');
       tbody.innerHTML = '';
@@ -1027,7 +1056,6 @@
       filtered.forEach(r => {
         const tr = document.createElement('tr');
         
-        // تجهيز القيم بشكل نظيف للنسخ
         const idVal = r.id || '';
         const nameVal = r.name || '';
         const areaVal = r.area || '';
@@ -1055,7 +1083,7 @@
             <span class="badge ${getBadgeClass(r.tomorrowLater)}">${tomorrowLaterVal || '-'}</span>
           </td>
           <td class="copyable" onclick="copyToClipboard('${feedbackVal}', event)" title="انقر لنسخ الـ Feedback">
-            <span style="color: var(--warning); font-size: 12px;">${feedbackVal || '-'}</span>
+            <span style="color: var(--warning); font-size: 12px; font-weight: bold;">${feedbackVal || '-'}</span>
           </td>
           <td class="copyable" onclick="copyToClipboard('${svVal}', event)" title="انقر لنسخ اسم المشرف">
             <strong>${svVal || '-'}</strong>
