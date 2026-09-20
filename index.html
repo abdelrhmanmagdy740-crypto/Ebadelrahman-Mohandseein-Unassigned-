@@ -6,10 +6,12 @@
   <title>Mohandiseen 3PLs-Dashboard | متابعة الطيارين</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
+    /* الوضع الليلي (الافتراضي) */
     :root {
       --bg-main: #0c1222;
       --bg-card: #151d32;
       --bg-inner: #0f172a;
+      --header-bg: #16203d;
       --accent: #ff6433;
       --accent-hover: #e85526;
       --cyan: #00b4d8;
@@ -19,9 +21,32 @@
       --success: #10b981;
       --danger: #ef4444;
       --warning: #f59e0b;
+      --input-bg: #0d1527;
+      --table-hover: rgba(255, 255, 255, 0.03);
+      --badge-bg: rgba(255, 255, 255, 0.03);
     }
 
-    * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: all 0.2s ease; }
+    /* ألوان الوضع النهاري (Light Mode) */
+    body.light-mode {
+      --bg-main: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-inner: #f8fafc;
+      --header-bg: #e2e8f0;
+      --accent: #ea580c;
+      --accent-hover: #c2410c;
+      --cyan: #0284c7;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --warning: #d97706;
+      --input-bg: #ffffff;
+      --table-hover: rgba(0, 0, 0, 0.03);
+      --badge-bg: rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
     body { background: var(--bg-main); color: var(--text); margin: 0; padding: 0; min-height: 100vh; }
 
     /* شريط التنقل العلوي */
@@ -43,47 +68,56 @@
       display: flex; align-items: center; justify-content: center;
       font-weight: 900; font-size: 22px; color: #fff;
     }
-    .brand-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .brand-title { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; }
     .brand-sub { font-size: 12px; color: var(--cyan); }
+
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+    /* زر تغيير المظهر (Theme Toggle) */
+    .theme-toggle-btn {
+      background: var(--bg-inner);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .theme-toggle-btn:hover {
+      border-color: var(--cyan);
+    }
 
     .container { max-width: 1400px; margin: 25px auto; padding: 0 15px; }
 
-    /* كروت المحتوى العام */
+    /* كروت المحتوى */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 24px;
       margin-bottom: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
     }
 
     /* كارت تسجيل الدخول */
     .auth-wrapper {
       max-width: 460px;
       margin: 50px auto;
-      background: #141d33;
-      border: 1px solid #233154;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
       border-radius: 18px;
       padding: 35px 30px;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
     }
-    .auth-icon {
-      font-size: 52px;
-      text-align: center;
-      margin-bottom: 12px;
-      line-height: 1;
-    }
-    .auth-title {
-      text-align: center;
-      margin: 0 0 8px 0;
-      font-size: 26px;
-      font-weight: 800;
-      color: #ffffff;
-    }
+    .auth-icon { font-size: 52px; text-align: center; margin-bottom: 12px; line-height: 1; }
+    .auth-title { text-align: center; margin: 0 0 8px 0; font-size: 26px; font-weight: 800; color: var(--text); }
     .signature-text {
       text-align: center;
-      color: #00c0f0;
+      color: var(--cyan);
       font-family: 'Caveat', cursive, sans-serif;
       font-size: 22px;
       letter-spacing: 0.5px;
@@ -94,38 +128,28 @@
     }
 
     .form-group { margin-bottom: 22px; }
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #cbd5e1;
-      text-align: right;
-    }
+    .form-group label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 700; color: var(--text-muted); text-align: right; }
 
     select.custom-login-field {
       width: 100%;
       padding: 14px 16px;
-      background: #0d1527;
-      border: 1.5px solid #00b4d8;
+      background: var(--input-bg);
+      border: 1.5px solid var(--cyan);
       border-radius: 9px;
-      color: #ffffff;
+      color: var(--text);
       font-size: 14px;
       font-weight: 600;
       outline: none;
       text-align: right;
       cursor: pointer;
     }
-    select.custom-login-field option {
-      background: #0d1527;
-      color: #fff;
-    }
+    select.custom-login-field option { background: var(--bg-card); color: var(--text); }
 
     input.custom-pass-input {
       width: 100%;
       padding: 13px 16px;
       background: #eef4ff;
-      border: none;
+      border: 1px solid #cbd5e1;
       border-radius: 9px;
       color: #0b132b;
       font-size: 20px;
@@ -136,7 +160,7 @@
     }
 
     .btn-login-orange {
-      background: #ff6433;
+      background: var(--accent);
       color: #ffffff;
       width: 100%;
       padding: 14px;
@@ -148,13 +172,11 @@
       margin-top: 6px;
       box-shadow: 0 4px 14px rgba(255, 100, 51, 0.35);
     }
-    .btn-login-orange:hover {
-      background: #e85526;
-    }
+    .btn-login-orange:hover { background: var(--accent-hover); }
 
     .switch-link { text-align: center; margin-top: 22px; }
     .switch-link a {
-      color: #00b4d8;
+      color: var(--cyan);
       text-decoration: none;
       font-size: 13px;
       font-weight: 600;
@@ -163,48 +185,42 @@
       align-items: center;
       gap: 5px;
     }
-    .switch-link a:hover {
-      text-decoration: underline;
-    }
+    .switch-link a:hover { text-decoration: underline; }
 
     .btn {
-      padding: 10px 18px; border-radius: 8px; border: none; font-weight: 700;
+      padding: 9px 16px; border-radius: 8px; border: none; font-weight: 700;
       cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
-      gap: 8px; font-size: 14px;
+      gap: 8px; font-size: 13px;
     }
     .btn-outline { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); }
     .btn-outline:hover { background: rgba(0,180,216,0.1); }
+    .btn-excel { background: #107c41; color: #fff; border: 1px solid #0e6b37; }
+    .btn-excel:hover { background: #0b5e31; }
 
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
     .stat-card {
       background: var(--bg-inner); border: 1px solid var(--border);
       border-radius: 10px; padding: 18px; border-right: 4px solid var(--cyan);
     }
-    .stat-val { font-size: 26px; font-weight: 800; color: #fff; margin-top: 5px; }
+    .stat-val { font-size: 26px; font-weight: 800; color: var(--text); margin-top: 5px; }
     .stat-label { font-size: 13px; color: var(--text-muted); }
 
-    /* شبكة كروت المناطق وإطاراتها الملونة */
-    .day-section-block {
-      margin-bottom: 30px;
-    }
+    /* شبكة كروت المناطق */
+    .day-section-block { margin-bottom: 30px; }
     .day-section-title {
       font-size: 15px;
       font-weight: 800;
-      color: #38bdf8;
+      color: var(--cyan);
       margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(56, 189, 248, 0.08);
+      background: rgba(0, 180, 216, 0.08);
       padding: 8px 16px;
       border-radius: 8px;
-      border-right: 4px solid #38bdf8;
+      border-right: 4px solid var(--cyan);
     }
-    .zones-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 20px;
-    }
+    .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
     .zone-column-card {
       background: var(--bg-inner);
       border-radius: 12px;
@@ -214,62 +230,34 @@
       border: 2px solid var(--border);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .zone-column-card:hover {
-      transform: translateY(-3px);
-    }
+    .zone-column-card:hover { transform: translateY(-3px); }
     .zone-card-header {
-      background: #16203d;
+      background: var(--header-bg);
       padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid var(--border);
     }
-    .zone-card-header .title-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 15px;
-      font-weight: 800;
-      color: #fff;
-    }
-    .zone-card-header .stats-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-    }
-    .zone-total-rate {
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-weight: 800;
-    }
-    .zone-total-counts {
-      color: var(--text-muted);
-      font-size: 12px;
-    }
-    .zone-table-container {
-      max-height: 480px;
-      overflow-y: auto;
-    }
-    .zone-table-container::-webkit-scrollbar {
-      width: 6px;
-    }
-    .zone-table-container::-webkit-scrollbar-thumb {
-      background: #24304f;
-      border-radius: 4px;
-    }
+    .zone-card-header .title-box { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 800; }
+    .zone-card-header .stats-badge { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .zone-total-rate { padding: 2px 8px; border-radius: 4px; font-weight: 800; }
+    .zone-total-counts { color: var(--text-muted); font-size: 12px; }
+    
+    .zone-table-container { max-height: 480px; overflow-y: auto; }
+    .zone-table-container::-webkit-scrollbar { width: 6px; }
+    .zone-table-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-    /* الجداول العامة */
+    /* الجداول */
     .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
-    .search-input { min-width: 260px; flex: 2; padding: 12px 14px; background: var(--bg-inner); border: 1px solid var(--border); border-radius: 8px; color: #fff; outline: none; }
-    .filter-select { flex: 1; min-width: 150px; padding: 12px 14px; background: var(--bg-inner); border: 1px solid var(--border); border-radius: 8px; color: #fff; outline: none; }
+    .search-input { min-width: 260px; flex: 2; padding: 12px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
+    .filter-select { flex: 1; min-width: 150px; padding: 12px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
     
     .table-container { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
     table { width: 100%; border-collapse: collapse; text-align: right; font-size: 12px; white-space: nowrap; }
-    th { background: var(--bg-card); padding: 10px 8px; color: var(--text-muted); font-weight: 700; }
+    th { background: var(--header-bg); padding: 10px 8px; color: var(--text-muted); font-weight: 700; }
     td { padding: 8px 10px; border-top: 1px solid var(--border); }
-    tbody tr:hover { background: rgba(255,255,255,0.03); }
+    tbody tr:hover { background: var(--table-hover); }
 
     .badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; display: inline-block; }
     .badge-published { background: rgba(16,185,129,0.15); color: var(--success); border: 1px solid rgba(16,185,129,0.3); }
@@ -291,10 +279,16 @@
         <div class="brand-sub">متابعة إسناد الطيارين (Assign Tracker)</div>
       </div>
     </div>
-    <div id="user-pill" class="hidden">
-      <button class="btn btn-outline" style="padding: 6px 14px; font-size: 12px;" onclick="fetchData()">🔄 تحديث البيانات</button>
-      <span id="current-user-name" style="margin: 0 10px; font-size: 14px; font-weight: 600;"></span>
-      <button class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;" onclick="logout()">خروج</button>
+    
+    <div class="nav-actions">
+      <!-- زر تغيير الوضع النهاري واليومي -->
+      <button class="theme-toggle-btn" onclick="toggleTheme()" title="تغيير المظهر">🌙</button>
+
+      <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px;">
+        <button class="btn btn-outline" onclick="fetchData()">🔄 تحديث البيانات</button>
+        <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 600;"></span>
+        <button class="btn btn-outline" onclick="logout()">خروج</button>
+      </div>
     </div>
   </header>
 
@@ -374,19 +368,18 @@
             <span style="font-size: 12px; color: var(--text-muted);">محسوب من واقع عمود الـ Feedback مقارنة بإجمالي مناديب المنطقة</span>
           </div>
 
-          <!-- شريط الفلاتر للتقرير (فلتر المشرف + فلتر اليوم مع خيار الـ 3 أيام) -->
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
             
             <div style="display: flex; align-items: center; gap: 6px;">
               <label style="margin: 0; font-size: 13px; color: var(--text-muted); font-weight: bold;">المشرف:</label>
-              <select id="report-supervisor-select" style="width: auto; padding: 6px 14px; font-size: 13px; background: var(--bg-inner); border: 1px solid var(--border); color:#fff; border-radius: 8px;" onchange="renderSupervisorReport()">
+              <select id="report-supervisor-select" style="width: auto; padding: 6px 14px; font-size: 13px; background: var(--input-bg); border: 1px solid var(--border); color:var(--text); border-radius: 8px;" onchange="renderSupervisorReport()">
                 <option value="all">كل المشرفين</option>
               </select>
             </div>
 
             <div style="display: flex; align-items: center; gap: 6px;">
               <label style="margin: 0; font-size: 13px; color: var(--text-muted); font-weight: bold;">اليوم المعروض:</label>
-              <select id="report-day-select" style="width: auto; padding: 6px 14px; font-size: 13px; background: var(--bg-inner); border: 1px solid var(--border); color:#fff; border-radius: 8px;" onchange="renderSupervisorReport()">
+              <select id="report-day-select" style="width: auto; padding: 6px 14px; font-size: 13px; background: var(--input-bg); border: 1px solid var(--border); color:var(--text); border-radius: 8px;" onchange="renderSupervisorReport()">
                 <option value="all_days">كل الأيام (الـ 3 أيام معاً)</option>
                 <option value="today">اليوم (Today)</option>
                 <option value="tomorrow">الغد (Tomorrow)</option>
@@ -397,7 +390,6 @@
           </div>
         </div>
 
-        <!-- الحاوية المجمعة لعرض الأيام والجداول تحت بعضها -->
         <div id="zones-container">
           <!-- كروت المناطق -->
         </div>
@@ -417,6 +409,9 @@
             <option value="PUBLISHED">PUBLISHED</option>
             <option value="NOT CHOSEN">NOT CHOSEN</option>
           </select>
+
+          <!-- زر سحب الداتا إكسيل أوفلاين -->
+          <button class="btn btn-excel" onclick="exportToExcel()">📥 تصدير Excel</button>
         </div>
 
         <div class="table-container">
@@ -452,14 +447,22 @@
     let ridersData = [];
     let currentRole = "";
 
+    /* تشغيل الوضع المفضل المخزن مسبقاً */
+    if (localStorage.getItem("dashboard_theme") === "light") {
+      document.body.classList.add("light-mode");
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("light-mode");
+      const isLight = document.body.classList.contains("light-mode");
+      localStorage.setItem("dashboard_theme", isLight ? "light" : "dark");
+      
+      const btn = document.querySelector(".theme-toggle-btn");
+      if (btn) btn.innerText = isLight ? "☀️" : "🌙";
+    }
+
     const ZONE_COLOR_PALETTE = [
-      "#00b4d8", // سماوي
-      "#ff6b35", // برتقالي
-      "#a855f7", // أرجواني
-      "#10b981", // أخضر
-      "#f59e0b", // أصفر
-      "#ec4899", // وردي
-      "#06b6d4"  // تركواز
+      "#00b4d8", "#ff6b35", "#a855f7", "#10b981", "#f59e0b", "#ec4899", "#06b6d4"
     ];
 
     function getZoneColor(zoneName, index) {
@@ -608,7 +611,6 @@
       return 'badge-default';
     }
 
-    /* دالة مساعدة لبناء كروت المناطق ليوم محدد */
     function buildZoneGridForDay(dayKey, dayTitle, selectedSupervisor) {
       const zonesMap = {};
 
@@ -695,7 +697,7 @@
               <td style="text-align: center; font-weight: bold; color: ${rateColor};">${rate}%</td>
               <td style="text-align: center; color: var(--text-muted);">${sv.total}</td>
               <td style="text-align: center; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
-              <td style="text-align: right; font-weight: 600; color: #fff;">${sv.name}</td>
+              <td style="text-align: right; font-weight: 600; color: var(--text);">${sv.name}</td>
             </tr>
           `;
         });
@@ -712,7 +714,7 @@
             </div>
             <div class="stats-badge">
               <span class="zone-total-counts">${zoneData.totalPublishedInZone} / ${zoneData.totalRidersInZone}</span>
-              <span class="zone-total-rate" style="color: ${overallColor}; border: 1px solid ${overallColor}; background: rgba(255,255,255,0.03);">${overallZoneRate}%</span>
+              <span class="zone-total-rate" style="color: ${overallColor}; border: 1px solid ${overallColor}; background: var(--badge-bg);">${overallZoneRate}%</span>
             </div>
           </div>
           <div class="zone-table-container">
@@ -739,7 +741,6 @@
       return sectionWrapper;
     }
 
-    /* دالة رسم تقرير كروت المناطق بناءً على اختيار الأيام */
     function renderSupervisorReport() {
       const container = document.getElementById('zones-container');
       if (!container) return;
@@ -755,7 +756,6 @@
       ];
 
       if (daySelection === 'all_days') {
-        // عرض الـ 3 أيام مصفوفة تحت بعضها بالترتيب
         dayDefinitions.forEach(dayDef => {
           const sectionEl = buildZoneGridForDay(dayDef.key, dayDef.title, selectedSupervisor);
           if (sectionEl) {
@@ -763,7 +763,6 @@
           }
         });
       } else {
-        // عرض يوم واحد فقط محدد
         const currentDef = dayDefinitions.find(d => d.key === daySelection) || dayDefinitions[0];
         const sectionEl = buildZoneGridForDay(currentDef.key, currentDef.title, selectedSupervisor);
         if (sectionEl) {
@@ -776,14 +775,12 @@
       }
     }
 
-    function renderTable() {
+    function getFilteredRiders() {
       const q = document.getElementById('search-box').value.trim().toLowerCase();
       const svFilter = document.getElementById('supervisor-filter').value;
       const todayFilter = document.getElementById('today-filter').value;
-      const tbody = document.getElementById('riders-tbody');
-      tbody.innerHTML = '';
 
-      const filtered = ridersData.filter(r => {
+      return ridersData.filter(r => {
         const matchQuery = (r.name && r.name.toLowerCase().includes(q)) ||
                            (r.id && r.id.toLowerCase().includes(q)) ||
                            (r.phone && r.phone.toLowerCase().includes(q));
@@ -793,6 +790,13 @@
 
         return matchQuery && matchSv && matchToday;
       });
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('riders-tbody');
+      tbody.innerHTML = '';
+
+      const filtered = getFilteredRiders();
 
       filtered.forEach(r => {
         const tr = document.createElement('tr');
@@ -811,6 +815,48 @@
       });
 
       updateStats(filtered);
+    }
+
+    /* دالة سحب وتصدير البيانات لشيت إكسيل أوفلاين مع دعم كامل للغة العربية */
+    function exportToExcel() {
+      const dataToExport = getFilteredRiders();
+      if (!dataToExport || dataToExport.length === 0) {
+        alert("لا توجد بيانات متاحة للتصدير حالياً.");
+        return;
+      }
+
+      // تجهيز رؤوس الأعمدة
+      const headers = ["ID", "الاسم", "المنطقة", "الهاتف", "اليوم (Today)", "الغد (Tomorrow)", "الغد لاحقاً", "Feedback", "المشرف (S.V)"];
+      
+      let csvContent = headers.join(",") + "\r\n";
+
+      dataToExport.forEach(row => {
+        const rowData = [
+          `"${(row.id || '').replace(/"/g, '""')}"`,
+          `"${(row.name || '').replace(/"/g, '""')}"`,
+          `"${(row.area || '').replace(/"/g, '""')}"`,
+          `"${(row.phone || '').replace(/"/g, '""')}"`,
+          `"${(row.today || '').replace(/"/g, '""')}"`,
+          `"${(row.tomorrow || '').replace(/"/g, '""')}"`,
+          `"${(row.tomorrowLater || '').replace(/"/g, '""')}"`,
+          `"${(row.feedback || '').replace(/"/g, '""')}"`,
+          `"${(row.supervisor || '').replace(/"/g, '""')}"`
+        ];
+        csvContent += rowData.join(",") + "\r\n";
+      });
+
+      // إضافة BOM لدعم اللغة العربية في برنامج Excel
+      const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      
+      const todayDate = new Date().toISOString().slice(0, 10);
+      a.download = `Riders_Data_${todayDate}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
   </script>
 </body>
