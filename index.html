@@ -504,15 +504,15 @@
               <div class="stat-val" id="total-riders">0</div>
             </div>
             <div class="stat-card" style="border-right-color: #34d399;">
-              <div class="stat-label" id="card-label-published">المقبول (PUBLISHED)</div>
+              <div class="stat-label" id="card-label-published">Today: PUBLISHED (المقبول)</div>
               <div class="stat-val" id="today-published">0</div>
             </div>
             <div class="stat-card" style="border-right-color: #f87171;">
-              <div class="stat-label" id="card-label-not-chosen">غير مختار (NOT CHOSEN)</div>
+              <div class="stat-label" id="card-label-not-chosen">Today: NOT CHOSEN (غير مختار)</div>
               <div class="stat-val" id="today-not-chosen">0</div>
             </div>
             <div class="stat-card" style="border-right-color: #fbbf24;">
-              <div class="stat-label" id="card-label-rate">نسبة الإسناد (%)</div>
+              <div class="stat-label" id="card-label-rate">Today: نسبة الإسناد (%)</div>
               <div class="stat-val" id="selected-day-rate">0%</div>
             </div>
           </div>
@@ -559,9 +559,8 @@
             <option value="all">كل المشرفين (S.V)</option>
           </select>
 
-          <!-- خانة اختيار اليوم مع خيار الـ 3 أيام مجمع -->
+          <!-- تم إلغاء خيار الـ 3 أيام مجمع وقصرها على الأيام فقط -->
           <select id="main-day-filter" class="filter-select" onchange="onMainDayFilterChange()">
-            <option value="all_days">كل الأيام (الـ 3 أيام معاً)</option>
             <option value="today">اليوم (Today)</option>
             <option value="tomorrow">الغد (Tomorrow)</option>
             <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
@@ -726,7 +725,6 @@
       }
     }
 
-    // دالة مرنة وقوية جداً لمطابقة وقراءة كافة الأعمدة بما فيها الـ Feedback
     function normalizeRider(raw) {
       const getVal = (keys) => {
         for (let k of keys) {
@@ -748,7 +746,6 @@
         today: getVal(['Today', 'اليوم']),
         tomorrow: getVal(['Tomorrow', 'الغد']),
         tomorrowLater: getVal(['Tomorrow Later', 'الغد لاحقاً']),
-        // قراءة الـ Feedback حتى لو كان مكتوباً Fedback أو به مسافة إضافية
         feedback: getVal(['Feedback', 'Fedback', 'فيدباك', 'الملاحظات', 'ملاحظات']),
         supervisor: getVal(['s.v', 'المشرف', 'المشرف (S.V)', 'Supervisor', 'SV'])
       };
@@ -854,7 +851,6 @@
 
     function updateStats(filteredData, selectedDayKey) {
       const dayNames = {
-        all_days: "كل الأيام مجمعة (3 أيام)",
         today: "اليوم (Today)",
         tomorrow: "الغد (Tomorrow)",
         tomorrowLater: "الغد لاحقاً (Tomorrow Later)"
@@ -864,7 +860,7 @@
       const badgeEl = document.getElementById('selected-day-badge');
       if (badgeEl) badgeEl.innerText = `${dayTitle}`;
 
-      let totalSlots = 0;
+      const total = filteredData.length;
       let published = 0;
       let notChosen = 0;
 
@@ -872,45 +868,31 @@
 
       filteredData.forEach(r => {
         const zone = (r.area || 'غير محدد').trim();
+        const status = (r[selectedDayKey] || '').toUpperCase();
+
         if (!zoneStats[zone]) {
           zoneStats[zone] = { total: 0, published: 0, notChosen: 0 };
         }
 
-        if (selectedDayKey === 'all_days') {
-          ['today', 'tomorrow', 'tomorrowLater'].forEach(dk => {
-            const st = r[dk] || '';
-            totalSlots++;
-            zoneStats[zone].total++;
-            if (isStatusPublished(st)) {
-              published++;
-              zoneStats[zone].published++;
-            } else if (isStatusNotChosen(st)) {
-              notChosen++;
-              zoneStats[zone].notChosen++;
-            }
-          });
-        } else {
-          const st = r[selectedDayKey] || '';
-          totalSlots++;
-          zoneStats[zone].total++;
-          if (isStatusPublished(st)) {
-            published++;
-            zoneStats[zone].published++;
-          } else if (isStatusNotChosen(st)) {
-            notChosen++;
-            zoneStats[zone].notChosen++;
-          }
+        zoneStats[zone].total++;
+
+        if (isStatusPublished(status)) {
+          published++;
+          zoneStats[zone].published++;
+        } else if (isStatusNotChosen(status)) {
+          notChosen++;
+          zoneStats[zone].notChosen++;
         }
       });
 
-      const totalRate = totalSlots > 0 ? Math.round((published / totalSlots) * 100) : 0;
+      const totalRate = total > 0 ? Math.round((published / total) * 100) : 0;
 
-      document.getElementById('card-label-total').innerText = selectedDayKey === 'all_days' ? 'إجمالي الفرص (3 أيام)' : 'إجمالي طيارين اليوم';
-      document.getElementById('card-label-published').innerText = `${dayTitle}: المقبول (PUBLISHED)`;
-      document.getElementById('card-label-not-chosen').innerText = `${dayTitle}: غير مختار (NOT CHOSEN)`;
+      document.getElementById('card-label-total').innerText = 'إجمالي الطيارين (المسجلين)';
+      document.getElementById('card-label-published').innerText = `${dayTitle}: PUBLISHED (المقبول)`;
+      document.getElementById('card-label-not-chosen').innerText = `${dayTitle}: NOT CHOSEN (غير مختار)`;
       document.getElementById('card-label-rate').innerText = `${dayTitle}: نسبة الإسناد (%)`;
 
-      document.getElementById('total-riders').innerText = totalSlots;
+      document.getElementById('total-riders').innerText = total;
       document.getElementById('today-published').innerText = published;
       document.getElementById('today-not-chosen').innerText = notChosen;
       document.getElementById('selected-day-rate').innerText = `${totalRate}%`;
@@ -944,7 +926,7 @@
 
           <div class="stats-grid">
             <div class="stat-card" style="border-right-color: ${themeColor};">
-              <div class="stat-label">إجمالي الفرص / المناديب</div>
+              <div class="stat-label">إجمالي طيارين المنطقة</div>
               <div class="stat-val" style="color: ${themeColor};">${zData.total}</div>
             </div>
             <div class="stat-card" style="border-right-color: var(--success);">
@@ -1138,16 +1120,9 @@
 
         let matchStatus = true;
         if (statusFilter !== 'all') {
-          if (selectedDay === 'all_days') {
-            const hasPub = isStatusPublished(r.today) || isStatusPublished(r.tomorrow) || isStatusPublished(r.tomorrowLater);
-            const hasNot = isStatusNotChosen(r.today) || isStatusNotChosen(r.tomorrow) || isStatusNotChosen(r.tomorrowLater);
-            if (statusFilter === 'PUBLISHED') matchStatus = hasPub;
-            else if (statusFilter === 'NOT CHOSEN') matchStatus = hasNot;
-          } else {
-            const dayVal = (r[selectedDay] || '').toUpperCase();
-            if (statusFilter === 'PUBLISHED') matchStatus = isStatusPublished(dayVal);
-            else if (statusFilter === 'NOT CHOSEN') matchStatus = isStatusNotChosen(dayVal);
-          }
+          const dayVal = (r[selectedDay] || '').toUpperCase();
+          if (statusFilter === 'PUBLISHED') matchStatus = isStatusPublished(dayVal);
+          else if (statusFilter === 'NOT CHOSEN') matchStatus = isStatusNotChosen(dayVal);
         }
 
         return matchQuery && matchSv && matchStatus;
