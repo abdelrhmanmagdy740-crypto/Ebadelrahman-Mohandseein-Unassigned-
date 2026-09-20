@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mohandiseen 3PLs-Dashboard | لوحة المتابعة</title>
+  <title>Mohandiseen 3PLs-Dashboard | متابعة الطيارين</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -46,7 +46,7 @@
     .brand-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2; }
     .brand-sub { font-size: 12px; color: var(--cyan); }
 
-    .container { max-width: 1200px; margin: 25px auto; padding: 0 15px; }
+    .container { max-width: 1350px; margin: 25px auto; padding: 0 15px; }
 
     /* بطاقات */
     .card {
@@ -82,13 +82,12 @@
     .btn-primary:hover { background: var(--accent-hover); }
     .btn-outline { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); }
     .btn-outline:hover { background: rgba(0,180,216,0.1); }
-    .btn-danger { background: rgba(239,68,68,0.2); color: var(--danger); border: 1px solid var(--danger); }
 
     .switch-link { text-align: center; margin-top: 15px; }
     .switch-link a { color: var(--cyan); text-decoration: none; font-size: 13px; cursor: pointer; }
 
     /* كروت الإحصائيات */
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
     .stat-card {
       background: var(--bg-inner); border: 1px solid var(--border);
       border-radius: 10px; padding: 18px; border-right: 4px solid var(--cyan);
@@ -96,38 +95,42 @@
     .stat-val { font-size: 26px; font-weight: 800; color: #fff; margin-top: 5px; }
     .stat-label { font-size: 13px; color: var(--text-muted); }
 
-    /* جدول الطيارين */
-    .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
-    .search-input { min-width: 250px; flex: 1; }
+    /* شريط الأدوات والفلترة */
+    .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .search-input { min-width: 260px; flex: 2; }
+    .filter-select { flex: 1; min-width: 150px; }
     
     .table-container { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
-    table { width: 100%; border-collapse: collapse; text-align: right; font-size: 14px; }
-    th { background: var(--bg-inner); padding: 14px; color: var(--text-muted); font-weight: 700; }
-    td { padding: 12px 14px; border-top: 1px solid var(--border); }
-    tbody tr:hover { background: rgba(255,255,255,0.02); }
+    table { width: 100%; border-collapse: collapse; text-align: right; font-size: 13px; white-space: nowrap; }
+    th { background: var(--bg-inner); padding: 14px 12px; color: var(--text-muted); font-weight: 700; }
+    td { padding: 12px; border-top: 1px solid var(--border); }
+    tbody tr:hover { background: rgba(255,255,255,0.03); }
 
-    .badge { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; display: inline-block; }
-    .badge-active { background: rgba(16,185,129,0.15); color: var(--success); }
-    .badge-inactive { background: rgba(239,68,68,0.15); color: var(--danger); }
-    .badge-busy { background: rgba(245,158,11,0.15); color: var(--warning); }
+    /* التسميات (Badges) */
+    .badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; display: inline-block; }
+    .badge-published { background: rgba(16,185,129,0.15); color: var(--success); border: 1px solid rgba(16,185,129,0.3); }
+    .badge-not-chosen { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+    .badge-default { background: rgba(148,163,184,0.15); color: var(--text-muted); border: 1px solid var(--border); }
 
+    .loading-state { text-align: center; padding: 40px; color: var(--cyan); font-size: 16px; font-weight: bold; }
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-  <!-- الهيدر -->
+  <!-- شريط العنوان العلوي -->
   <header class="navbar">
     <div class="brand-box">
       <div class="brand-logo">T</div>
       <div>
         <div class="brand-title">Mohandiseen 3PLs-Dashboard</div>
-        <div class="brand-sub">3PLs Assign Tracker | لوحة المهندسين</div>
+        <div class="brand-sub">متابعة إسناد الطيارين (Assign Tracker)</div>
       </div>
     </div>
     <div id="user-pill" class="hidden">
-      <span id="current-user-name" style="margin-left: 12px; font-size: 14px; font-weight: 600;"></span>
-      <button class="btn btn-outline" style="padding: 6px 12px;" onclick="logout()">خروج</button>
+      <button class="btn btn-outline" style="padding: 6px 14px; font-size: 12px;" onclick="fetchData()">🔄 تحديث البيانات</button>
+      <span id="current-user-name" style="margin: 0 10px; font-size: 14px; font-weight: 600;"></span>
+      <button class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;" onclick="logout()">خروج</button>
     </div>
   </header>
 
@@ -179,40 +182,43 @@
       </div>
     </div>
 
-    <!-- الشاشة الرئيسية: لوحة المتابعة -->
+    <!-- الشاشة الرئيسية: لوحة المتابعة المباشرة -->
     <div id="main-dashboard" class="hidden">
       
-      <!-- إحصائيات سريعة -->
+      <!-- إحصائيات سريعة من واقع الشيت -->
       <div class="stats-grid">
-        <div class="stat-card" style="border-right-color: #10b981;">
-          <div class="stat-label">إجمالي الطيارين</div>
+        <div class="stat-card" style="border-right-color: #00b4d8;">
+          <div class="stat-label">إجمالي الطيارين المسجلين</div>
           <div class="stat-val" id="total-riders">0</div>
         </div>
-        <div class="stat-card" style="border-right-color: #00b4d8;">
-          <div class="stat-label">الطيارين النشطين (شغالين)</div>
-          <div class="stat-val" id="active-riders">0</div>
-        </div>
-        <div class="stat-card" style="border-right-color: #f59e0b;">
-          <div class="stat-label">في أوردر / شيفت</div>
-          <div class="stat-val" id="busy-riders">0</div>
+        <div class="stat-card" style="border-right-color: #10b981;">
+          <div class="stat-label">Today: PUBLISHED (مقبول اليوم)</div>
+          <div class="stat-val" id="today-published">0</div>
         </div>
         <div class="stat-card" style="border-right-color: #ef4444;">
-          <div class="stat-label">غير نشط</div>
-          <div class="stat-val" id="inactive-riders">0</div>
+          <div class="stat-label">Today: NOT CHOSEN (غير مختار)</div>
+          <div class="stat-val" id="today-not-chosen">0</div>
+        </div>
+        <div class="stat-card" style="border-right-color: #f59e0b;">
+          <div class="stat-label">Tomorrow: PUBLISHED (مقبول غداً)</div>
+          <div class="stat-val" id="tomorrow-published">0</div>
         </div>
       </div>
 
       <!-- أدوات الفلترة والبحث -->
       <div class="card">
         <div class="table-header-tools">
-          <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث باسم الطيار أو الـ ID أو الهاتف..." onkeyup="renderTable()">
-          <select id="status-filter" style="width: auto; min-width: 160px;" onchange="renderTable()">
-            <option value="all">كل الحالات</option>
-            <option value="نشط">نشط فقط</option>
-            <option value="في شيفت">في شيفت فقط</option>
-            <option value="غير متاح">غير متاح</option>
+          <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث بالاسم، الـ ID، أو الهاتف..." onkeyup="renderTable()">
+          
+          <select id="supervisor-filter" class="filter-select" onchange="renderTable()">
+            <option value="all">كل المشرفين (S.V)</option>
           </select>
-          <button class="btn btn-outline" onclick="openAddModal()">➕ إضافة طيار جديد</button>
+
+          <select id="today-filter" class="filter-select" onchange="renderTable()">
+            <option value="all">كل حالات اليوم</option>
+            <option value="PUBLISHED">PUBLISHED</option>
+            <option value="NOT CHOSEN">NOT CHOSEN</option>
+          </select>
         </div>
 
         <div class="table-container">
@@ -221,17 +227,20 @@
               <tr>
                 <th>ID</th>
                 <th>الاسم</th>
-                <th>المكتب / المنطقة</th>
-                <th>آخر شيفت</th>
+                <th>المنطقة</th>
                 <th>الهاتف</th>
-                <th>الحالة</th>
-                <th>إجراءات</th>
+                <th>اليوم (Today)</th>
+                <th>الغد (Tomorrow)</th>
+                <th>الغد لاحقاً</th>
+                <th>Feedback</th>
+                <th>المشرف (S.V)</th>
               </tr>
             </thead>
             <tbody id="riders-tbody">
-              <!-- يتم تعبئة البيانات عبر الجافاسكربت -->
+              <!-- تحميل البيانات هنا -->
             </tbody>
           </table>
+          <div id="loading-spinner" class="loading-state">⏳ جاري جلب البيانات من Google Sheets...</div>
         </div>
       </div>
 
@@ -240,19 +249,10 @@
   </div>
 
   <script>
-    // البيانات الافتراضية
-    const defaultRiders = [
-      { id: "101", name: "محمد طارق", office: "مكتب عباد الرحمن", lastShift: "اليوم 02:00 م", phone: "01012345678", status: "نشط" },
-      { id: "102", name: "أحمد سيد", office: "مكتب المهندسين", lastShift: "أمس 11:00 م", phone: "01123456789", status: "في شيفت" },
-      { id: "103", name: "محمود حسن", office: "مكتب شبرا", lastShift: "منذ 3 أيام", phone: "01234567890", status: "غير متاح" },
-      { id: "104", name: "كريم مجدي", office: "مكتب عباد الرحمن", lastShift: "اليوم 01:30 م", phone: "01555543210", status: "نشط" }
-    ];
+    // الرابط المباشر لـ Google Sheet Web App
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp0wtmh4YXFihShMs10ducOyrF1ZH9VmZ6NDSNdFHZUlnCCa8ZbHo_I-NShvg7ZXaS/exec";
 
-    let riders = JSON.parse(localStorage.getItem('riders_data')) || defaultRiders;
-
-    function saveRiders() {
-      localStorage.setItem('riders_data', JSON.stringify(riders));
-    }
+    let ridersData = [];
 
     function showAdminLogin() {
       document.getElementById('office-login-box').classList.add('hidden');
@@ -270,16 +270,16 @@
       if (pass === "1234") {
         enterDashboard(office);
       } else {
-        alert("باسورد المكتب غير صحيح (جرب: 1234)");
+        alert("كلمة المرور غير صحيحة (التجريبية: 1234)");
       }
     }
 
     function loginAdmin() {
       const pass = document.getElementById('admin-pass').value;
       if (pass === "admin123") {
-        enterDashboard("المسؤول (Admin)");
+        enterDashboard("المسؤول العام");
       } else {
-        alert("باسورد المسؤول غير صحيح (جرب: admin123)");
+        alert("كلمة مرور المسؤول غير صحيحة (التجريبية: admin123)");
       }
     }
 
@@ -289,7 +289,7 @@
       document.getElementById('main-dashboard').classList.remove('hidden');
       document.getElementById('user-pill').classList.remove('hidden');
       document.getElementById('current-user-name').innerText = "👤 " + title;
-      renderTable();
+      fetchData();
     }
 
     function logout() {
@@ -298,73 +298,94 @@
       showOfficeLogin();
     }
 
-    function updateStats() {
-      document.getElementById('total-riders').innerText = riders.length;
-      document.getElementById('active-riders').innerText = riders.filter(r => r.status === 'نشط').length;
-      document.getElementById('busy-riders').innerText = riders.filter(r => r.status === 'في شيفت').length;
-      document.getElementById('inactive-riders').innerText = riders.filter(r => r.status === 'غير متاح').length;
+    async function fetchData() {
+      const spinner = document.getElementById('loading-spinner');
+      spinner.classList.remove('hidden');
+      spinner.innerText = "⏳ جاري جلب وتحديث البيانات من Google Sheets...";
+      
+      try {
+        const res = await fetch(SCRIPT_URL);
+        const data = await res.json();
+        ridersData = data || [];
+        populateSupervisors();
+        renderTable();
+      } catch (err) {
+        console.error(err);
+        spinner.innerText = "⚠️ تعذر جلب البيانات. تأكد من إعدادات النشر في Apps Script.";
+      } finally {
+        if (ridersData.length > 0) {
+          spinner.classList.add('hidden');
+        }
+      }
+    }
+
+    function populateSupervisors() {
+      const svSet = new Set();
+      ridersData.forEach(r => {
+        if (r.supervisor && r.supervisor.trim() !== '') {
+          svSet.add(r.supervisor.trim());
+        }
+      });
+
+      const svSelect = document.getElementById('supervisor-filter');
+      svSelect.innerHTML = '<option value="all">كل المشرفين (S.V)</option>';
+      svSet.forEach(sv => {
+        const opt = document.createElement('option');
+        opt.value = sv;
+        opt.innerText = sv;
+        svSelect.appendChild(opt);
+      });
+    }
+
+    function updateStats(filteredData) {
+      document.getElementById('total-riders').innerText = filteredData.length;
+      document.getElementById('today-published').innerText = filteredData.filter(r => (r.today || '').toUpperCase().includes('PUBLISHED')).length;
+      document.getElementById('today-not-chosen').innerText = filteredData.filter(r => (r.today || '').toUpperCase().includes('NOT CHOSEN')).length;
+      document.getElementById('tomorrow-published').innerText = filteredData.filter(r => (r.tomorrow || '').toUpperCase().includes('PUBLISHED')).length;
+    }
+
+    function getBadgeClass(val) {
+      val = (val || '').toUpperCase();
+      if (val.includes('PUBLISHED')) return 'badge-published';
+      if (val.includes('NOT CHOSEN')) return 'badge-not-chosen';
+      return 'badge-default';
     }
 
     function renderTable() {
       const q = document.getElementById('search-box').value.trim().toLowerCase();
-      const filter = document.getElementById('status-filter').value;
+      const svFilter = document.getElementById('supervisor-filter').value;
+      const todayFilter = document.getElementById('today-filter').value;
       const tbody = document.getElementById('riders-tbody');
       tbody.innerHTML = '';
 
-      const filtered = riders.filter(r => {
-        const matchQuery = r.name.toLowerCase().includes(q) || r.id.includes(q) || r.phone.includes(q);
-        const matchStatus = (filter === 'all') || (r.status === filter);
-        return matchQuery && matchStatus;
+      const filtered = ridersData.filter(r => {
+        const matchQuery = (r.name && r.name.toLowerCase().includes(q)) ||
+                           (r.id && r.id.toLowerCase().includes(q)) ||
+                           (r.phone && r.phone.toLowerCase().includes(q));
+        
+        const matchSv = (svFilter === 'all') || (r.supervisor && r.supervisor.trim() === svFilter);
+        const matchToday = (todayFilter === 'all') || (r.today && r.today.toUpperCase().includes(todayFilter));
+
+        return matchQuery && matchSv && matchToday;
       });
 
-      filtered.forEach((r, idx) => {
-        let badgeClass = 'badge-active';
-        if (r.status === 'غير متاح') badgeClass = 'badge-inactive';
-        if (r.status === 'في شيفت') badgeClass = 'badge-busy';
-
+      filtered.forEach(r => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td style="font-weight: bold; color: var(--cyan);">#${r.id}</td>
+          <td style="font-weight: bold; color: var(--cyan);">${r.id}</td>
           <td><strong>${r.name}</strong></td>
-          <td>${r.office}</td>
-          <td>${r.lastShift}</td>
+          <td>${r.area}</td>
           <td><a href="tel:${r.phone}" style="color:var(--text); text-decoration:none;">📞 ${r.phone}</a></td>
-          <td><span class="badge ${badgeClass}">${r.status}</span></td>
-          <td>
-            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 12px;" onclick="toggleStatus(${idx})">تغيير الحالة</button>
-          </td>
+          <td><span class="badge ${getBadgeClass(r.today)}">${r.today || '-'}</span></td>
+          <td><span class="badge ${getBadgeClass(r.tomorrow)}">${r.tomorrow || '-'}</span></td>
+          <td><span class="badge ${getBadgeClass(r.tomorrowLater)}">${r.tomorrowLater || '-'}</span></td>
+          <td><span style="color: var(--warning); font-size: 12px;">${r.feedback || '-'}</span></td>
+          <td><strong>${r.supervisor || '-'}</strong></td>
         `;
         tbody.appendChild(tr);
       });
 
-      updateStats();
-    }
-
-    function toggleStatus(idx) {
-      const statuses = ['نشط', 'في شيفت', 'غير متاح'];
-      const current = statuses.indexOf(riders[idx].status);
-      riders[idx].status = statuses[(current + 1) % statuses.length];
-      saveRiders();
-      renderTable();
-    }
-
-    function openAddModal() {
-      const name = prompt("اسم الطيار:");
-      if (!name) return;
-      const phone = prompt("رقم الهاتف:");
-      const office = prompt("المنطقة / المكتب:", "مكتب عباد الرحمن");
-      const id = Math.floor(100 + Math.random() * 900).toString();
-
-      riders.push({
-        id: id,
-        name: name,
-        office: office || "المهندسين",
-        lastShift: "الآن",
-        phone: phone || "-",
-        status: "نشط"
-      });
-      saveRiders();
-      renderTable();
+      updateStats(filtered);
     }
   </script>
 </body>
