@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mohandiseen 3PLs-Dashboard | متابعة الطيارين</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-main: #0b132b;
@@ -59,10 +59,21 @@
     }
 
     /* تسجيل الدخول */
-    .auth-wrapper { max-width: 420px; margin: 60px auto; }
+    .auth-wrapper { max-width: 440px; margin: 60px auto; }
     .auth-icon { font-size: 45px; text-align: center; margin-bottom: 10px; }
     .auth-title { text-align: center; margin: 0 0 5px 0; font-size: 24px; color: #fff; }
-    .auth-sub { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 25px; }
+    
+    /* التوقيع بخط أنيق ومميز */
+    .signature-text {
+      text-align: center;
+      color: var(--cyan);
+      font-family: 'Caveat', cursive, sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.5px;
+      margin-bottom: 25px;
+      direction: ltr;
+      display: block;
+    }
 
     .form-group { margin-bottom: 18px; }
     label { display: block; margin-bottom: 7px; font-size: 14px; font-weight: 600; color: var(--text-muted); }
@@ -191,19 +202,16 @@
 
   <div class="container">
 
-    <!-- تسجيل الدخول للمكاتب -->
+    <!-- شاشة تسجيل الدخول: المكاتب -->
     <div id="office-login-box" class="card auth-wrapper">
       <div class="auth-icon">🏢</div>
       <h2 class="auth-title">تسجيل الدخول للمكاتب</h2>
-      <p class="auth-sub">اختر مكتبك ثم أدخل الباسورد المخصص</p>
+      <span class="signature-text">With regards : Engineer Abd el-rahman Magdy</span>
       
       <div class="form-group">
         <label>① اختار المكتب</label>
         <select id="office-name">
-          <option value="مكتب عباد الرحمن">مكتب عباد الرحمن</option>
-          <option value="مكتب المهندسين">مكتب المهندسين</option>
-          <option value="مكتب شبرا">مكتب شبرا</option>
-          <option value="مكتب حدائق القبة">مكتب حدائق القبة</option>
+          <option value="Mohandseein Manual Unassigned">Mohandseein Manual Unassigned</option>
         </select>
       </div>
 
@@ -219,11 +227,11 @@
       </div>
     </div>
 
-    <!-- تسجيل الدخول للمسؤول -->
+    <!-- شاشة تسجيل الدخول: المسؤول -->
     <div id="admin-login-box" class="card auth-wrapper hidden">
       <div class="auth-icon">🔐</div>
       <h2 class="auth-title">لوحة المسؤول</h2>
-      <p class="auth-sub">للوصول لإعدادات ومؤشرات النظام العامة</p>
+      <p class="auth-sub" style="text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 25px;">للوصول لإعدادات ومؤشرات النظام العامة</p>
 
       <div class="form-group">
         <label>باسورد المسؤول</label>
@@ -334,7 +342,6 @@
     let ridersData = [];
     let currentRole = "";
 
-    // لوحة ألوان مميزة لكل منطقة
     const ZONE_COLOR_PALETTE = [
       "#00b4d8", // سماوي نيون
       "#ff6b35", // برتقالي حيوي
@@ -347,9 +354,9 @@
 
     function getZoneColor(zoneName, index) {
       const z = zoneName.toLowerCase();
-      if (z.includes('mohandiseen') || z.includes('مهندس')) return "#00b4d8"; // سماوي
-      if (z.includes('hadayek') || z.includes('حدائق')) return "#ff6b35";    // برتقالي
-      if (z.includes('shobra') || z.includes('شبرا')) return "#a855f7";      // بنفسجي
+      if (z.includes('mohandiseen') || z.includes('مهندس')) return "#00b4d8";
+      if (z.includes('hadayek') || z.includes('حدائق')) return "#ff6b35";
+      if (z.includes('shobra') || z.includes('شبرا')) return "#a855f7";
       return ZONE_COLOR_PALETTE[index % ZONE_COLOR_PALETTE.length];
     }
 
@@ -464,7 +471,6 @@
       return 'badge-default';
     }
 
-    /* دالة رسم كروت المناطق مع إطار ملون خاص لكل منطقة */
     function renderSupervisorReport() {
       const container = document.getElementById('zones-container');
       if (!container) return;
@@ -528,7 +534,6 @@
 
         const card = document.createElement('div');
         card.className = 'zone-column-card';
-        // إضافة إطار ملون خاص بكل منطقة مع ظل خفيف متناسق
         card.style.border = `2px solid ${zoneThemeColor}`;
         card.style.boxShadow = `0 4px 18px ${zoneThemeColor}25`;
 
