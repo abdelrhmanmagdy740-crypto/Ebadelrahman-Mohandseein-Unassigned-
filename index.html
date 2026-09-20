@@ -95,7 +95,7 @@
     .stat-val { font-size: 26px; font-weight: 800; color: #fff; margin-top: 5px; }
     .stat-label { font-size: 13px; color: var(--text-muted); }
 
-    /* تقسيم كروت المناطق حسب التصميم المطلوب */
+    /* تقسيم كروت المناطق وإطاراتها الملونة */
     .zones-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -104,11 +104,15 @@
     }
     .zone-column-card {
       background: var(--bg-inner);
-      border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      border: 2px solid var(--border);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .zone-column-card:hover {
+      transform: translateY(-3px);
     }
     .zone-card-header {
       background: #16203d;
@@ -116,7 +120,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .zone-card-header .title-box {
       display: flex;
@@ -133,8 +137,6 @@
       font-size: 13px;
     }
     .zone-total-rate {
-      background: rgba(239, 68, 68, 0.15);
-      color: var(--danger);
       padding: 2px 8px;
       border-radius: 4px;
       font-weight: 800;
@@ -258,7 +260,7 @@
         </div>
       </div>
 
-      <!-- تقرير المشرفين والمناطق (ستايل الكروت المجمعة للآدمن فقط) -->
+      <!-- تقرير المشرفين والمناطق (كروت ملونة للآدمن فقط) -->
       <div id="admin-report-card" class="card hidden">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
           <div>
@@ -279,7 +281,7 @@
 
         <!-- شبكة كروت المناطق -->
         <div id="zones-container" class="zones-grid">
-          <!-- يتم إنشاؤها ديناميكياً -->
+          <!-- يتم ملؤها ديناميكياً -->
         </div>
       </div>
 
@@ -331,6 +333,25 @@
 
     let ridersData = [];
     let currentRole = "";
+
+    // لوحة ألوان مميزة لكل منطقة
+    const ZONE_COLOR_PALETTE = [
+      "#00b4d8", // سماوي نيون
+      "#ff6b35", // برتقالي حيوي
+      "#a855f7", // أرجواني
+      "#10b981", // أخضر زمردي
+      "#f59e0b", // أصفر كهرماني
+      "#ec4899", // وردي نيون
+      "#06b6d4"  // تركواز
+    ];
+
+    function getZoneColor(zoneName, index) {
+      const z = zoneName.toLowerCase();
+      if (z.includes('mohandiseen') || z.includes('مهندس')) return "#00b4d8"; // سماوي
+      if (z.includes('hadayek') || z.includes('حدائق')) return "#ff6b35";    // برتقالي
+      if (z.includes('shobra') || z.includes('شبرا')) return "#a855f7";      // بنفسجي
+      return ZONE_COLOR_PALETTE[index % ZONE_COLOR_PALETTE.length];
+    }
 
     function showAdminLogin() {
       document.getElementById('office-login-box').classList.add('hidden');
@@ -443,7 +464,7 @@
       return 'badge-default';
     }
 
-    /* دالة رسم كروت المناطق بنفس ستايل الصورة المعروضة */
+    /* دالة رسم كروت المناطق مع إطار ملون خاص لكل منطقة */
     function renderSupervisorReport() {
       const container = document.getElementById('zones-container');
       if (!container) return;
@@ -451,7 +472,6 @@
 
       const dayField = document.getElementById('report-day-select').value;
       
-      // تجميع البيانات حسب: المنطقة -> المشرف (Feedback)
       const zonesMap = {};
 
       ridersData.forEach(r => {
@@ -494,9 +514,10 @@
         return;
       }
 
-      // بناء كارت منفصل لكل منطقة
-      zoneNames.forEach(zoneName => {
+      zoneNames.forEach((zoneName, index) => {
         const zoneData = zonesMap[zoneName];
+        const zoneThemeColor = getZoneColor(zoneName, index);
+
         const overallZoneRate = zoneData.totalRidersInZone > 0
           ? Math.round((zoneData.totalPublishedInZone / zoneData.totalRidersInZone) * 100)
           : 0;
@@ -507,10 +528,12 @@
 
         const card = document.createElement('div');
         card.className = 'zone-column-card';
+        // إضافة إطار ملون خاص بكل منطقة مع ظل خفيف متناسق
+        card.style.border = `2px solid ${zoneThemeColor}`;
+        card.style.boxShadow = `0 4px 18px ${zoneThemeColor}25`;
 
         let rowsHtml = '';
         const svList = Object.values(zoneData.supervisors);
-        // ترتيب المشرفين تنازلياً حسب الإنجاز
         svList.sort((a, b) => (b.published / (b.total || 1)) - (a.published / (a.total || 1)));
 
         svList.forEach(sv => {
@@ -523,7 +546,7 @@
             <tr>
               <td style="text-align: center; font-weight: bold; color: ${rateColor};">${rate}%</td>
               <td style="text-align: center; color: var(--text-muted);">${sv.total}</td>
-              <td style="text-align: center; font-weight: bold; color: var(--cyan);">${sv.published}</td>
+              <td style="text-align: center; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
               <td style="text-align: right; font-weight: 600; color: #fff;">${sv.name}</td>
             </tr>
           `;
@@ -534,14 +557,14 @@
         }
 
         card.innerHTML = `
-          <div class="zone-card-header">
+          <div class="zone-card-header" style="border-bottom: 2px solid ${zoneThemeColor}50;">
             <div class="title-box">
-              <span>▼</span>
-              <span>${zoneName}</span>
+              <span style="color: ${zoneThemeColor}; font-size: 11px;">▼</span>
+              <span style="color: ${zoneThemeColor}; font-weight: 800;">${zoneName}</span>
             </div>
             <div class="stats-badge">
               <span class="zone-total-counts">${zoneData.totalPublishedInZone} / ${zoneData.totalRidersInZone}</span>
-              <span class="zone-total-rate" style="color: ${overallColor}; border: 1px solid ${overallColor};">${overallZoneRate}%</span>
+              <span class="zone-total-rate" style="color: ${overallColor}; border: 1px solid ${overallColor}; background: rgba(255,255,255,0.03);">${overallZoneRate}%</span>
             </div>
           </div>
           <div class="zone-table-container">
@@ -550,7 +573,7 @@
                 <tr style="text-align: center;">
                   <th style="text-align: center; width: 60px;">%</th>
                   <th style="text-align: center; width: 70px;">Target</th>
-                  <th style="text-align: center; width: 70px;">مجدول</th>
+                  <th style="text-align: center; width: 70px; color: ${zoneThemeColor};">مجدول</th>
                   <th style="text-align: right;">المكتب / المشرف</th>
                 </tr>
               </thead>
