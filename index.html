@@ -3,88 +3,368 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة متابعة 3PLs</title>
+  <title>Mohandiseen 3PLs-Dashboard | لوحة المتابعة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
-    .card { background: #1e293b; border-radius: 10px; padding: 20px; max-width: 900px; margin: 20px auto; border: 1px solid #334155; }
-    h2 { margin-top: 0; color: #38bdf8; }
-    .input-group { margin-bottom: 15px; }
-    input, select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; box-sizing: border-box; }
-    button { background: #0284c7; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
-    button:hover { background: #0369a1; }
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-    th, td { border: 1px solid #334155; padding: 10px; text-align: center; }
-    th { background: #334155; }
-    .hidden { display: none; }
-    .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; }
-    .active { background: #166534; color: #86efac; }
+    :root {
+      --bg-main: #0b132b;
+      --bg-card: #1c2541;
+      --bg-inner: #111a36;
+      --accent: #ff6b35;
+      --accent-hover: #e85924;
+      --cyan: #00b4d8;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #2e3856;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+
+    * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: all 0.2s ease; }
+    body { background: var(--bg-main); color: var(--text); margin: 0; padding: 0; min-height: 100vh; }
+
+    /* الهيدر العلوي */
+    .navbar {
+      background: var(--bg-card);
+      border-bottom: 2px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand-box { display: flex; align-items: center; gap: 12px; }
+    .brand-logo {
+      background: linear-gradient(135deg, var(--accent), #f72585);
+      width: 42px; height: 42px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 22px; color: #fff;
+    }
+    .brand-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .brand-sub { font-size: 12px; color: var(--cyan); }
+
+    .container { max-width: 1200px; margin: 25px auto; padding: 0 15px; }
+
+    /* بطاقات */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+
+    /* تسجيل الدخول */
+    .auth-wrapper { max-width: 420px; margin: 60px auto; }
+    .auth-icon { font-size: 45px; text-align: center; margin-bottom: 10px; }
+    .auth-title { text-align: center; margin: 0 0 5px 0; font-size: 24px; color: #fff; }
+    .auth-sub { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 25px; }
+
+    .form-group { margin-bottom: 18px; }
+    label { display: block; margin-bottom: 7px; font-size: 14px; font-weight: 600; color: var(--text-muted); }
+    input, select {
+      width: 100%; padding: 12px 14px; background: var(--bg-inner);
+      border: 1px solid var(--border); border-radius: 8px; color: #fff;
+      font-size: 14px; outline: none;
+    }
+    input:focus, select:focus { border-color: var(--cyan); }
+
+    .btn {
+      padding: 10px 18px; border-radius: 8px; border: none; font-weight: 700;
+      cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; font-size: 14px;
+    }
+    .btn-primary { background: var(--accent); color: white; width: 100%; padding: 12px; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-outline { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); }
+    .btn-outline:hover { background: rgba(0,180,216,0.1); }
+    .btn-danger { background: rgba(239,68,68,0.2); color: var(--danger); border: 1px solid var(--danger); }
+
+    .switch-link { text-align: center; margin-top: 15px; }
+    .switch-link a { color: var(--cyan); text-decoration: none; font-size: 13px; cursor: pointer; }
+
+    /* كروت الإحصائيات */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .stat-card {
+      background: var(--bg-inner); border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px; border-right: 4px solid var(--cyan);
+    }
+    .stat-val { font-size: 26px; font-weight: 800; color: #fff; margin-top: 5px; }
+    .stat-label { font-size: 13px; color: var(--text-muted); }
+
+    /* جدول الطيارين */
+    .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
+    .search-input { min-width: 250px; flex: 1; }
+    
+    .table-container { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; text-align: right; font-size: 14px; }
+    th { background: var(--bg-inner); padding: 14px; color: var(--text-muted); font-weight: 700; }
+    td { padding: 12px 14px; border-top: 1px solid var(--border); }
+    tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+    .badge { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; display: inline-block; }
+    .badge-active { background: rgba(16,185,129,0.15); color: var(--success); }
+    .badge-inactive { background: rgba(239,68,68,0.15); color: var(--danger); }
+    .badge-busy { background: rgba(245,158,11,0.15); color: var(--warning); }
+
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-  <!-- شاشة الدخول -->
-  <div id="login-view" class="card" style="max-width: 400px;">
-    <h2>🔐 تسجيل الدخول</h2>
-    <div class="input-group">
-      <label>اختر المكتب:</label>
-      <select id="branch-select">
-        <option value="mohandiseen">مكتب المهندسين</option>
-        <option value="admin">لوحة المسؤول</option>
-      </select>
+  <!-- الهيدر -->
+  <header class="navbar">
+    <div class="brand-box">
+      <div class="brand-logo">T</div>
+      <div>
+        <div class="brand-title">Mohandiseen 3PLs-Dashboard</div>
+        <div class="brand-sub">3PLs Assign Tracker | لوحة المهندسين</div>
+      </div>
     </div>
-    <div class="input-group">
-      <label>كلمة المرور:</label>
-      <input type="password" id="password" placeholder="أدخل الرمز...">
+    <div id="user-pill" class="hidden">
+      <span id="current-user-name" style="margin-left: 12px; font-size: 14px; font-weight: 600;"></span>
+      <button class="btn btn-outline" style="padding: 6px 12px;" onclick="logout()">خروج</button>
     </div>
-    <button onclick="handleLogin()">دخول</button>
-  </div>
+  </header>
 
-  <!-- شاشة الجدول -->
-  <div id="dashboard-view" class="card hidden">
-    <h2>👥 قائمة الطيارين — متابعة الشيفت</h2>
-    <input type="text" id="search" placeholder="بحث بالاسم أو الكود..." onkeyup="filterTable()">
-    <table id="riders-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>الاسم</th>
-          <th>المنطقة</th>
-          <th>الهاتف</th>
-          <th>الحالة</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>101</td>
-          <td>أحمد محمد</td>
-          <td>المهندسين</td>
-          <td>01012345678</td>
-          <td><span class="status-badge active">نشط</span></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="container">
+
+    <!-- شاشة تسجيل الدخول: المكاتب -->
+    <div id="office-login-box" class="card auth-wrapper">
+      <div class="auth-icon">🏢</div>
+      <h2 class="auth-title">تسجيل الدخول للمكاتب</h2>
+      <p class="auth-sub">اختر مكتبك ثم أدخل الباسورد المخصص</p>
+      
+      <div class="form-group">
+        <label>① اختار المكتب</label>
+        <select id="office-name">
+          <option value="مكتب عباد الرحمن">مكتب عباد الرحمن</option>
+          <option value="مكتب المهندسين">مكتب المهندسين</option>
+          <option value="مكتب شبرا">مكتب شبرا</option>
+          <option value="مكتب حدائق القبة">مكتب حدائق القبة</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>② أدخل الباسورد</label>
+        <input type="password" id="office-pass" placeholder="كلمة المرور...">
+      </div>
+
+      <button class="btn btn-primary" onclick="loginOffice()">تسجيل الدخول</button>
+      
+      <div class="switch-link">
+        <a onclick="showAdminLogin()">⚙ دخول المسؤول (Admin)</a>
+      </div>
+    </div>
+
+    <!-- شاشة تسجيل الدخول: المسؤول -->
+    <div id="admin-login-box" class="card auth-wrapper hidden">
+      <div class="auth-icon">🔐</div>
+      <h2 class="auth-title">لوحة المسؤول</h2>
+      <p class="auth-sub">للوصول لإعدادات ومؤشرات النظام العامة</p>
+
+      <div class="form-group">
+        <label>باسورد المسؤول</label>
+        <input type="password" id="admin-pass" placeholder="أدخل باسورد الإدارة...">
+      </div>
+
+      <button class="btn btn-primary" onclick="loginAdmin()">دخول المسؤول</button>
+
+      <div class="switch-link">
+        <a onclick="showOfficeLogin()">← رجوع لتسجيل دخول المكاتب</a>
+      </div>
+    </div>
+
+    <!-- الشاشة الرئيسية: لوحة المتابعة -->
+    <div id="main-dashboard" class="hidden">
+      
+      <!-- إحصائيات سريعة -->
+      <div class="stats-grid">
+        <div class="stat-card" style="border-right-color: #10b981;">
+          <div class="stat-label">إجمالي الطيارين</div>
+          <div class="stat-val" id="total-riders">0</div>
+        </div>
+        <div class="stat-card" style="border-right-color: #00b4d8;">
+          <div class="stat-label">الطيارين النشطين (شغالين)</div>
+          <div class="stat-val" id="active-riders">0</div>
+        </div>
+        <div class="stat-card" style="border-right-color: #f59e0b;">
+          <div class="stat-label">في أوردر / شيفت</div>
+          <div class="stat-val" id="busy-riders">0</div>
+        </div>
+        <div class="stat-card" style="border-right-color: #ef4444;">
+          <div class="stat-label">غير نشط</div>
+          <div class="stat-val" id="inactive-riders">0</div>
+        </div>
+      </div>
+
+      <!-- أدوات الفلترة والبحث -->
+      <div class="card">
+        <div class="table-header-tools">
+          <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث باسم الطيار أو الـ ID أو الهاتف..." onkeyup="renderTable()">
+          <select id="status-filter" style="width: auto; min-width: 160px;" onchange="renderTable()">
+            <option value="all">كل الحالات</option>
+            <option value="نشط">نشط فقط</option>
+            <option value="في شيفت">في شيفت فقط</option>
+            <option value="غير متاح">غير متاح</option>
+          </select>
+          <button class="btn btn-outline" onclick="openAddModal()">➕ إضافة طيار جديد</button>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>الاسم</th>
+                <th>المكتب / المنطقة</th>
+                <th>آخر شيفت</th>
+                <th>الهاتف</th>
+                <th>الحالة</th>
+                <th>إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="riders-tbody">
+              <!-- يتم تعبئة البيانات عبر الجافاسكربت -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
   <script>
-    function handleLogin() {
-      const branch = document.getElementById('branch-select').value;
-      const pass = document.getElementById('password').value;
-      
-      // تحقق مبسط للتجربة
-      if (pass === '1234') {
-        document.getElementById('login-view').classList.add('hidden');
-        document.getElementById('dashboard-view').classList.remove('hidden');
+    // البيانات الافتراضية
+    const defaultRiders = [
+      { id: "101", name: "محمد طارق", office: "مكتب عباد الرحمن", lastShift: "اليوم 02:00 م", phone: "01012345678", status: "نشط" },
+      { id: "102", name: "أحمد سيد", office: "مكتب المهندسين", lastShift: "أمس 11:00 م", phone: "01123456789", status: "في شيفت" },
+      { id: "103", name: "محمود حسن", office: "مكتب شبرا", lastShift: "منذ 3 أيام", phone: "01234567890", status: "غير متاح" },
+      { id: "104", name: "كريم مجدي", office: "مكتب عباد الرحمن", lastShift: "اليوم 01:30 م", phone: "01555543210", status: "نشط" }
+    ];
+
+    let riders = JSON.parse(localStorage.getItem('riders_data')) || defaultRiders;
+
+    function saveRiders() {
+      localStorage.setItem('riders_data', JSON.stringify(riders));
+    }
+
+    function showAdminLogin() {
+      document.getElementById('office-login-box').classList.add('hidden');
+      document.getElementById('admin-login-box').classList.remove('hidden');
+    }
+
+    function showOfficeLogin() {
+      document.getElementById('admin-login-box').classList.add('hidden');
+      document.getElementById('office-login-box').classList.remove('hidden');
+    }
+
+    function loginOffice() {
+      const office = document.getElementById('office-name').value;
+      const pass = document.getElementById('office-pass').value;
+      if (pass === "1234") {
+        enterDashboard(office);
       } else {
-        alert('كلمة المرور غير صحيحة');
+        alert("باسورد المكتب غير صحيح (جرب: 1234)");
       }
     }
 
-    function filterTable() {
-      const q = document.getElementById('search').value.toLowerCase();
-      const rows = document.querySelectorAll('#riders-table tbody tr');
-      rows.forEach(r => {
-        r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+    function loginAdmin() {
+      const pass = document.getElementById('admin-pass').value;
+      if (pass === "admin123") {
+        enterDashboard("المسؤول (Admin)");
+      } else {
+        alert("باسورد المسؤول غير صحيح (جرب: admin123)");
+      }
+    }
+
+    function enterDashboard(title) {
+      document.getElementById('office-login-box').classList.add('hidden');
+      document.getElementById('admin-login-box').classList.add('hidden');
+      document.getElementById('main-dashboard').classList.remove('hidden');
+      document.getElementById('user-pill').classList.remove('hidden');
+      document.getElementById('current-user-name').innerText = "👤 " + title;
+      renderTable();
+    }
+
+    function logout() {
+      document.getElementById('main-dashboard').classList.add('hidden');
+      document.getElementById('user-pill').classList.add('hidden');
+      showOfficeLogin();
+    }
+
+    function updateStats() {
+      document.getElementById('total-riders').innerText = riders.length;
+      document.getElementById('active-riders').innerText = riders.filter(r => r.status === 'نشط').length;
+      document.getElementById('busy-riders').innerText = riders.filter(r => r.status === 'في شيفت').length;
+      document.getElementById('inactive-riders').innerText = riders.filter(r => r.status === 'غير متاح').length;
+    }
+
+    function renderTable() {
+      const q = document.getElementById('search-box').value.trim().toLowerCase();
+      const filter = document.getElementById('status-filter').value;
+      const tbody = document.getElementById('riders-tbody');
+      tbody.innerHTML = '';
+
+      const filtered = riders.filter(r => {
+        const matchQuery = r.name.toLowerCase().includes(q) || r.id.includes(q) || r.phone.includes(q);
+        const matchStatus = (filter === 'all') || (r.status === filter);
+        return matchQuery && matchStatus;
       });
+
+      filtered.forEach((r, idx) => {
+        let badgeClass = 'badge-active';
+        if (r.status === 'غير متاح') badgeClass = 'badge-inactive';
+        if (r.status === 'في شيفت') badgeClass = 'badge-busy';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-weight: bold; color: var(--cyan);">#${r.id}</td>
+          <td><strong>${r.name}</strong></td>
+          <td>${r.office}</td>
+          <td>${r.lastShift}</td>
+          <td><a href="tel:${r.phone}" style="color:var(--text); text-decoration:none;">📞 ${r.phone}</a></td>
+          <td><span class="badge ${badgeClass}">${r.status}</span></td>
+          <td>
+            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 12px;" onclick="toggleStatus(${idx})">تغيير الحالة</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      updateStats();
+    }
+
+    function toggleStatus(idx) {
+      const statuses = ['نشط', 'في شيفت', 'غير متاح'];
+      const current = statuses.indexOf(riders[idx].status);
+      riders[idx].status = statuses[(current + 1) % statuses.length];
+      saveRiders();
+      renderTable();
+    }
+
+    function openAddModal() {
+      const name = prompt("اسم الطيار:");
+      if (!name) return;
+      const phone = prompt("رقم الهاتف:");
+      const office = prompt("المنطقة / المكتب:", "مكتب عباد الرحمن");
+      const id = Math.floor(100 + Math.random() * 900).toString();
+
+      riders.push({
+        id: id,
+        name: name,
+        office: office || "المهندسين",
+        lastShift: "الآن",
+        phone: phone || "-",
+        status: "نشط"
+      });
+      saveRiders();
+      renderTable();
     }
   </script>
 </body>
