@@ -327,7 +327,6 @@
       font-size: 13px; 
     }
     
-    /* الجداول العامة وتوسيط النصوص والحدود العريضة */
     .table-container { 
       width: 100%;
       overflow-x: auto; 
@@ -380,33 +379,36 @@
     .badge-not-chosen { background: rgba(248, 113, 113, 0.14); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.35); }
     .badge-default { background: rgba(148, 163, 184, 0.1); color: var(--text-muted); border: 1px solid var(--border); }
 
-    /* شارات وتنسيقات الـ Feedback المخصصة */
+    /* شارات الـ Feedback بالألوان المحددة وخط أبيض ناصع */
     .badge-fb-remove {
-      background: #dc2626 !important;
+      background-color: #dc2626 !important;
       color: #ffffff !important;
       padding: 4px 10px;
       border-radius: 6px;
       font-weight: 800;
       display: inline-block;
-      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
+      border: 1px solid #b91c1c;
+      box-shadow: 0 2px 5px rgba(220, 38, 38, 0.25);
     }
     .badge-fb-day {
-      background: #16a34a !important;
+      background-color: #16a34a !important;
       color: #ffffff !important;
       padding: 4px 10px;
       border-radius: 6px;
       font-weight: 800;
       display: inline-block;
-      box-shadow: 0 2px 6px rgba(22, 163, 74, 0.3);
+      border: 1px solid #15803d;
+      box-shadow: 0 2px 5px rgba(22, 163, 74, 0.25);
     }
     .badge-fb-holiday {
-      background: #1e3a8a !important;
+      background-color: #1e3a8a !important; /* أزرق داكن كحلي واضح */
       color: #ffffff !important;
       padding: 4px 10px;
       border-radius: 6px;
       font-weight: 800;
       display: inline-block;
-      box-shadow: 0 2px 6px rgba(30, 58, 138, 0.3);
+      border: 1px solid #172554;
+      box-shadow: 0 2px 5px rgba(30, 58, 138, 0.35);
     }
 
     #copy-toast {
@@ -982,22 +984,29 @@
       return 'badge-default';
     }
 
-    /* دالة تنسيق خلية الـ Feedback حسب الكلمة المطلوبة */
+    /* دالة تنسيق خلية الـ Feedback مع التدقيق لمنع التداخل */
     function renderFeedbackCell(fb) {
       const cleanFb = (fb || '').trim();
       if (!cleanFb || cleanFb === '-') return '-';
 
       const lowerFb = cleanFb.toLowerCase();
-      if (lowerFb.includes('remove') || lowerFb.includes('s.p')) {
-        return `<span class="badge-fb-remove">${cleanFb}</span>`;
-      }
-      if (lowerFb.includes('day') || lowerFb.includes('day by day')) {
-        return `<span class="badge-fb-day">${cleanFb}</span>`;
-      }
+
+      // 1. فحص الإجازة Holiday أولاً لمنع الخلط
       if (lowerFb.includes('holiday')) {
         return `<span class="badge-fb-holiday">${cleanFb}</span>`;
       }
 
+      // 2. فحص الحذف Remove S.P
+      if (lowerFb.includes('remove') || lowerFb.includes('s.p')) {
+        return `<span class="badge-fb-remove">${cleanFb}</span>`;
+      }
+
+      // 3. فحص اليومية Day by day
+      if (lowerFb.includes('day by day') || lowerFb === 'day') {
+        return `<span class="badge-fb-day">${cleanFb}</span>`;
+      }
+
+      // 4. أسماء المشرفين العادية
       return `<span style="color: var(--warning); font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
     }
 
