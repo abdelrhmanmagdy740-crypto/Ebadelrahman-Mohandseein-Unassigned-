@@ -27,10 +27,10 @@
       --badge-bg: rgba(255, 255, 255, 0.03);
     }
 
-    /* الوضع النهاري: خلفية رمادية فاتحة ومريحة للعين */
+    /* الوضع النهاري: رمادي فاتح مريح */
     body.light-mode {
-      --bg-main: #e5e7eb; /* رمادي فاتح مريح بدلاً من الأبيض */
-      --bg-card: #f3f4f6; /* كروت بدرجة رمادي ناعمة */
+      --bg-main: #e5e7eb;
+      --bg-card: #f3f4f6;
       --bg-inner: #e2e8f0;
       --header-bg: #cbd5e1;
       --accent: #ea580c;
@@ -327,7 +327,6 @@
       font-size: 13px; 
     }
     
-    /* الجداول العامة وتوسيط النصوص والحدود العريضة */
     .table-container { 
       width: 100%;
       overflow-x: auto; 
@@ -380,7 +379,7 @@
     .badge-not-chosen { background: rgba(248, 113, 113, 0.14); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.35); }
     .badge-default { background: rgba(148, 163, 184, 0.1); color: var(--text-muted); border: 1px solid var(--border); }
 
-    /* شارات الـ Feedback */
+    /* شارات التمييز بالألوان المحددة */
     .badge-fb-remove {
       background-color: #dc2626 !important;
       color: #ffffff !important;
@@ -670,11 +669,10 @@
       return palette[index % palette.length];
     }
 
-    /* دالة حساب لون النسبة حسب الشروط المحددة */
     function getRateColor(rate) {
-      if (rate > 80) return "var(--success)"; // أكبر من 80% أخضر
-      if (rate >= 70 && rate <= 80) return "var(--warning)"; // من 70% إلى 80% أصفر
-      return "var(--danger)"; // أقل من 70% أحمر
+      if (rate > 80) return "var(--success)";
+      if (rate >= 70 && rate <= 80) return "var(--warning)";
+      return "var(--danger)";
     }
 
     function copyToClipboard(text, event) {
@@ -994,6 +992,7 @@
       return 'badge-default';
     }
 
+    /* دالة تنسيق خلية الـ Feedback وجداول المناطق */
     function renderFeedbackCell(fb) {
       const cleanFb = (fb || '').trim();
       if (!cleanFb || cleanFb === '-') return '-';
@@ -1011,6 +1010,24 @@
       }
 
       return `<span style="color: var(--warning); font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
+    }
+
+    /* دالة تنسيق اسم المشرف في جدول المناطق ليدعم ألوان Remove S.P و Day by day و Holiday */
+    function renderSupervisorNameCell(name) {
+      const cleanName = (name || '').trim();
+      const lowerName = cleanName.toLowerCase();
+
+      if (lowerName.includes('holiday')) {
+        return `<span class="badge-fb-holiday">${cleanName}</span>`;
+      }
+      if (lowerName.includes('remove') || lowerName.includes('s.p')) {
+        return `<span class="badge-fb-remove">${cleanName}</span>`;
+      }
+      if (lowerName.includes('day by day') || lowerName === 'day') {
+        return `<span class="badge-fb-day">${cleanName}</span>`;
+      }
+
+      return cleanName;
     }
 
     function buildZoneGridForDay(dayKey, dayTitle, selectedSupervisor) {
@@ -1082,7 +1099,7 @@
               <td style="text-align: center !important; font-weight: bold; color: ${rateColor};">${rate}%</td>
               <td style="text-align: center !important; color: var(--text-muted);">${sv.total}</td>
               <td style="text-align: center !important; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
-              <td style="text-align: center !important; font-weight: 600; color: var(--text);" class="copyable" onclick="copyToClipboard('${sv.name}', event)" title="انقر للنسخ">${sv.name}</td>
+              <td style="text-align: center !important; font-weight: 600; color: var(--text);" class="copyable" onclick="copyToClipboard('${sv.name}', event)" title="انقر للنسخ">${renderSupervisorNameCell(sv.name)}</td>
             </tr>
           `;
         });
