@@ -27,7 +27,7 @@
       --badge-bg: rgba(255, 255, 255, 0.03);
     }
 
-    /* الوضع النهاري المريح للعين */
+    /* الوضع النهاري */
     body.light-mode {
       --bg-main: #f3f4f6;
       --bg-card: #ffffff;
@@ -51,7 +51,6 @@
     * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
     body { background: var(--bg-main); color: var(--text); margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden; }
 
-    /* شريط التنقل العلوي */
     .navbar {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border);
@@ -95,11 +94,11 @@
 
     .last-update-tag {
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--cyan);
       background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      padding: 5px 10px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 6px 12px;
       border-radius: 6px;
       display: inline-flex;
       align-items: center;
@@ -107,7 +106,6 @@
       white-space: nowrap;
     }
 
-    /* توسيع العرض الكامل للصفحة مع مراعاة الشاشات الكبيرة والصغيرة */
     .container { 
       width: 98%; 
       max-width: 1800px; 
@@ -124,7 +122,6 @@
       box-shadow: 0 4px 18px rgba(0,0,0,0.04);
     }
 
-    /* كارت تسجيل الدخول */
     .auth-wrapper {
       max-width: 450px;
       margin: 40px auto;
@@ -219,7 +216,6 @@
     .btn-excel { background: #059669; color: #fff; border: 1px solid #047857; }
     .btn-excel:hover { background: #047857; }
 
-    /* شبكة كروت الإحصائيات */
     .stats-section-block { margin-bottom: 20px; }
     .stats-block-header {
       display: flex;
@@ -256,7 +252,6 @@
     .stat-val { font-size: 22px; font-weight: 800; color: var(--text); margin-top: 4px; }
     .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 
-    /* كروت تقرير المناطق */
     .day-section-block { margin-bottom: 25px; }
     .day-section-title {
       font-size: 14px;
@@ -301,7 +296,6 @@
     .zone-table-container table td, 
     .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; }
 
-    /* أدوات الفلترة */
     .table-header-tools { 
       display: flex; 
       justify-content: space-between; 
@@ -333,7 +327,6 @@
       font-size: 13px; 
     }
     
-    /* الجداول العامة وتوسيع العرض وإظهار اسم المشرف بالكامل */
     .table-container { 
       width: 100%;
       overflow-x: auto; 
@@ -370,7 +363,6 @@
     td:last-child { border-left: none; }
     tbody tr:hover { background: var(--table-hover); }
 
-    /* تحديد حد أدنى للعرض لمنع اقتطاع الأعمدة والأسماء */
     .col-sv { min-width: 150px; font-weight: 700; }
     .col-fb { min-width: 140px; }
     .col-name { min-width: 250px; font-weight: 700; }
@@ -379,23 +371,15 @@
     .col-badge { min-width: 110px; }
     .col-id { min-width: 90px; }
 
-    .copyable {
-      cursor: pointer;
-      user-select: none;
-    }
-    .copyable:hover {
-      background: rgba(56, 189, 248, 0.12);
-    }
-    .copyable:active {
-      transform: scale(0.98);
-    }
+    .copyable { cursor: pointer; user-select: none; }
+    .copyable:hover { background: rgba(56, 189, 248, 0.12); }
+    .copyable:active { transform: scale(0.98); }
 
     .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
     .badge-published { background: rgba(52, 211, 153, 0.14); color: var(--success); border: 1px solid rgba(52, 211, 153, 0.35); }
     .badge-not-chosen { background: rgba(248, 113, 113, 0.14); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.35); }
     .badge-default { background: rgba(148, 163, 184, 0.1); color: var(--text-muted); border: 1px solid var(--border); }
 
-    /* توست التنبيه */
     #copy-toast {
       position: fixed;
       bottom: 25px;
@@ -425,40 +409,20 @@
     .loading-state { text-align: center; padding: 35px; color: var(--cyan); font-size: 15px; font-weight: bold; }
     .hidden { display: none !important; }
 
-    /* تعديلات التجاوب مع شاشات الموبايل (Responsive Media Queries) */
     @media (max-width: 768px) {
-      .navbar {
-        padding: 10px 14px;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .nav-actions {
-        width: 100%;
-        justify-content: space-between;
-      }
-      .table-header-tools {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .search-input, .filter-select, .btn-excel {
-        width: 100%;
-        min-width: 100%;
-      }
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .zones-grid {
-        grid-template-columns: 1fr;
-      }
+      .navbar { padding: 10px 14px; flex-direction: column; align-items: flex-start; }
+      .nav-actions { width: 100%; justify-content: space-between; }
+      .table-header-tools { flex-direction: column; align-items: stretch; }
+      .search-input, .filter-select, .btn-excel { width: 100%; min-width: 100%; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .zones-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- تنبيه النسخ (Toast) -->
   <div id="copy-toast">📋 تم النسخ: <span id="toast-text" style="color: #fff;"></span></div>
 
-  <!-- شريط الهيدر العلوي -->
   <header class="navbar">
     <div class="brand-box">
       <div class="brand-logo">T</div>
@@ -472,7 +436,7 @@
       <button class="theme-toggle-btn" onclick="toggleTheme()" title="تغيير المظهر">🌙</button>
 
       <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-        <span id="last-update-time" class="last-update-tag">🕒 جاري التحميل...</span>
+        <span id="last-update-time" class="last-update-tag">🕒 جاري جلب وقت التحديث...</span>
         <button class="btn btn-outline" onclick="fetchData()">🔄 تحديث البيانات</button>
         <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 600;"></span>
         <button class="btn btn-outline" onclick="logout()">خروج</button>
@@ -482,7 +446,6 @@
 
   <div class="container">
 
-    <!-- تسجيل الدخول للمكاتب -->
     <div id="office-login-box" class="auth-wrapper">
       <div class="auth-icon">🏢</div>
       <h2 class="auth-title">تسجيل الدخول للمكاتب</h2>
@@ -507,7 +470,6 @@
       </div>
     </div>
 
-    <!-- تسجيل الدخول للمسؤول -->
     <div id="admin-login-box" class="auth-wrapper hidden">
       <div class="auth-icon">🔐</div>
       <h2 class="auth-title">لوحة المسؤول</h2>
@@ -525,10 +487,8 @@
       </div>
     </div>
 
-    <!-- الشاشة الرئيسية -->
     <div id="main-dashboard" class="hidden">
       
-      <!-- الحاوية المجمعة لشرائط الإحصائيات -->
       <div id="top-stats-container">
         <div class="stats-section-block">
           <div class="stats-block-header">
@@ -558,12 +518,9 @@
           </div>
         </div>
 
-        <div id="zones-breakdown-stats">
-          <!-- كروت إحصائيات المناطق المنفصلة -->
-        </div>
+        <div id="zones-breakdown-stats"></div>
       </div>
 
-      <!-- تقرير المشرفين والمناطق الملون للآدمن فقط -->
       <div id="admin-report-card" class="card hidden">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
           <div>
@@ -591,12 +548,9 @@
           </div>
         </div>
 
-        <div id="zones-container">
-          <!-- كروت المناطق -->
-        </div>
+        <div id="zones-container"></div>
       </div>
 
-      <!-- أدوات الفلترة والجدول العام للطيارين -->
       <div class="card">
         <div class="table-header-tools">
           <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث بالاسم، الـ ID، أو الهاتف..." onkeyup="renderTable()">
@@ -635,9 +589,7 @@
                 <th class="col-sv">المشرف (S.V)</th>
               </tr>
             </thead>
-            <tbody id="riders-tbody">
-              <!-- صفوف الطيارين -->
-            </tbody>
+            <tbody id="riders-tbody"></tbody>
           </table>
           <div id="loading-spinner" class="loading-state">⏳ جاري جلب البيانات من Google Sheets...</div>
         </div>
@@ -648,7 +600,7 @@
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRcAB39S8h26BgnCg3nvho8IIzqDWHzVJj0bJD_w3lDGeZgSwgRjFR2Ba0drZ1CIze/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp0wtmh4YXFihShMs10ducOyrF1ZH9VmZ6NDSNdFHZUlnCCa8ZbHo_I-NShvg7ZXaS/exec";
 
     let ridersData = [];
     let currentRole = "";
@@ -667,7 +619,7 @@
     }
 
     function getZoneColor(zoneName, index) {
-      const z = zoneName.toLowerCase();
+      const z = (zoneName || '').toLowerCase();
       const isLight = document.body.classList.contains("light-mode");
       
       if (z.includes('mohandiseen') || z.includes('مهندس')) {
@@ -761,12 +713,41 @@
       showOfficeLogin();
     }
 
-    function updateLastRefreshTimestamp() {
+    function displaySheetLastUpdate(timestampStr) {
       const el = document.getElementById('last-update-time');
       if (!el) return;
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-      el.innerText = `🕒 آخر تحديث: ${timeStr}`;
+      if (timestampStr) {
+        el.innerText = `🕒 تحديث الشيت: ${timestampStr}`;
+      } else {
+        const now = new Date();
+        el.innerText = `🕒 آخر تحديث: ${now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}`;
+      }
+    }
+
+    // دالة مرنة لتوحيد قراءة الحقول سواء بالإنجليزية أو العربية مع إزالة المسافات
+    function normalizeRider(raw) {
+      const getVal = (keys) => {
+        for (let k of keys) {
+          for (let rawKey of Object.keys(raw)) {
+            if (rawKey.trim().toLowerCase() === k.trim().toLowerCase() && raw[rawKey] !== undefined) {
+              return String(raw[rawKey]).trim();
+            }
+          }
+        }
+        return '';
+      };
+
+      return {
+        id: getVal(['ID', 'الكود', 'كود']),
+        name: getVal(['الاسم', 'Name']),
+        area: getVal(['المنطقة', 'Area', 'Zone']),
+        phone: getVal(['الهاتف', 'Phone', 'الموبايل', 'رقم الهاتف']),
+        today: getVal(['Today', 'اليوم', 'Today ']),
+        tomorrow: getVal(['Tomorrow', 'الغد', 'Tomorrow ']),
+        tomorrowLater: getVal(['Tomorrow Later', 'الغد لاحقاً', 'Tomorrow Later ']),
+        feedback: getVal(['Feedback', 'فيدباك', 'الملاحظات']),
+        supervisor: getVal(['s.v', 'المشرف', 'المشرف (S.V)', 'Supervisor', 'SV'])
+      };
     }
 
     async function fetchData() {
@@ -776,17 +757,27 @@
       
       try {
         const res = await fetch(SCRIPT_URL);
-        const data = await res.json();
-        ridersData = data || [];
+        const json = await res.json();
+
+        let rawRows = [];
+        if (json && json.data) {
+          rawRows = json.data || [];
+          displaySheetLastUpdate(json.lastUpdated);
+        } else if (Array.isArray(json)) {
+          rawRows = json;
+          displaySheetLastUpdate(null);
+        }
+
+        ridersData = rawRows.map(r => normalizeRider(r));
+
         populateSupervisors();
         populateReportSupervisors();
         renderTable();
         if (currentRole === "admin") {
           renderSupervisorReport();
         }
-        updateLastRefreshTimestamp();
       } catch (err) {
-        console.error(err);
+        console.error("Fetch Error:", err);
         spinner.innerText = "⚠️ تعذر جلب البيانات. تأكد من إعدادات النشر في Apps Script.";
       } finally {
         if (ridersData.length > 0) {
@@ -1016,7 +1007,7 @@
               <td style="text-align: center; font-weight: bold; color: ${rateColor};">${rate}%</td>
               <td style="text-align: center; color: var(--text-muted);">${sv.total}</td>
               <td style="text-align: center; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
-              <td style="text-align: center; font-weight: 600; color: var(--text);" class="copyable" onclick="copyToClipboard('${sv.name}', event)" title="انقر للنسخ">${sv.name}</td>
+              <td style="text-align: right; font-weight: 600; color: var(--text);" class="copyable" onclick="copyToClipboard('${sv.name}', event)" title="انقر للنسخ">${sv.name}</td>
             </tr>
           `;
         });
@@ -1043,7 +1034,7 @@
                   <th style="text-align: center; width: 60px;">%</th>
                   <th style="text-align: center; width: 70px;">Target</th>
                   <th style="text-align: center; width: 70px; color: ${zoneThemeColor};">مجدول</th>
-                  <th style="text-align: center;">المكتب / المشرف</th>
+                  <th style="text-align: right;">المكتب / المشرف</th>
                 </tr>
               </thead>
               <tbody>
