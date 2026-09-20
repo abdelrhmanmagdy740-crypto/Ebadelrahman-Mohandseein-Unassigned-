@@ -750,13 +750,20 @@
       };
     }
 
-    async function fetchData() {
+  async function fetchData() {
       const spinner = document.getElementById('loading-spinner');
-      spinner.classList.remove('hidden');
-      spinner.innerText = "⏳ جاري جلب وتحديث البيانات من Google Sheets...";
+      if (spinner) {
+        spinner.classList.remove('hidden');
+        spinner.innerText = "⏳ جاري جلب وتحديث البيانات من Google Sheets...";
+      }
       
       try {
-        const res = await fetch(SCRIPT_URL);
+        const res = await fetch(SCRIPT_URL, {
+          method: "GET",
+          redirect: "follow"
+        });
+        
+        if (!res.ok) throw new Error("HTTP error " + res.status);
         const json = await res.json();
 
         let rawRows = [];
@@ -778,9 +785,11 @@
         }
       } catch (err) {
         console.error("Fetch Error:", err);
-        spinner.innerText = "⚠️ تعذر جلب البيانات. تأكد من إعدادات النشر في Apps Script.";
+        if (spinner) {
+          spinner.innerText = "⚠️ تعذر جلب البيانات. تأكد من إعدادات النشر في Apps Script.";
+        }
       } finally {
-        if (ridersData.length > 0) {
+        if (spinner && ridersData.length > 0) {
           spinner.classList.add('hidden');
         }
       }
