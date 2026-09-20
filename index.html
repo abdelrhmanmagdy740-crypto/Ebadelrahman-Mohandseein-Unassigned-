@@ -6,7 +6,7 @@
   <title>Mohandiseen 3PLs-Dashboard | متابعة الطيارين</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    /* الوضع الليلي */
+    /* الوضع الليلي (الافتراضي) */
     :root {
       --bg-main: #0c1222;
       --bg-card: #151d32;
@@ -26,7 +26,7 @@
       --badge-bg: rgba(255, 255, 255, 0.03);
     }
 
-    /* الوضع النهاري */
+    /* ألوان الوضع النهاري (Light Mode) */
     body.light-mode {
       --bg-main: #f1f5f9;
       --bg-card: #ffffff;
@@ -193,16 +193,44 @@
     .btn-excel { background: #107c41; color: #fff; border: 1px solid #0e6b37; }
     .btn-excel:hover { background: #0b5e31; }
 
-    /* كروت الإحصائيات */
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-    .stat-card {
-      background: var(--bg-inner); border: 1px solid var(--border);
-      border-radius: 10px; padding: 18px; border-right: 4px solid var(--cyan);
+    /* شبكة كروت الإحصائيات */
+    .stats-section-block {
+      margin-bottom: 22px;
     }
-    .stat-val { font-size: 26px; font-weight: 800; color: var(--text); margin-top: 5px; }
-    .stat-label { font-size: 13px; color: var(--text-muted); }
+    .stats-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      border-right: 4px solid var(--cyan);
+    }
+    .stats-block-header .zone-title-tag {
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .stat-card {
+      background: var(--bg-inner);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      border-right: 4px solid var(--cyan);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    }
+    .stat-val { font-size: 24px; font-weight: 800; color: var(--text); margin-top: 5px; }
+    .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 
-    /* كروت المناطق */
+    /* كروت المناطق بالأسفل */
     .day-section-block { margin-bottom: 30px; }
     .day-section-title {
       font-size: 15px;
@@ -245,7 +273,7 @@
     .zone-table-container::-webkit-scrollbar { width: 6px; }
     .zone-table-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-    /* الجداول */
+    /* الجداول العامة */
     .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
     .search-input { min-width: 240px; flex: 2; padding: 11px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
     .filter-select { flex: 1; min-width: 140px; padding: 11px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
@@ -267,7 +295,7 @@
 </head>
 <body>
 
-  <!-- شريط العنوان العلوي -->
+  <!-- شريط الهيدر العلوي -->
   <header class="navbar">
     <div class="brand-box">
       <div class="brand-logo">T</div>
@@ -336,23 +364,40 @@
     <!-- الشاشة الرئيسية -->
     <div id="main-dashboard" class="hidden">
       
-      <!-- إحصائيات سريعة وديناميكية من واقع اليوم المختار -->
-      <div class="stats-grid">
-        <div class="stat-card" style="border-right-color: #00b4d8;">
-          <div class="stat-label">إجمالي الطيارين (المسجلين)</div>
-          <div class="stat-val" id="total-riders">0</div>
+      <!-- الحاوية المجمعة لشرائط الإحصائيات (المجمعة + مقسمة لكل منطقة) -->
+      <div id="top-stats-container">
+        <!-- 1. شريط الإحصائيات المجمعة لكافة المناطق -->
+        <div class="stats-section-block">
+          <div class="stats-block-header">
+            <div class="zone-title-tag" style="color: var(--cyan);">
+              <span>🌐</span>
+              <span>إجمالي كافة المناطق مجمعة (All Zones)</span>
+            </div>
+            <span id="selected-day-badge" style="font-size: 12px; color: var(--text-muted); font-weight: bold;">اليوم (Today)</span>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card" style="border-right-color: #00b4d8;">
+              <div class="stat-label">إجمالي الطيارين (المسجلين)</div>
+              <div class="stat-val" id="total-riders">0</div>
+            </div>
+            <div class="stat-card" style="border-right-color: #10b981;">
+              <div class="stat-label" id="card-label-published">Today: PUBLISHED (المقبول)</div>
+              <div class="stat-val" id="today-published">0</div>
+            </div>
+            <div class="stat-card" style="border-right-color: #ef4444;">
+              <div class="stat-label" id="card-label-not-chosen">Today: NOT CHOSEN (غير مختار)</div>
+              <div class="stat-val" id="today-not-chosen">0</div>
+            </div>
+            <div class="stat-card" style="border-right-color: #f59e0b;">
+              <div class="stat-label" id="card-label-rate">Today: نسبة الإسناد (%)</div>
+              <div class="stat-val" id="selected-day-rate">0%</div>
+            </div>
+          </div>
         </div>
-        <div class="stat-card" style="border-right-color: #10b981;">
-          <div class="stat-label" id="card-label-published">Today: PUBLISHED (المقبول)</div>
-          <div class="stat-val" id="today-published">0</div>
-        </div>
-        <div class="stat-card" style="border-right-color: #ef4444;">
-          <div class="stat-label" id="card-label-not-chosen">Today: NOT CHOSEN (غير مختار)</div>
-          <div class="stat-val" id="today-not-chosen">0</div>
-        </div>
-        <div class="stat-card" style="border-right-color: #f59e0b;">
-          <div class="stat-label" id="card-label-rate">Today: نسبة الإسناد (%)</div>
-          <div class="stat-val" id="selected-day-rate">0%</div>
+
+        <!-- 2. كروت إحصائيات كل منطقة منفصلة -->
+        <div id="zones-breakdown-stats">
+          <!-- يتم إنشاؤها ديناميكياً لكل منطقة -->
         </div>
       </div>
 
@@ -394,7 +439,6 @@
         <div class="table-header-tools">
           <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث بالاسم، الـ ID، أو الهاتف..." onkeyup="renderTable()">
           
-          <!-- فلتر المشرف S.V -->
           <select id="supervisor-filter" class="filter-select" onchange="renderTable()">
             <option value="all">كل المشرفين (S.V)</option>
           </select>
@@ -598,6 +642,7 @@
       }
     }
 
+    /* تحديث شريط الإحصائيات المجمع بالإضافة إلى تقسيم داتا كل منطقة لوحدها */
     function updateStats(filteredData, selectedDayKey) {
       const dayNames = {
         today: "Today",
@@ -606,29 +651,101 @@
       };
       const dayTitle = dayNames[selectedDayKey] || "Today";
 
-      document.getElementById('card-label-published').innerText = `${dayTitle}: PUBLISHED (المقبول)`;
-      document.getElementById('card-label-not-chosen').innerText = `${dayTitle}: NOT CHOSEN (غير مختار)`;
-      document.getElementById('card-label-rate').innerText = `${dayTitle}: نسبة الإسناد (%)`;
+      const badgeEl = document.getElementById('selected-day-badge');
+      if (badgeEl) badgeEl.innerText = `${dayTitle}`;
 
+      // 1. حساب الإجمالي المجمع لكافة المناطق
       const total = filteredData.length;
       let published = 0;
       let notChosen = 0;
 
+      // هيكل تجميع لكل منطقة على حدة
+      const zoneStats = {};
+
       filteredData.forEach(r => {
+        const zone = (r.area || 'غير محدد').trim();
         const status = (r[selectedDayKey] || '').toUpperCase();
+
+        if (!zoneStats[zone]) {
+          zoneStats[zone] = {
+            total: 0,
+            published: 0,
+            notChosen: 0
+          };
+        }
+
+        zoneStats[zone].total++;
+
         if (status.includes('PUBLISHED') || status.includes('EVALUATED')) {
           published++;
+          zoneStats[zone].published++;
         } else if (status.includes('NOT CHOSEN')) {
           notChosen++;
+          zoneStats[zone].notChosen++;
         }
       });
 
-      const rate = total > 0 ? Math.round((published / total) * 100) : 0;
+      const totalRate = total > 0 ? Math.round((published / total) * 100) : 0;
+
+      // تحديث كروت الإجمالي العام
+      document.getElementById('card-label-published').innerText = `${dayTitle}: PUBLISHED (المقبول)`;
+      document.getElementById('card-label-not-chosen').innerText = `${dayTitle}: NOT CHOSEN (غير مختار)`;
+      document.getElementById('card-label-rate').innerText = `${dayTitle}: نسبة الإسناد (%)`;
 
       document.getElementById('total-riders').innerText = total;
       document.getElementById('today-published').innerText = published;
       document.getElementById('today-not-chosen').innerText = notChosen;
-      document.getElementById('selected-day-rate').innerText = `${rate}%`;
+      document.getElementById('selected-day-rate').innerText = `${totalRate}%`;
+
+      // 2. بناء كروت إحصائيات كل منطقة منفصلة
+      const zonesContainer = document.getElementById('zones-breakdown-stats');
+      if (!zonesContainer) return;
+      zonesContainer.innerHTML = '';
+
+      const zoneKeys = Object.keys(zoneStats);
+      zoneKeys.forEach((zoneName, index) => {
+        const zData = zoneStats[zoneName];
+        const zRate = zData.total > 0 ? Math.round((zData.published / zData.total) * 100) : 0;
+        const themeColor = getZoneColor(zoneName, index);
+
+        let rateColor = '#ef4444';
+        if (zRate >= 70) rateColor = '#10b981';
+        else if (zRate >= 40) rateColor = '#f59e0b';
+
+        const block = document.createElement('div');
+        block.className = 'stats-section-block';
+        block.innerHTML = `
+          <div class="stats-block-header" style="border-right-color: ${themeColor}; background: rgba(255, 255, 255, 0.02);">
+            <div class="zone-title-tag" style="color: ${themeColor};">
+              <span>📍</span>
+              <span>منطقة: ${zoneName}</span>
+            </div>
+            <span style="font-size: 12px; color: ${themeColor}; font-weight: bold; border: 1px solid ${themeColor}40; padding: 2px 8px; border-radius: 6px;">
+              إحصائيات ${dayTitle}
+            </span>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card" style="border-right-color: ${themeColor};">
+              <div class="stat-label">إجمالي طيارين المنطقة</div>
+              <div class="stat-val" style="color: ${themeColor};">${zData.total}</div>
+            </div>
+            <div class="stat-card" style="border-right-color: #10b981;">
+              <div class="stat-label">المقبول (PUBLISHED)</div>
+              <div class="stat-val" style="color: #10b981;">${zData.published}</div>
+            </div>
+            <div class="stat-card" style="border-right-color: #ef4444;">
+              <div class="stat-label">غير مختار (NOT CHOSEN)</div>
+              <div class="stat-val" style="color: #ef4444;">${zData.notChosen}</div>
+            </div>
+            <div class="stat-card" style="border-right-color: ${rateColor};">
+              <div class="stat-label">نسبة إسناد المنطقة (%)</div>
+              <div class="stat-val" style="color: ${rateColor};">${zRate}%</div>
+            </div>
+          </div>
+        `;
+        zonesContainer.appendChild(block);
+      });
     }
 
     function getBadgeClass(val) {
@@ -854,6 +971,7 @@
         tbody.appendChild(tr);
       });
 
+      // تحديث الإحصائيات المجمعة وتقسيم كل منطقة
       updateStats(filtered, selectedDay);
     }
 
