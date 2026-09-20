@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة متابعة 3PLs</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+    .card { background: #1e293b; border-radius: 10px; padding: 20px; max-width: 900px; margin: 20px auto; border: 1px solid #334155; }
+    h2 { margin-top: 0; color: #38bdf8; }
+    .input-group { margin-bottom: 15px; }
+    input, select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; box-sizing: border-box; }
+    button { background: #0284c7; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    button:hover { background: #0369a1; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: center; }
+    th { background: #334155; }
+    .hidden { display: none; }
+    .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+    .active { background: #166534; color: #86efac; }
+  </style>
+</head>
+<body>
+
+  <!-- شاشة الدخول -->
+  <div id="login-view" class="card" style="max-width: 400px;">
+    <h2>🔐 تسجيل الدخول</h2>
+    <div class="input-group">
+      <label>اختر المكتب:</label>
+      <select id="branch-select">
+        <option value="mohandiseen">مكتب المهندسين</option>
+        <option value="admin">لوحة المسؤول</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>كلمة المرور:</label>
+      <input type="password" id="password" placeholder="أدخل الرمز...">
+    </div>
+    <button onclick="handleLogin()">دخول</button>
+  </div>
+
+  <!-- شاشة الجدول -->
+  <div id="dashboard-view" class="card hidden">
+    <h2>👥 قائمة الطيارين — متابعة الشيفت</h2>
+    <input type="text" id="search" placeholder="بحث بالاسم أو الكود..." onkeyup="filterTable()">
+    <table id="riders-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>الاسم</th>
+          <th>المنطقة</th>
+          <th>الهاتف</th>
+          <th>الحالة</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>101</td>
+          <td>أحمد محمد</td>
+          <td>المهندسين</td>
+          <td>01012345678</td>
+          <td><span class="status-badge active">نشط</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function handleLogin() {
+      const branch = document.getElementById('branch-select').value;
+      const pass = document.getElementById('password').value;
+      
+      // تحقق مبسط للتجربة
+      if (pass === '1234') {
+        document.getElementById('login-view').classList.add('hidden');
+        document.getElementById('dashboard-view').classList.remove('hidden');
+      } else {
+        alert('كلمة المرور غير صحيحة');
+      }
+    }
+
+    function filterTable() {
+      const q = document.getElementById('search').value.toLowerCase();
+      const rows = document.querySelectorAll('#riders-table tbody tr');
+      rows.forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
