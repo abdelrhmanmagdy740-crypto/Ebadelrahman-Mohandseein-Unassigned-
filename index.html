@@ -27,25 +27,25 @@
       --badge-bg: rgba(255, 255, 255, 0.03);
     }
 
-    /* الوضع النهاري */
+    /* الوضع النهاري: خلفية رمادية فاتحة ومريحة للعين */
     body.light-mode {
-      --bg-main: #f3f4f6;
-      --bg-card: #ffffff;
-      --bg-inner: #f8fafc;
-      --header-bg: #e2e8f0;
+      --bg-main: #e5e7eb; /* رمادي فاتح مريح بدلاً من الأبيض */
+      --bg-card: #f3f4f6; /* كروت بدرجة رمادي ناعمة */
+      --bg-inner: #e2e8f0;
+      --header-bg: #cbd5e1;
       --accent: #ea580c;
       --accent-hover: #c2410c;
       --cyan: #0284c7;
-      --text: #1e293b;
-      --text-muted: #64748b;
+      --text: #0f172a;
+      --text-muted: #475569;
       --border: #cbd5e1;
       --table-border: #94a3b8;
-      --success: #059669;
-      --danger: #e11d48;
+      --success: #16a34a;
+      --danger: #dc2626;
       --warning: #d97706;
-      --input-bg: #f8fafc;
-      --table-hover: rgba(0, 0, 0, 0.03);
-      --badge-bg: rgba(0, 0, 0, 0.03);
+      --input-bg: #ffffff;
+      --table-hover: rgba(0, 0, 0, 0.04);
+      --badge-bg: rgba(0, 0, 0, 0.04);
     }
 
     * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
@@ -61,7 +61,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
       flex-wrap: wrap;
       gap: 12px;
     }
@@ -223,7 +223,7 @@
       justify-content: space-between;
       margin-bottom: 10px;
       padding: 6px 14px;
-      background: rgba(0, 0, 0, 0.02);
+      background: rgba(0, 0, 0, 0.03);
       border-radius: 8px;
       border-right: 4px solid var(--cyan);
       flex-wrap: wrap;
@@ -242,7 +242,7 @@
       gap: 12px;
     }
     .stat-card {
-      background: var(--bg-inner);
+      background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 14px 16px;
@@ -327,6 +327,7 @@
       font-size: 13px; 
     }
     
+    /* الجداول العامة وتوسيط النصوص والحدود العريضة */
     .table-container { 
       width: 100%;
       overflow-x: auto; 
@@ -379,7 +380,7 @@
     .badge-not-chosen { background: rgba(248, 113, 113, 0.14); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.35); }
     .badge-default { background: rgba(148, 163, 184, 0.1); color: var(--text-muted); border: 1px solid var(--border); }
 
-    /* شارات الـ Feedback بالألوان المحددة وخط أبيض ناصع */
+    /* شارات الـ Feedback */
     .badge-fb-remove {
       background-color: #dc2626 !important;
       color: #ffffff !important;
@@ -401,7 +402,7 @@
       box-shadow: 0 2px 5px rgba(22, 163, 74, 0.25);
     }
     .badge-fb-holiday {
-      background-color: #1e3a8a !important; /* أزرق داكن كحلي واضح */
+      background-color: #1e3a8a !important;
       color: #ffffff !important;
       padding: 4px 10px;
       border-radius: 6px;
@@ -542,7 +543,7 @@
               <div class="stat-label" id="card-label-not-chosen">Today: NOT CHOSEN (غير مختار)</div>
               <div class="stat-val" id="today-not-chosen">0</div>
             </div>
-            <div class="stat-card" style="border-right-color: #fbbf24;">
+            <div class="stat-card" id="main-rate-card" style="border-right-color: #fbbf24;">
               <div class="stat-label" id="card-label-rate">Today: نسبة الإسناد (%)</div>
               <div class="stat-val" id="selected-day-rate">0%</div>
             </div>
@@ -667,6 +668,13 @@
         ? ["#0284c7", "#ea580c", "#7c3aed", "#059669", "#d97706", "#db2777"]
         : ["#38bdf8", "#fb923c", "#c084fc", "#34d399", "#fbbf24", "#f472b6"];
       return palette[index % palette.length];
+    }
+
+    /* دالة حساب لون النسبة حسب الشروط المحددة */
+    function getRateColor(rate) {
+      if (rate > 80) return "var(--success)"; // أكبر من 80% أخضر
+      if (rate >= 70 && rate <= 80) return "var(--warning)"; // من 70% إلى 80% أصفر
+      return "var(--danger)"; // أقل من 70% أحمر
     }
 
     function copyToClipboard(text, event) {
@@ -916,6 +924,7 @@
       });
 
       const totalRate = total > 0 ? Math.round((published / total) * 100) : 0;
+      const totalRateColor = getRateColor(totalRate);
 
       document.getElementById('card-label-total').innerText = 'إجمالي الطيارين (المسجلين)';
       document.getElementById('card-label-published').innerText = `${dayTitle}: PUBLISHED (المقبول)`;
@@ -925,7 +934,11 @@
       document.getElementById('total-riders').innerText = total;
       document.getElementById('today-published').innerText = published;
       document.getElementById('today-not-chosen').innerText = notChosen;
-      document.getElementById('selected-day-rate').innerText = `${totalRate}%`;
+      
+      const totalRateEl = document.getElementById('selected-day-rate');
+      totalRateEl.innerText = `${totalRate}%`;
+      totalRateEl.style.color = totalRateColor;
+      document.getElementById('main-rate-card').style.borderRightColor = totalRateColor;
 
       const zonesContainer = document.getElementById('zones-breakdown-stats');
       if (!zonesContainer) return;
@@ -936,10 +949,7 @@
         const zData = zoneStats[zoneName];
         const zRate = zData.total > 0 ? Math.round((zData.published / zData.total) * 100) : 0;
         const themeColor = getZoneColor(zoneName, index);
-
-        let rateColor = 'var(--danger)';
-        if (zRate >= 70) rateColor = 'var(--success)';
-        else if (zRate >= 40) rateColor = 'var(--warning)';
+        const rateColor = getRateColor(zRate);
 
         const block = document.createElement('div');
         block.className = 'stats-section-block';
@@ -984,29 +994,22 @@
       return 'badge-default';
     }
 
-    /* دالة تنسيق خلية الـ Feedback مع التدقيق لمنع التداخل */
     function renderFeedbackCell(fb) {
       const cleanFb = (fb || '').trim();
       if (!cleanFb || cleanFb === '-') return '-';
 
       const lowerFb = cleanFb.toLowerCase();
 
-      // 1. فحص الإجازة Holiday أولاً لمنع الخلط
       if (lowerFb.includes('holiday')) {
         return `<span class="badge-fb-holiday">${cleanFb}</span>`;
       }
-
-      // 2. فحص الحذف Remove S.P
       if (lowerFb.includes('remove') || lowerFb.includes('s.p')) {
         return `<span class="badge-fb-remove">${cleanFb}</span>`;
       }
-
-      // 3. فحص اليومية Day by day
       if (lowerFb.includes('day by day') || lowerFb === 'day') {
         return `<span class="badge-fb-day">${cleanFb}</span>`;
       }
 
-      // 4. أسماء المشرفين العادية
       return `<span style="color: var(--warning); font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
     }
 
@@ -1060,9 +1063,7 @@
           ? Math.round((zoneData.totalPublishedInZone / zoneData.totalRidersInZone) * 100)
           : 0;
 
-        let overallColor = 'var(--danger)';
-        if (overallZoneRate >= 70) overallColor = 'var(--success)';
-        else if (overallZoneRate >= 40) overallColor = 'var(--warning)';
+        const overallColor = getRateColor(overallZoneRate);
 
         const card = document.createElement('div');
         card.className = 'zone-column-card';
@@ -1074,9 +1075,7 @@
 
         svList.forEach(sv => {
           const rate = sv.total > 0 ? Math.round((sv.published / sv.total) * 100) : 0;
-          let rateColor = 'var(--danger)';
-          if (rate >= 70) rateColor = 'var(--success)';
-          else if (rate >= 40) rateColor = 'var(--warning)';
+          const rateColor = getRateColor(rate);
 
           rowsHtml += `
             <tr>
