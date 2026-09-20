@@ -294,7 +294,7 @@
     
     .zone-table-container { width: 100%; overflow-x: auto; max-height: none !important; }
     .zone-table-container table td, 
-    .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; }
+    .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; text-align: center !important; }
 
     .table-header-tools { 
       display: flex; 
@@ -327,6 +327,7 @@
       font-size: 13px; 
     }
     
+    /* الجداول العامة وتوسيط النصوص والحدود العريضة */
     .table-container { 
       width: 100%;
       overflow-x: auto; 
@@ -338,7 +339,6 @@
     table { 
       width: 100%; 
       border-collapse: collapse; 
-      text-align: center; 
       font-size: 12px; 
       white-space: nowrap; 
     }
@@ -347,7 +347,7 @@
       padding: 12px 10px; 
       color: var(--text-muted); 
       font-weight: 800; 
-      text-align: center; 
+      text-align: center !important; 
       border-bottom: 2px solid var(--table-border); 
       border-left: 2px solid var(--table-border); 
     }
@@ -355,7 +355,7 @@
 
     td { 
       padding: 10px 12px; 
-      text-align: center; 
+      text-align: center !important; 
       border-top: 2px solid var(--table-border); 
       border-left: 2px solid var(--table-border); 
       color: var(--text); 
@@ -363,13 +363,13 @@
     td:last-child { border-left: none; }
     tbody tr:hover { background: var(--table-hover); }
 
-    .col-sv { min-width: 150px; font-weight: 700; }
-    .col-fb { min-width: 140px; }
-    .col-name { min-width: 250px; font-weight: 700; }
-    .col-area { min-width: 130px; }
-    .col-phone { min-width: 130px; }
-    .col-badge { min-width: 110px; }
-    .col-id { min-width: 90px; }
+    .col-sv { min-width: 150px; font-weight: 700; text-align: center !important; }
+    .col-fb { min-width: 140px; text-align: center !important; }
+    .col-name { min-width: 250px; font-weight: 700; text-align: center !important; }
+    .col-area { min-width: 130px; text-align: center !important; }
+    .col-phone { min-width: 130px; text-align: center !important; }
+    .col-badge { min-width: 110px; text-align: center !important; }
+    .col-id { min-width: 90px; text-align: center !important; }
 
     .copyable { cursor: pointer; user-select: none; }
     .copyable:hover { background: rgba(56, 189, 248, 0.12); }
@@ -500,19 +500,19 @@
           </div>
           <div class="stats-grid">
             <div class="stat-card" style="border-right-color: #38bdf8;">
-              <div class="stat-label">إجمالي الطيارين (المسجلين)</div>
+              <div class="stat-label" id="card-label-total">إجمالي الطيارين (المسجلين)</div>
               <div class="stat-val" id="total-riders">0</div>
             </div>
             <div class="stat-card" style="border-right-color: #34d399;">
-              <div class="stat-label" id="card-label-published">Today: PUBLISHED (المقبول)</div>
+              <div class="stat-label" id="card-label-published">المقبول (PUBLISHED)</div>
               <div class="stat-val" id="today-published">0</div>
             </div>
             <div class="stat-card" style="border-right-color: #f87171;">
-              <div class="stat-label" id="card-label-not-chosen">Today: NOT CHOSEN (غير مختار)</div>
+              <div class="stat-label" id="card-label-not-chosen">غير مختار (NOT CHOSEN)</div>
               <div class="stat-val" id="today-not-chosen">0</div>
             </div>
             <div class="stat-card" style="border-right-color: #fbbf24;">
-              <div class="stat-label" id="card-label-rate">Today: نسبة الإسناد (%)</div>
+              <div class="stat-label" id="card-label-rate">نسبة الإسناد (%)</div>
               <div class="stat-val" id="selected-day-rate">0%</div>
             </div>
           </div>
@@ -559,7 +559,9 @@
             <option value="all">كل المشرفين (S.V)</option>
           </select>
 
+          <!-- خانة اختيار اليوم مع خيار الـ 3 أيام مجمع -->
           <select id="main-day-filter" class="filter-select" onchange="onMainDayFilterChange()">
+            <option value="all_days">كل الأيام (الـ 3 أيام معاً)</option>
             <option value="today">اليوم (Today)</option>
             <option value="tomorrow">الغد (Tomorrow)</option>
             <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
@@ -724,13 +726,14 @@
       }
     }
 
-    // دالة مرنة لتوحيد قراءة الحقول سواء بالإنجليزية أو العربية مع إزالة المسافات
+    // دالة مرنة وقوية جداً لمطابقة وقراءة كافة الأعمدة بما فيها الـ Feedback
     function normalizeRider(raw) {
       const getVal = (keys) => {
         for (let k of keys) {
           for (let rawKey of Object.keys(raw)) {
             if (rawKey.trim().toLowerCase() === k.trim().toLowerCase() && raw[rawKey] !== undefined) {
-              return String(raw[rawKey]).trim();
+              const strVal = String(raw[rawKey]).trim();
+              if (strVal !== '') return strVal;
             }
           }
         }
@@ -742,15 +745,16 @@
         name: getVal(['الاسم', 'Name']),
         area: getVal(['المنطقة', 'Area', 'Zone']),
         phone: getVal(['الهاتف', 'Phone', 'الموبايل', 'رقم الهاتف']),
-        today: getVal(['Today', 'اليوم', 'Today ']),
-        tomorrow: getVal(['Tomorrow', 'الغد', 'Tomorrow ']),
-        tomorrowLater: getVal(['Tomorrow Later', 'الغد لاحقاً', 'Tomorrow Later ']),
-        feedback: getVal(['Feedback', 'فيدباك', 'الملاحظات']),
+        today: getVal(['Today', 'اليوم']),
+        tomorrow: getVal(['Tomorrow', 'الغد']),
+        tomorrowLater: getVal(['Tomorrow Later', 'الغد لاحقاً']),
+        // قراءة الـ Feedback حتى لو كان مكتوباً Fedback أو به مسافة إضافية
+        feedback: getVal(['Feedback', 'Fedback', 'فيدباك', 'الملاحظات', 'ملاحظات']),
         supervisor: getVal(['s.v', 'المشرف', 'المشرف (S.V)', 'Supervisor', 'SV'])
       };
     }
 
-  async function fetchData() {
+    async function fetchData() {
       const spinner = document.getElementById('loading-spinner');
       if (spinner) {
         spinner.classList.remove('hidden');
@@ -763,7 +767,6 @@
           redirect: "follow"
         });
         
-        if (!res.ok) throw new Error("HTTP error " + res.status);
         const json = await res.json();
 
         let rawRows = [];
@@ -805,7 +808,7 @@
 
       const svSelect = document.getElementById('supervisor-filter');
       svSelect.innerHTML = '<option value="all">كل المشرفين (S.V)</option>';
-      svSet.forEach(sv => {
+      Array.from(svSet).sort((a, b) => a.localeCompare(b, 'ar')).forEach(sv => {
         const opt = document.createElement('option');
         opt.value = sv;
         opt.innerText = sv;
@@ -839,18 +842,29 @@
       }
     }
 
+    function isStatusPublished(statusStr) {
+      const s = (statusStr || '').toUpperCase();
+      return s.includes('PUBLISHED') || s.includes('EVALUATED');
+    }
+
+    function isStatusNotChosen(statusStr) {
+      const s = (statusStr || '').toUpperCase();
+      return s.includes('NOT CHOSEN');
+    }
+
     function updateStats(filteredData, selectedDayKey) {
       const dayNames = {
-        today: "Today",
-        tomorrow: "Tomorrow",
-        tomorrowLater: "Tomorrow Later"
+        all_days: "كل الأيام مجمعة (3 أيام)",
+        today: "اليوم (Today)",
+        tomorrow: "الغد (Tomorrow)",
+        tomorrowLater: "الغد لاحقاً (Tomorrow Later)"
       };
-      const dayTitle = dayNames[selectedDayKey] || "Today";
+      const dayTitle = dayNames[selectedDayKey] || "اليوم (Today)";
 
       const badgeEl = document.getElementById('selected-day-badge');
       if (badgeEl) badgeEl.innerText = `${dayTitle}`;
 
-      const total = filteredData.length;
+      let totalSlots = 0;
       let published = 0;
       let notChosen = 0;
 
@@ -858,30 +872,45 @@
 
       filteredData.forEach(r => {
         const zone = (r.area || 'غير محدد').trim();
-        const status = (r[selectedDayKey] || '').toUpperCase();
-
         if (!zoneStats[zone]) {
           zoneStats[zone] = { total: 0, published: 0, notChosen: 0 };
         }
 
-        zoneStats[zone].total++;
-
-        if (status.includes('PUBLISHED') || status.includes('EVALUATED')) {
-          published++;
-          zoneStats[zone].published++;
-        } else if (status.includes('NOT CHOSEN')) {
-          notChosen++;
-          zoneStats[zone].notChosen++;
+        if (selectedDayKey === 'all_days') {
+          ['today', 'tomorrow', 'tomorrowLater'].forEach(dk => {
+            const st = r[dk] || '';
+            totalSlots++;
+            zoneStats[zone].total++;
+            if (isStatusPublished(st)) {
+              published++;
+              zoneStats[zone].published++;
+            } else if (isStatusNotChosen(st)) {
+              notChosen++;
+              zoneStats[zone].notChosen++;
+            }
+          });
+        } else {
+          const st = r[selectedDayKey] || '';
+          totalSlots++;
+          zoneStats[zone].total++;
+          if (isStatusPublished(st)) {
+            published++;
+            zoneStats[zone].published++;
+          } else if (isStatusNotChosen(st)) {
+            notChosen++;
+            zoneStats[zone].notChosen++;
+          }
         }
       });
 
-      const totalRate = total > 0 ? Math.round((published / total) * 100) : 0;
+      const totalRate = totalSlots > 0 ? Math.round((published / totalSlots) * 100) : 0;
 
-      document.getElementById('card-label-published').innerText = `${dayTitle}: PUBLISHED (المقبول)`;
-      document.getElementById('card-label-not-chosen').innerText = `${dayTitle}: NOT CHOSEN (غير مختار)`;
+      document.getElementById('card-label-total').innerText = selectedDayKey === 'all_days' ? 'إجمالي الفرص (3 أيام)' : 'إجمالي طيارين اليوم';
+      document.getElementById('card-label-published').innerText = `${dayTitle}: المقبول (PUBLISHED)`;
+      document.getElementById('card-label-not-chosen').innerText = `${dayTitle}: غير مختار (NOT CHOSEN)`;
       document.getElementById('card-label-rate').innerText = `${dayTitle}: نسبة الإسناد (%)`;
 
-      document.getElementById('total-riders').innerText = total;
+      document.getElementById('total-riders').innerText = totalSlots;
       document.getElementById('today-published').innerText = published;
       document.getElementById('today-not-chosen').innerText = notChosen;
       document.getElementById('selected-day-rate').innerText = `${totalRate}%`;
@@ -915,7 +944,7 @@
 
           <div class="stats-grid">
             <div class="stat-card" style="border-right-color: ${themeColor};">
-              <div class="stat-label">إجمالي طيارين المنطقة</div>
+              <div class="stat-label">إجمالي الفرص / المناديب</div>
               <div class="stat-val" style="color: ${themeColor};">${zData.total}</div>
             </div>
             <div class="stat-card" style="border-right-color: var(--success);">
@@ -955,7 +984,7 @@
           zonesMap[zone] = { supervisors: {}, totalRidersInZone: 0, totalPublishedInZone: 0 };
         }
 
-        const isPublished = status.includes('PUBLISHED') || status.includes('EVALUATED');
+        const isPublished = isStatusPublished(status);
 
         if (feedbackSv && feedbackSv !== '-' && feedbackSv !== '') {
           if (selectedSupervisor === 'all' || feedbackSv === selectedSupervisor) {
@@ -1013,16 +1042,16 @@
 
           rowsHtml += `
             <tr>
-              <td style="text-align: center; font-weight: bold; color: ${rateColor};">${rate}%</td>
-              <td style="text-align: center; color: var(--text-muted);">${sv.total}</td>
-              <td style="text-align: center; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
-              <td style="text-align: right; font-weight: 600; color: var(--text);" class="copyable" onclick="copyToClipboard('${sv.name}', event)" title="انقر للنسخ">${sv.name}</td>
+              <td style="text-align: center !important; font-weight: bold; color: ${rateColor};">${rate}%</td>
+              <td style="text-align: center !important; color: var(--text-muted);">${sv.total}</td>
+              <td style="text-align: center !important; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
+              <td style="text-align: center !important; font-weight: 600; color: var(--text);" class="copyable" onclick="copyToClipboard('${sv.name}', event)" title="انقر للنسخ">${sv.name}</td>
             </tr>
           `;
         });
 
         if (svList.length === 0) {
-          rowsHtml = '<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 15px;">لا توجد بيانات لهذا المشرف في المنطقة.</td></tr>';
+          rowsHtml = '<tr><td colspan="4" style="text-align: center !important; color: var(--text-muted); padding: 15px;">لا توجد بيانات لهذا المشرف في المنطقة.</td></tr>';
         }
 
         card.innerHTML = `
@@ -1040,10 +1069,10 @@
             <table>
               <thead>
                 <tr style="text-align: center;">
-                  <th style="text-align: center; width: 60px;">%</th>
-                  <th style="text-align: center; width: 70px;">Target</th>
-                  <th style="text-align: center; width: 70px; color: ${zoneThemeColor};">مجدول</th>
-                  <th style="text-align: right;">المكتب / المشرف</th>
+                  <th style="text-align: center !important; width: 60px;">%</th>
+                  <th style="text-align: center !important; width: 70px;">Target</th>
+                  <th style="text-align: center !important; width: 70px; color: ${zoneThemeColor};">مجدول</th>
+                  <th style="text-align: center !important;">المكتب / المشرف</th>
                 </tr>
               </thead>
               <tbody>
@@ -1086,7 +1115,7 @@
       }
 
       if (container.children.length === 0) {
-        container.innerHTML = '<div style="color: var(--text-muted); padding: 25px; text-align: center;">لا توجد بيانات مسجلة لهذا الاختيار.</div>';
+        container.innerHTML = '<div style="color: var(--text-muted); padding: 25px; text-align: center !important;">لا توجد بيانات مسجلة لهذا الاختيار.</div>';
       }
     }
 
@@ -1107,12 +1136,18 @@
         
         const matchSv = (svFilter === 'all') || (r.supervisor && r.supervisor.trim() === svFilter);
 
-        const dayVal = (r[selectedDay] || '').toUpperCase();
         let matchStatus = true;
-        if (statusFilter === 'PUBLISHED') {
-          matchStatus = dayVal.includes('PUBLISHED') || dayVal.includes('EVALUATED');
-        } else if (statusFilter === 'NOT CHOSEN') {
-          matchStatus = dayVal.includes('NOT CHOSEN');
+        if (statusFilter !== 'all') {
+          if (selectedDay === 'all_days') {
+            const hasPub = isStatusPublished(r.today) || isStatusPublished(r.tomorrow) || isStatusPublished(r.tomorrowLater);
+            const hasNot = isStatusNotChosen(r.today) || isStatusNotChosen(r.tomorrow) || isStatusNotChosen(r.tomorrowLater);
+            if (statusFilter === 'PUBLISHED') matchStatus = hasPub;
+            else if (statusFilter === 'NOT CHOSEN') matchStatus = hasNot;
+          } else {
+            const dayVal = (r[selectedDay] || '').toUpperCase();
+            if (statusFilter === 'PUBLISHED') matchStatus = isStatusPublished(dayVal);
+            else if (statusFilter === 'NOT CHOSEN') matchStatus = isStatusNotChosen(dayVal);
+          }
         }
 
         return matchQuery && matchSv && matchStatus;
@@ -1140,25 +1175,25 @@
         const svVal = r.supervisor || '';
 
         tr.innerHTML = `
-          <td class="copyable col-id" onclick="copyToClipboard('${idVal}', event)" title="انقر لنسخ الـ ID" style="font-weight: bold; color: var(--cyan);">${idVal}</td>
-          <td class="copyable col-name" onclick="copyToClipboard('${nameVal}', event)" title="انقر لنسخ الاسم"><strong>${nameVal}</strong></td>
-          <td class="copyable col-area" onclick="copyToClipboard('${areaVal}', event)" title="انقر لنسخ المنطقة">${areaVal}</td>
-          <td class="copyable col-phone" onclick="copyToClipboard('${phoneVal}', event)" title="انقر لنسخ الهاتف">
+          <td class="copyable col-id" onclick="copyToClipboard('${idVal}', event)" title="انقر لنسخ الـ ID" style="font-weight: bold; color: var(--cyan); text-align: center !important;">${idVal}</td>
+          <td class="copyable col-name" onclick="copyToClipboard('${nameVal}', event)" title="انقر لنسخ الاسم" style="text-align: center !important;"><strong>${nameVal}</strong></td>
+          <td class="copyable col-area" onclick="copyToClipboard('${areaVal}', event)" title="انقر لنسخ المنطقة" style="text-align: center !important;">${areaVal}</td>
+          <td class="copyable col-phone" onclick="copyToClipboard('${phoneVal}', event)" title="انقر لنسخ الهاتف" style="text-align: center !important;">
             <span style="direction: ltr; display: inline-block;">📞 ${phoneVal}</span>
           </td>
-          <td class="copyable col-badge" onclick="copyToClipboard('${todayVal}', event)" title="انقر للنسخ">
+          <td class="copyable col-badge" onclick="copyToClipboard('${todayVal}', event)" title="انقر للنسخ" style="text-align: center !important;">
             <span class="badge ${getBadgeClass(r.today)}">${todayVal || '-'}</span>
           </td>
-          <td class="copyable col-badge" onclick="copyToClipboard('${tomorrowVal}', event)" title="انقر للنسخ">
+          <td class="copyable col-badge" onclick="copyToClipboard('${tomorrowVal}', event)" title="انقر للنسخ" style="text-align: center !important;">
             <span class="badge ${getBadgeClass(r.tomorrow)}">${tomorrowVal || '-'}</span>
           </td>
-          <td class="copyable col-badge" onclick="copyToClipboard('${tomorrowLaterVal}', event)" title="انقر للنسخ">
+          <td class="copyable col-badge" onclick="copyToClipboard('${tomorrowLaterVal}', event)" title="انقر للنسخ" style="text-align: center !important;">
             <span class="badge ${getBadgeClass(r.tomorrowLater)}">${tomorrowLaterVal || '-'}</span>
           </td>
-          <td class="copyable col-fb" onclick="copyToClipboard('${feedbackVal}', event)" title="انقر لنسخ الـ Feedback">
-            <span style="color: var(--warning); font-size: 12px; font-weight: bold;">${feedbackVal || '-'}</span>
+          <td class="copyable col-fb" onclick="copyToClipboard('${feedbackVal}', event)" title="انقر لنسخ الـ Feedback" style="text-align: center !important;">
+            <span style="color: var(--warning); font-size: 12.5px; font-weight: bold;">${feedbackVal || '-'}</span>
           </td>
-          <td class="copyable col-sv" onclick="copyToClipboard('${svVal}', event)" title="انقر لنسخ اسم المشرف">
+          <td class="copyable col-sv" onclick="copyToClipboard('${svVal}', event)" title="انقر لنسخ اسم المشرف" style="text-align: center !important;">
             <strong>${svVal || '-'}</strong>
           </td>
         `;
