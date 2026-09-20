@@ -88,6 +88,20 @@
     }
     .theme-toggle-btn:hover { border-color: var(--cyan); }
 
+    .last-update-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--cyan);
+      background: rgba(0, 180, 216, 0.08);
+      border: 1px solid rgba(0, 180, 216, 0.25);
+      padding: 5px 10px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+
     .container { max-width: 1400px; margin: 25px auto; padding: 0 15px; }
 
     .card {
@@ -309,6 +323,7 @@
       <button class="theme-toggle-btn" onclick="toggleTheme()" title="تغيير المظهر">🌙</button>
 
       <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px;">
+        <span id="last-update-time" class="last-update-tag">🕒 جاري التحميل...</span>
         <button class="btn btn-outline" onclick="fetchData()">🔄 تحديث البيانات</button>
         <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 600;"></span>
         <button class="btn btn-outline" onclick="logout()">خروج</button>
@@ -573,6 +588,14 @@
       showOfficeLogin();
     }
 
+    function updateLastRefreshTimestamp() {
+      const el = document.getElementById('last-update-time');
+      if (!el) return;
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+      el.innerText = `🕒 آخر تحديث: ${timeStr}`;
+    }
+
     async function fetchData() {
       const spinner = document.getElementById('loading-spinner');
       spinner.classList.remove('hidden');
@@ -588,6 +611,7 @@
         if (currentRole === "admin") {
           renderSupervisorReport();
         }
+        updateLastRefreshTimestamp(); // تسجيل وقت التحديث الناجح
       } catch (err) {
         console.error(err);
         spinner.innerText = "⚠️ تعذر جلب البيانات. تأكد من إعدادات النشر في Apps Script.";
@@ -971,7 +995,6 @@
         tbody.appendChild(tr);
       });
 
-      // تحديث الإحصائيات المجمعة وتقسيم كل منطقة
       updateStats(filtered, selectedDay);
     }
 
