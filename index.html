@@ -6,7 +6,7 @@
   <title>Mohandiseen 3PLs-Dashboard | متابعة الطيارين</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    /* الوضع الليلي (الافتراضي) */
+    /* الوضع الليلي */
     :root {
       --bg-main: #0c1222;
       --bg-card: #151d32;
@@ -26,7 +26,7 @@
       --badge-bg: rgba(255, 255, 255, 0.03);
     }
 
-    /* ألوان الوضع النهاري (Light Mode) */
+    /* الوضع النهاري */
     body.light-mode {
       --bg-main: #f1f5f9;
       --bg-card: #ffffff;
@@ -245,7 +245,7 @@
     .zone-table-container::-webkit-scrollbar { width: 6px; }
     .zone-table-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-    /* الجداول العامة */
+    /* الجداول */
     .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
     .search-input { min-width: 240px; flex: 2; padding: 11px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
     .filter-select { flex: 1; min-width: 140px; padding: 11px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
@@ -598,7 +598,6 @@
       }
     }
 
-    /* دالة تحديث الكروت العلوية حسب اليوم المختار والبيانات المفلترة */
     function updateStats(filteredData, selectedDayKey) {
       const dayNames = {
         today: "Today",
@@ -607,7 +606,6 @@
       };
       const dayTitle = dayNames[selectedDayKey] || "Today";
 
-      // تحديث مسميات الكروت العلوية ديناميكياً
       document.getElementById('card-label-published').innerText = `${dayTitle}: PUBLISHED (المقبول)`;
       document.getElementById('card-label-not-chosen').innerText = `${dayTitle}: NOT CHOSEN (غير مختار)`;
       document.getElementById('card-label-rate').innerText = `${dayTitle}: نسبة الإسناد (%)`;
@@ -821,7 +819,6 @@
         
         const matchSv = (svFilter === 'all') || (r.supervisor && r.supervisor.trim() === svFilter);
 
-        // فحص حالة اليوم المختار من قائمة الأيام
         const dayVal = (r[selectedDay] || '').toUpperCase();
         let matchStatus = true;
         if (statusFilter === 'PUBLISHED') {
@@ -857,7 +854,6 @@
         tbody.appendChild(tr);
       });
 
-      // تحديث الكروت العلوية بناءً على اليوم المختار
       updateStats(filtered, selectedDay);
     }
 
