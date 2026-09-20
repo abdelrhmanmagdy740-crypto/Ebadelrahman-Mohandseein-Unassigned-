@@ -6,44 +6,44 @@
   <title>Mohandiseen 3PLs-Dashboard | متابعة الطيارين</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    /* الوضع الليلي (الافتراضي) */
+    /* باليتة الألوان المحسنة: الوضع الليلي الهادئ للعين */
     :root {
-      --bg-main: #0c1222;
-      --bg-card: #151d32;
-      --bg-inner: #0f172a;
-      --header-bg: #16203d;
-      --accent: #ff6433;
-      --accent-hover: #e85526;
-      --cyan: #00b4d8;
-      --text: #f8fafc;
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-inner: #151e32;
+      --header-bg: #1c263d;
+      --accent: #f97316;
+      --accent-hover: #ea580c;
+      --cyan: #38bdf8;
+      --text: #f1f5f9;
       --text-muted: #94a3b8;
-      --border: #24304f;
-      --success: #10b981;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --input-bg: #0d1527;
-      --table-hover: rgba(255, 255, 255, 0.03);
+      --border: #232f48;
+      --success: #34d399;
+      --danger: #f87171;
+      --warning: #fbbf24;
+      --input-bg: #0d1424;
+      --table-hover: rgba(255, 255, 255, 0.025);
       --badge-bg: rgba(255, 255, 255, 0.03);
     }
 
-    /* ألوان الوضع النهاري (Light Mode) */
+    /* باليتة الألوان المحسنة: الوضع النهاري المريح للعين (Soft Light) */
     body.light-mode {
-      --bg-main: #f1f5f9;
+      --bg-main: #f3f4f6;
       --bg-card: #ffffff;
       --bg-inner: #f8fafc;
       --header-bg: #e2e8f0;
       --accent: #ea580c;
       --accent-hover: #c2410c;
       --cyan: #0284c7;
-      --text: #0f172a;
+      --text: #1e293b;
       --text-muted: #64748b;
-      --border: #cbd5e1;
-      --success: #16a34a;
-      --danger: #dc2626;
+      --border: #e2e8f0;
+      --success: #059669;
+      --danger: #e11d48;
       --warning: #d97706;
-      --input-bg: #ffffff;
-      --table-hover: rgba(0, 0, 0, 0.03);
-      --badge-bg: rgba(0, 0, 0, 0.04);
+      --input-bg: #f8fafc;
+      --table-hover: rgba(0, 0, 0, 0.02);
+      --badge-bg: rgba(0, 0, 0, 0.03);
     }
 
     * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
@@ -52,24 +52,25 @@
     /* شريط التنقل العلوي */
     .navbar {
       background: var(--bg-card);
-      border-bottom: 2px solid var(--border);
-      padding: 14px 28px;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     }
     .brand-box { display: flex; align-items: center; gap: 12px; }
     .brand-logo {
-      background: linear-gradient(135deg, var(--accent), #f72585);
-      width: 42px; height: 42px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), #e11d48);
+      width: 40px; height: 40px; border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: 22px; color: #fff;
+      font-weight: 900; font-size: 20px; color: #fff;
     }
-    .brand-title { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; }
-    .brand-sub { font-size: 12px; color: var(--cyan); }
+    .brand-title { font-size: 17px; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .brand-sub { font-size: 12px; color: var(--cyan); font-weight: 600; }
 
     .nav-actions { display: flex; align-items: center; gap: 10px; }
 
@@ -77,14 +78,14 @@
       background: var(--bg-inner);
       border: 1px solid var(--border);
       color: var(--text);
-      width: 38px;
-      height: 38px;
-      border-radius: 9px;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 16px;
     }
     .theme-toggle-btn:hover { border-color: var(--cyan); }
 
@@ -92,8 +93,8 @@
       font-size: 11px;
       font-weight: 600;
       color: var(--cyan);
-      background: rgba(0, 180, 216, 0.08);
-      border: 1px solid rgba(0, 180, 216, 0.25);
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.2);
       padding: 5px 10px;
       border-radius: 6px;
       display: inline-flex;
@@ -108,44 +109,44 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 24px;
+      padding: 22px;
       margin-bottom: 20px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.04);
     }
 
     /* كارت تسجيل الدخول */
     .auth-wrapper {
-      max-width: 460px;
+      max-width: 450px;
       margin: 50px auto;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 35px 30px;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     }
-    .auth-icon { font-size: 52px; text-align: center; margin-bottom: 12px; line-height: 1; }
-    .auth-title { text-align: center; margin: 0 0 8px 0; font-size: 26px; font-weight: 800; color: var(--text); }
+    .auth-icon { font-size: 48px; text-align: center; margin-bottom: 12px; line-height: 1; }
+    .auth-title { text-align: center; margin: 0 0 8px 0; font-size: 24px; font-weight: 800; color: var(--text); }
     .signature-text {
       text-align: center;
       color: var(--cyan);
       font-family: 'Caveat', cursive, sans-serif;
-      font-size: 22px;
+      font-size: 21px;
       letter-spacing: 0.5px;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       direction: ltr;
       display: block;
       font-weight: 600;
     }
 
-    .form-group { margin-bottom: 22px; }
-    .form-group label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 700; color: var(--text-muted); text-align: right; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 700; color: var(--text-muted); text-align: right; }
 
     select.custom-login-field {
       width: 100%;
-      padding: 14px 16px;
+      padding: 12px 14px;
       background: var(--input-bg);
-      border: 1.5px solid var(--cyan);
-      border-radius: 9px;
+      border: 1px solid var(--cyan);
+      border-radius: 8px;
       color: var(--text);
       font-size: 14px;
       font-weight: 600;
@@ -157,14 +158,14 @@
 
     input.custom-pass-input {
       width: 100%;
-      padding: 13px 16px;
-      background: #eef4ff;
-      border: 1px solid #cbd5e1;
-      border-radius: 9px;
-      color: #0b132b;
-      font-size: 20px;
+      padding: 12px 14px;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 18px;
       font-weight: 800;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       outline: none;
       text-align: right;
     }
@@ -173,18 +174,18 @@
       background: var(--accent);
       color: #ffffff;
       width: 100%;
-      padding: 14px;
-      font-size: 16px;
+      padding: 13px;
+      font-size: 15px;
       font-weight: 800;
-      border-radius: 9px;
+      border-radius: 8px;
       border: none;
       cursor: pointer;
       margin-top: 6px;
-      box-shadow: 0 4px 14px rgba(255, 100, 51, 0.35);
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
     }
     .btn-login-orange:hover { background: var(--accent-hover); }
 
-    .switch-link { text-align: center; margin-top: 22px; }
+    .switch-link { text-align: center; margin-top: 20px; }
     .switch-link a {
       color: var(--cyan);
       text-decoration: none;
@@ -198,31 +199,29 @@
     .switch-link a:hover { text-decoration: underline; }
 
     .btn {
-      padding: 9px 16px; border-radius: 8px; border: none; font-weight: 700;
+      padding: 8px 14px; border-radius: 8px; border: none; font-weight: 700;
       cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
-      gap: 8px; font-size: 13px;
+      gap: 6px; font-size: 12px;
     }
     .btn-outline { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); }
-    .btn-outline:hover { background: rgba(0,180,216,0.1); }
-    .btn-excel { background: #107c41; color: #fff; border: 1px solid #0e6b37; }
-    .btn-excel:hover { background: #0b5e31; }
+    .btn-outline:hover { background: rgba(56, 189, 248, 0.08); }
+    .btn-excel { background: #059669; color: #fff; border: 1px solid #047857; }
+    .btn-excel:hover { background: #047857; }
 
     /* شبكة كروت الإحصائيات */
-    .stats-section-block {
-      margin-bottom: 22px;
-    }
+    .stats-section-block { margin-bottom: 20px; }
     .stats-block-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 10px;
       padding: 6px 14px;
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(0, 0, 0, 0.02);
       border-radius: 8px;
       border-right: 4px solid var(--cyan);
     }
     .stats-block-header .zone-title-tag {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
       display: flex;
       align-items: center;
@@ -231,88 +230,81 @@
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
+      gap: 12px;
     }
     .stat-card {
       background: var(--bg-inner);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 16px 18px;
+      padding: 14px 16px;
       border-right: 4px solid var(--cyan);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
-    .stat-val { font-size: 24px; font-weight: 800; color: var(--text); margin-top: 5px; }
+    .stat-val { font-size: 22px; font-weight: 800; color: var(--text); margin-top: 4px; }
     .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 
-    /* كروت المناطق بالأسفل (تم تكبيرها وعرضها بالكامل دون تقييد الارتفاع) */
-    .day-section-block { margin-bottom: 30px; }
+    /* كروت المناطق المريحة للعين */
+    .day-section-block { margin-bottom: 25px; }
     .day-section-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
       color: var(--cyan);
       margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(0, 180, 216, 0.08);
-      padding: 8px 16px;
+      background: rgba(56, 189, 248, 0.06);
+      padding: 8px 14px;
       border-radius: 8px;
       border-right: 4px solid var(--cyan);
     }
-    .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; align-items: start; }
+    .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 16px; align-items: start; }
     .zone-column-card {
-      background: var(--bg-inner);
-      border-radius: 12px;
+      background: var(--bg-card);
+      border-radius: 10px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      border: 2px solid var(--border);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 1px solid var(--border);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
       height: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
-    .zone-column-card:hover { transform: translateY(-3px); }
+    .zone-column-card:hover { transform: translateY(-2px); }
     .zone-card-header {
-      background: var(--header-bg);
-      padding: 14px 16px;
+      background: var(--bg-inner);
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid var(--border);
     }
-    .zone-card-header .title-box { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 800; }
-    .zone-card-header .stats-badge { display: flex; align-items: center; gap: 8px; font-size: 13px; }
-    .zone-total-rate { padding: 2px 8px; border-radius: 4px; font-weight: 800; }
+    .zone-card-header .title-box { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; }
+    .zone-card-header .stats-badge { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+    .zone-total-rate { padding: 2px 7px; border-radius: 4px; font-weight: 800; font-size: 12px; }
     .zone-total-counts { color: var(--text-muted); font-size: 12px; }
     
-    /* جعل الجدول يتمدد بالكامل ليظهر كل المشرفين */
-    .zone-table-container {
-      width: 100%;
-      overflow-x: auto;
-      max-height: none !important;
-    }
+    .zone-table-container { width: 100%; overflow-x: auto; max-height: none !important; }
     .zone-table-container table td, 
-    .zone-table-container table th {
-      padding: 10px 12px;
-      font-size: 13px;
-    }
+    .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; }
 
     /* الجداول العامة */
-    .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
-    .search-input { min-width: 240px; flex: 2; padding: 11px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
-    .filter-select { flex: 1; min-width: 140px; padding: 11px 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none; }
+    .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+    .search-input { min-width: 240px; flex: 2; padding: 9px 12px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 7px; color: var(--text); outline: none; font-size: 13px; }
+    .filter-select { flex: 1; min-width: 140px; padding: 9px 12px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 7px; color: var(--text); outline: none; font-size: 13px; }
     
-    .table-container { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+    .table-container { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
     table { width: 100%; border-collapse: collapse; text-align: right; font-size: 12px; white-space: nowrap; }
-    th { background: var(--header-bg); padding: 10px 8px; color: var(--text-muted); font-weight: 700; }
-    td { padding: 8px 10px; border-top: 1px solid var(--border); }
+    th { background: var(--bg-inner); padding: 9px 10px; color: var(--text-muted); font-weight: 700; border-bottom: 1px solid var(--border); }
+    td { padding: 8px 10px; border-top: 1px solid var(--border); color: var(--text); }
     tbody tr:hover { background: var(--table-hover); }
 
-    .badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; display: inline-block; }
-    .badge-published { background: rgba(16,185,129,0.15); color: var(--success); border: 1px solid rgba(16,185,129,0.3); }
-    .badge-not-chosen { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
-    .badge-default { background: rgba(148,163,184,0.15); color: var(--text-muted); border: 1px solid var(--border); }
+    .badge { padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; display: inline-block; }
+    .badge-published { background: rgba(52, 211, 153, 0.12); color: var(--success); border: 1px solid rgba(52, 211, 153, 0.25); }
+    .badge-not-chosen { background: rgba(248, 113, 113, 0.12); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.25); }
+    .badge-default { background: rgba(148, 163, 184, 0.1); color: var(--text-muted); border: 1px solid var(--border); }
 
-    .loading-state { text-align: center; padding: 40px; color: var(--cyan); font-size: 16px; font-weight: bold; }
+    .loading-state { text-align: center; padding: 35px; color: var(--cyan); font-size: 15px; font-weight: bold; }
     .hidden { display: none !important; }
   </style>
 </head>
@@ -388,7 +380,7 @@
     <!-- الشاشة الرئيسية -->
     <div id="main-dashboard" class="hidden">
       
-      <!-- الحاوية المجمعة لشرائط الإحصائيات (المجمعة + مقسمة لكل منطقة) -->
+      <!-- الحاوية المجمعة لشرائط الإحصائيات -->
       <div id="top-stats-container">
         <!-- 1. شريط الإحصائيات المجمعة لكافة المناطق -->
         <div class="stats-section-block">
@@ -400,19 +392,19 @@
             <span id="selected-day-badge" style="font-size: 12px; color: var(--text-muted); font-weight: bold;">اليوم (Today)</span>
           </div>
           <div class="stats-grid">
-            <div class="stat-card" style="border-right-color: #00b4d8;">
+            <div class="stat-card" style="border-right-color: #38bdf8;">
               <div class="stat-label">إجمالي الطيارين (المسجلين)</div>
               <div class="stat-val" id="total-riders">0</div>
             </div>
-            <div class="stat-card" style="border-right-color: #10b981;">
+            <div class="stat-card" style="border-right-color: #34d399;">
               <div class="stat-label" id="card-label-published">Today: PUBLISHED (المقبول)</div>
               <div class="stat-val" id="today-published">0</div>
             </div>
-            <div class="stat-card" style="border-right-color: #ef4444;">
+            <div class="stat-card" style="border-right-color: #f87171;">
               <div class="stat-label" id="card-label-not-chosen">Today: NOT CHOSEN (غير مختار)</div>
               <div class="stat-val" id="today-not-chosen">0</div>
             </div>
-            <div class="stat-card" style="border-right-color: #f59e0b;">
+            <div class="stat-card" style="border-right-color: #fbbf24;">
               <div class="stat-label" id="card-label-rate">Today: نسبة الإسناد (%)</div>
               <div class="stat-val" id="selected-day-rate">0%</div>
             </div>
@@ -421,29 +413,29 @@
 
         <!-- 2. كروت إحصائيات كل منطقة منفصلة -->
         <div id="zones-breakdown-stats">
-          <!-- يتم إنشاؤها ديناميكياً لكل منطقة -->
+          <!-- ديناميكي -->
         </div>
       </div>
 
-      <!-- تقرير المشرفين والمناطق الملون للآدمن فقط (مكبر بالكامل) -->
+      <!-- تقرير المشرفين والمناطق الملون للآدمن فقط -->
       <div id="admin-report-card" class="card hidden">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
           <div>
-            <h3 style="margin: 0; font-size: 16px; color: var(--cyan);">📊 توزيع ونسب إسناد المشرفين حسب المناطق (خاص بالمسؤول)</h3>
+            <h3 style="margin: 0; font-size: 15px; color: var(--cyan);">📊 توزيع ونسب إسناد المشرفين حسب المناطق (خاص بالمسؤول)</h3>
             <span style="font-size: 12px; color: var(--text-muted);">محسوب من واقع عمود الـ Feedback مقارنة بإجمالي مناديب المنطقة</span>
           </div>
 
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 6px;">
-              <label style="margin: 0; font-size: 13px; color: var(--text-muted); font-weight: bold;">المشرف:</label>
-              <select id="report-supervisor-select" style="width: auto; padding: 6px 14px; font-size: 13px; background: var(--input-bg); border: 1px solid var(--border); color:var(--text); border-radius: 8px;" onchange="renderSupervisorReport()">
+              <label style="margin: 0; font-size: 12px; color: var(--text-muted); font-weight: bold;">المشرف:</label>
+              <select id="report-supervisor-select" style="width: auto; padding: 6px 12px; font-size: 12px; background: var(--input-bg); border: 1px solid var(--border); color:var(--text); border-radius: 6px;" onchange="renderSupervisorReport()">
                 <option value="all">كل المشرفين</option>
               </select>
             </div>
 
             <div style="display: flex; align-items: center; gap: 6px;">
-              <label style="margin: 0; font-size: 13px; color: var(--text-muted); font-weight: bold;">اليوم المعروض:</label>
-              <select id="report-day-select" style="width: auto; padding: 6px 14px; font-size: 13px; background: var(--input-bg); border: 1px solid var(--border); color:var(--text); border-radius: 8px;" onchange="renderSupervisorReport()">
+              <label style="margin: 0; font-size: 12px; color: var(--text-muted); font-weight: bold;">اليوم المعروض:</label>
+              <select id="report-day-select" style="width: auto; padding: 6px 12px; font-size: 12px; background: var(--input-bg); border: 1px solid var(--border); color:var(--text); border-radius: 6px;" onchange="renderSupervisorReport()">
                 <option value="all_days">كل الأيام (الـ 3 أيام معاً)</option>
                 <option value="today">اليوم (Today)</option>
                 <option value="tomorrow">الغد (Tomorrow)</option>
@@ -454,7 +446,7 @@
         </div>
 
         <div id="zones-container">
-          <!-- كروت المناطق تتمدد تلقائياً -->
+          <!-- كروت المناطق -->
         </div>
       </div>
 
@@ -467,14 +459,12 @@
             <option value="all">كل المشرفين (S.V)</option>
           </select>
 
-          <!-- فلتر اختيار اليوم للجدول والكروت العلوية -->
           <select id="main-day-filter" class="filter-select" onchange="onMainDayFilterChange()">
             <option value="today">اليوم (Today)</option>
             <option value="tomorrow">الغد (Tomorrow)</option>
             <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
           </select>
 
-          <!-- فلتر حالات اليوم المختار -->
           <select id="today-filter" class="filter-select" onchange="renderTable()">
             <option value="all">كل الحالات</option>
             <option value="PUBLISHED">PUBLISHED & EVALUATED</option>
@@ -530,16 +520,25 @@
       if (btn) btn.innerText = isLight ? "☀️" : "🌙";
     }
 
-    const ZONE_COLOR_PALETTE = [
-      "#00b4d8", "#ff6b35", "#a855f7", "#10b981", "#f59e0b", "#ec4899", "#06b6d4"
-    ];
-
+    /* ألوان باستيل مميزة ومريحة جداً للعين */
     function getZoneColor(zoneName, index) {
       const z = zoneName.toLowerCase();
-      if (z.includes('mohandiseen') || z.includes('مهندس')) return "#00b4d8";
-      if (z.includes('hadayek') || z.includes('حدائق')) return "#ff6b35";
-      if (z.includes('shobra') || z.includes('شبرا')) return "#a855f7";
-      return ZONE_COLOR_PALETTE[index % ZONE_COLOR_PALETTE.length];
+      const isLight = document.body.classList.contains("light-mode");
+      
+      if (z.includes('mohandiseen') || z.includes('مهندس')) {
+        return isLight ? "#0284c7" : "#38bdf8"; // أزرق سماوي هادئ
+      }
+      if (z.includes('hadayek') || z.includes('حدائق')) {
+        return isLight ? "#ea580c" : "#fb923c"; // برتقالي ناعم
+      }
+      if (z.includes('shobra') || z.includes('شبرا')) {
+        return isLight ? "#7c3aed" : "#c084fc"; // بنفسجي باستيل هادئ
+      }
+      
+      const palette = isLight 
+        ? ["#0284c7", "#ea580c", "#7c3aed", "#059669", "#d97706", "#db2777"]
+        : ["#38bdf8", "#fb923c", "#c084fc", "#34d399", "#fbbf24", "#f472b6"];
+      return palette[index % palette.length];
     }
 
     function showAdminLogin() {
@@ -697,11 +696,7 @@
         const status = (r[selectedDayKey] || '').toUpperCase();
 
         if (!zoneStats[zone]) {
-          zoneStats[zone] = {
-            total: 0,
-            published: 0,
-            notChosen: 0
-          };
+          zoneStats[zone] = { total: 0, published: 0, notChosen: 0 };
         }
 
         zoneStats[zone].total++;
@@ -736,19 +731,19 @@
         const zRate = zData.total > 0 ? Math.round((zData.published / zData.total) * 100) : 0;
         const themeColor = getZoneColor(zoneName, index);
 
-        let rateColor = '#ef4444';
-        if (zRate >= 70) rateColor = '#10b981';
-        else if (zRate >= 40) rateColor = '#f59e0b';
+        let rateColor = 'var(--danger)';
+        if (zRate >= 70) rateColor = 'var(--success)';
+        else if (zRate >= 40) rateColor = 'var(--warning)';
 
         const block = document.createElement('div');
         block.className = 'stats-section-block';
         block.innerHTML = `
-          <div class="stats-block-header" style="border-right-color: ${themeColor}; background: rgba(255, 255, 255, 0.02);">
+          <div class="stats-block-header" style="border-right-color: ${themeColor};">
             <div class="zone-title-tag" style="color: ${themeColor};">
               <span>📍</span>
               <span>منطقة: ${zoneName}</span>
             </div>
-            <span style="font-size: 12px; color: ${themeColor}; font-weight: bold; border: 1px solid ${themeColor}40; padding: 2px 8px; border-radius: 6px;">
+            <span style="font-size: 11px; color: ${themeColor}; font-weight: bold; border: 1px solid ${themeColor}40; padding: 2px 7px; border-radius: 5px;">
               إحصائيات ${dayTitle}
             </span>
           </div>
@@ -758,13 +753,13 @@
               <div class="stat-label">إجمالي طيارين المنطقة</div>
               <div class="stat-val" style="color: ${themeColor};">${zData.total}</div>
             </div>
-            <div class="stat-card" style="border-right-color: #10b981;">
+            <div class="stat-card" style="border-right-color: var(--success);">
               <div class="stat-label">المقبول (PUBLISHED)</div>
-              <div class="stat-val" style="color: #10b981;">${zData.published}</div>
+              <div class="stat-val" style="color: var(--success);">${zData.published}</div>
             </div>
-            <div class="stat-card" style="border-right-color: #ef4444;">
+            <div class="stat-card" style="border-right-color: var(--danger);">
               <div class="stat-label">غير مختار (NOT CHOSEN)</div>
-              <div class="stat-val" style="color: #ef4444;">${zData.notChosen}</div>
+              <div class="stat-val" style="color: var(--danger);">${zData.notChosen}</div>
             </div>
             <div class="stat-card" style="border-right-color: ${rateColor};">
               <div class="stat-label">نسبة إسناد المنطقة (%)</div>
@@ -792,11 +787,7 @@
         const status = (r[dayKey] || '').toUpperCase();
 
         if (!zonesMap[zone]) {
-          zonesMap[zone] = {
-            supervisors: {},
-            totalRidersInZone: 0,
-            totalPublishedInZone: 0
-          };
+          zonesMap[zone] = { supervisors: {}, totalRidersInZone: 0, totalPublishedInZone: 0 };
         }
 
         const isPublished = status.includes('PUBLISHED') || status.includes('EVALUATED');
@@ -804,20 +795,12 @@
         if (feedbackSv && feedbackSv !== '-' && feedbackSv !== '') {
           if (selectedSupervisor === 'all' || feedbackSv === selectedSupervisor) {
             zonesMap[zone].totalRidersInZone += 1;
-            if (isPublished) {
-              zonesMap[zone].totalPublishedInZone += 1;
-            }
+            if (isPublished) zonesMap[zone].totalPublishedInZone += 1;
 
             if (!zonesMap[zone].supervisors[feedbackSv]) {
-              zonesMap[zone].supervisors[feedbackSv] = {
-                name: feedbackSv,
-                published: 0,
-                total: 0
-              };
+              zonesMap[zone].supervisors[feedbackSv] = { name: feedbackSv, published: 0, total: 0 };
             }
-            if (isPublished) {
-              zonesMap[zone].supervisors[feedbackSv].published += 1;
-            }
+            if (isPublished) zonesMap[zone].supervisors[feedbackSv].published += 1;
             zonesMap[zone].supervisors[feedbackSv].total += 1;
           }
         }
@@ -851,8 +834,7 @@
 
         const card = document.createElement('div');
         card.className = 'zone-column-card';
-        card.style.border = `2px solid ${zoneThemeColor}`;
-        card.style.boxShadow = `0 4px 18px ${zoneThemeColor}25`;
+        card.style.borderTop = `3px solid ${zoneThemeColor}`;
 
         let rowsHtml = '';
         const svList = Object.values(zoneData.supervisors);
@@ -879,14 +861,14 @@
         }
 
         card.innerHTML = `
-          <div class="zone-card-header" style="border-bottom: 2px solid ${zoneThemeColor}50;">
+          <div class="zone-card-header">
             <div class="title-box">
-              <span style="color: ${zoneThemeColor}; font-size: 11px;">▼</span>
+              <span style="color: ${zoneThemeColor}; font-size: 10px;">▼</span>
               <span style="color: ${zoneThemeColor}; font-weight: 800;">${zoneName}</span>
             </div>
             <div class="stats-badge">
               <span class="zone-total-counts">${zoneData.totalPublishedInZone} / ${zoneData.totalRidersInZone}</span>
-              <span class="zone-total-rate" style="color: ${overallColor}; border: 1px solid ${overallColor}; background: var(--badge-bg);">${overallZoneRate}%</span>
+              <span class="zone-total-rate" style="color: ${overallColor}; border: 1px solid ${overallColor}40; background: var(--badge-bg);">${overallZoneRate}%</span>
             </div>
           </div>
           <div class="zone-table-container">
@@ -930,16 +912,12 @@
       if (daySelection === 'all_days') {
         dayDefinitions.forEach(dayDef => {
           const sectionEl = buildZoneGridForDay(dayDef.key, dayDef.title, selectedSupervisor);
-          if (sectionEl) {
-            container.appendChild(sectionEl);
-          }
+          if (sectionEl) container.appendChild(sectionEl);
         });
       } else {
         const currentDef = dayDefinitions.find(d => d.key === daySelection) || dayDefinitions[0];
         const sectionEl = buildZoneGridForDay(currentDef.key, currentDef.title, selectedSupervisor);
-        if (sectionEl) {
-          container.appendChild(sectionEl);
-        }
+        if (sectionEl) container.appendChild(sectionEl);
       }
 
       if (container.children.length === 0) {
