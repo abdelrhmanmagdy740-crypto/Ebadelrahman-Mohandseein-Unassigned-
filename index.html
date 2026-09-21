@@ -64,6 +64,7 @@
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
+      background: #000;
     }
     .intro-title {
       margin-top: 25px;
@@ -451,12 +452,10 @@
 </head>
 <body>
 
-  <!-- شاشة الشعار الافتتاحي التفاعلية بالفيديو -->
+  <!-- شاشة الشعار الافتتاحي التفاعلية بالفيديو المباشر -->
   <div id="intro-screen">
     <div class="intro-video-container">
-      <video id="splash-video" autoplay muted loop playsinline preload="auto">
-        <source src="intro.mp4" type="video/mp4">
-      </video>
+      <video id="splash-video" src="intro.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
     </div>
     <div class="intro-title">Mohandiseen 3PLs-Dashboard</div>
     <button class="skip-intro-btn" onclick="hideIntro()">تخطي الشعار الافتتاحي ✕</button>
@@ -466,9 +465,7 @@
 
   <header class="navbar">
     <div class="brand-box">
-      <video class="brand-video-mini" autoplay loop muted playsinline preload="auto">
-        <source src="intro.mp4" type="video/mp4">
-      </video>
+      <video class="brand-video-mini" src="intro.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
       <div>
         <div class="brand-title">Mohandiseen 3PLs-Dashboard</div>
         <div class="brand-sub">متابعة إسناد الطيارين (Assign Tracker)</div>
@@ -489,9 +486,7 @@
 
     <!-- شاشة تسجيل دخول المشرفين -->
     <div id="office-login-box" class="auth-wrapper">
-      <video class="login-brand-video" autoplay loop muted playsinline preload="auto">
-        <source src="intro.mp4" type="video/mp4">
-      </video>
+      <video class="login-brand-video" src="intro.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
       <h2 class="auth-title">تسجيل دخول المشرفين</h2>
       <span class="signature-text">With regards : Engineer Abd el-rahman Magdy</span>
       
@@ -514,9 +509,7 @@
 
     <!-- شاشة دخول المسؤول العام -->
     <div id="admin-login-box" class="auth-wrapper hidden">
-      <video class="login-brand-video" autoplay loop muted playsinline preload="auto">
-        <source src="intro.mp4" type="video/mp4">
-      </video>
+      <video class="login-brand-video" src="intro.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
       <h2 class="auth-title">لوحة المسؤول العام</h2>
       <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 22px;">للاطلاع على كل المشرفين والمناطق مجتمعة</p>
 
@@ -665,28 +658,23 @@
     let currentRole = "";
     let loggedInSupervisor = "";
 
-    // تشغيل الفيديوهات إجبارياً وتخطي سياسة الحظر
-    function forcePlayAllVideos() {
-      const allVideos = document.querySelectorAll('video');
-      allVideos.forEach(vid => {
-        vid.muted = true;
-        vid.defaultMuted = true;
-        vid.setAttribute('muted', '');
-        vid.setAttribute('playsinline', '');
-        
-        const playPromise = vid.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            // في حال الحظر من المتصفح، يتم تشغيله فور أول تفاعل أو لمسة من المستخدم
-            const startOnInteraction = () => {
-              vid.play();
-              window.removeEventListener('click', startOnInteraction);
-              window.removeEventListener('touchstart', startOnInteraction);
-              window.removeEventListener('keydown', startOnInteraction);
+    // تشغيل كافة الفيديوهات الصامتة فوراً وتخطي حظر المتصفحات
+    function playAllVideosImmediately() {
+      const vids = document.querySelectorAll('video');
+      vids.forEach(v => {
+        v.muted = true;
+        v.defaultMuted = true;
+        const p = v.play();
+        if (p !== undefined) {
+          p.catch(() => {
+            // تشغيل مؤكد عند أول لمسة للموقع
+            const onTouch = () => {
+              v.play();
+              window.removeEventListener('click', onTouch);
+              window.removeEventListener('touchstart', onTouch);
             };
-            window.addEventListener('click', startOnInteraction, { once: true });
-            window.addEventListener('touchstart', startOnInteraction, { once: true });
-            window.addEventListener('keydown', startOnInteraction, { once: true });
+            window.addEventListener('click', onTouch, { once: true });
+            window.addEventListener('touchstart', onTouch, { once: true });
           });
         }
       });
@@ -750,13 +738,13 @@
     function showAdminLogin() {
       document.getElementById('office-login-box').classList.add('hidden');
       document.getElementById('admin-login-box').classList.remove('hidden');
-      forcePlayAllVideos();
+      playAllVideosImmediately();
     }
 
     function showOfficeLogin() {
       document.getElementById('admin-login-box').classList.add('hidden');
       document.getElementById('office-login-box').classList.remove('hidden');
-      forcePlayAllVideos();
+      playAllVideosImmediately();
     }
 
     function loginSupervisor() {
@@ -808,7 +796,7 @@
       }
 
       fetchData();
-      forcePlayAllVideos();
+      playAllVideosImmediately();
     }
 
     function logout() {
@@ -1376,8 +1364,17 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       initSupervisorLoginDropdown();
-      forcePlayAllVideos();
+      playAllVideosImmediately();
     });
+
+    window.addEventListener('load', () => {
+      playAllVideosImmediately();
+    });
+
+    // تشغيل احتياطي إضافي عند أول نقرة في أي مكان بالصفحة
+    document.addEventListener('click', () => {
+      playAllVideosImmediately();
+    }, { once: true });
   </script>
 </body>
 </html>
