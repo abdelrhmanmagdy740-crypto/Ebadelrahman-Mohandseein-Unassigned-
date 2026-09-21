@@ -379,7 +379,6 @@
     .badge-not-chosen { background: rgba(248, 113, 113, 0.14); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.35); }
     .badge-default { background: rgba(148, 163, 184, 0.1); color: var(--text-muted); border: 1px solid var(--border); }
 
-    /* شارات التمييز بالألوان المحددة */
     .badge-fb-remove {
       background-color: #dc2626 !important;
       color: #ffffff !important;
@@ -477,34 +476,36 @@
 
   <div class="container">
 
+    <!-- شاشة تسجيل دخول المشرفين المخصصة -->
     <div id="office-login-box" class="auth-wrapper">
-      <div class="auth-icon">🏢</div>
-      <h2 class="auth-title">تسجيل الدخول للمكاتب</h2>
+      <div class="auth-icon">👨‍💼</div>
+      <h2 class="auth-title">تسجيل دخول المشرفين</h2>
       <span class="signature-text">With regards : Engineer Abd el-rahman Magdy</span>
       
       <div class="form-group">
-        <label>① اختار المكتب</label>
-        <select id="office-name" class="custom-login-field">
-          <option value="Mohandseein Manual Unassigned">Mohandseein Manual Unassigned</option>
+        <label>① اختار اسم المشرف</label>
+        <select id="supervisor-user-select" class="custom-login-field">
+          <!-- يتم ملؤها تلقائياً من مصفوفة المشرفين -->
         </select>
       </div>
 
       <div class="form-group">
-        <label>② أدخل الباسورد</label>
-        <input type="password" id="office-pass" class="custom-pass-input" placeholder="••••••••">
+        <label>② أدخل الباسورد الخاص بك</label>
+        <input type="password" id="supervisor-pass" class="custom-pass-input" placeholder="••••••••">
       </div>
 
-      <button class="btn-login-orange" onclick="loginOffice()">تسجيل الدخول</button>
+      <button class="btn-login-orange" onclick="loginSupervisor()">تسجيل الدخول</button>
       
       <div class="switch-link">
-        <a onclick="showAdminLogin()">⚙ دخول المسؤول (Admin)</a>
+        <a onclick="showAdminLogin()">⚙ دخول المسؤول العام (Admin)</a>
       </div>
     </div>
 
+    <!-- شاشة دخول الإدارة العامة -->
     <div id="admin-login-box" class="auth-wrapper hidden">
       <div class="auth-icon">🔐</div>
-      <h2 class="auth-title">لوحة المسؤول</h2>
-      <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 25px;">للوصول لإعدادات ومؤشرات النظام العامة</p>
+      <h2 class="auth-title">لوحة المسؤول العام</h2>
+      <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 25px;">للاطلاع على كل المشرفين والمناطق مجتمعة</p>
 
       <div class="form-group">
         <label>باسورد المسؤول</label>
@@ -514,7 +515,7 @@
       <button class="btn-login-orange" onclick="loginAdmin()">دخول المسؤول</button>
 
       <div class="switch-link">
-        <a onclick="showOfficeLogin()">← رجوع لتسجيل دخول المكاتب</a>
+        <a onclick="showOfficeLogin()">← رجوع لتسجيل دخول المشرفين</a>
       </div>
     </div>
 
@@ -525,13 +526,13 @@
           <div class="stats-block-header">
             <div class="zone-title-tag" style="color: var(--cyan);">
               <span>🌐</span>
-              <span>إجمالي كافة المناطق مجمعة (All Zones)</span>
+              <span id="stats-header-scope">إحصائيات المناديب المسندين</span>
             </div>
             <span id="selected-day-badge" style="font-size: 12px; color: var(--text-muted); font-weight: bold;">اليوم (Today)</span>
           </div>
           <div class="stats-grid">
             <div class="stat-card" style="border-right-color: #38bdf8;">
-              <div class="stat-label" id="card-label-total">إجمالي الطيارين (المسجلين)</div>
+              <div class="stat-label" id="card-label-total">إجمالي الطيارين</div>
               <div class="stat-val" id="total-riders">0</div>
             </div>
             <div class="stat-card" style="border-right-color: #34d399;">
@@ -552,6 +553,7 @@
         <div id="zones-breakdown-stats"></div>
       </div>
 
+      <!-- تقرير المشرفين: يظهر فقط لحساب الأدمن العام -->
       <div id="admin-report-card" class="card hidden">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
           <div>
@@ -633,8 +635,39 @@
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp0wtmh4YXFihShMs10ducOyrF1ZH9VmZ6NDSNdFHZUlnCCa8ZbHo_I-NShvg7ZXaS/exec";
 
+    /* ==========================================================================
+       قاعدة بيانات حسابات المشرفين وكلمات المرور (يمكنك التعديل أو الإضافة عليها بسهولة)
+       ========================================================================== */
+    const SUPERVISORS_DB = [
+      { name: "محمد طارق", pass: "1001" },
+      { name: "العادل ( دليفري أكس )", pass: "1002" },
+      { name: "فوكس ( علي نصر )", pass: "1003" },
+      { name: "( سكاي ) محمد خالد", pass: "1004" },
+      { name: "كرلس روماني", pass: "1005" },
+      { name: "احمد حفني", pass: "1006" },
+      { name: "حسن اسماعيل", pass: "1007" },
+      { name: "حسين صلاح", pass: "1008" },
+      { name: "اسماعيل علي", pass: "1009" },
+      { name: "عبدالرحمن حسين", pass: "1010" },
+      { name: "ريفو", pass: "1011" }
+    ];
+
     let ridersData = [];
-    let currentRole = "";
+    let currentRole = ""; // "admin" أو "supervisor"
+    let loggedInSupervisor = ""; // اسم المشرف المسجل دخوله حالياً
+
+    // تهيئة قائمة أسماء المشرفين في صفحة الدخول
+    function initSupervisorLoginDropdown() {
+      const select = document.getElementById('supervisor-user-select');
+      if (!select) return;
+      select.innerHTML = '<option value="" disabled selected>-- اختر اسم المشرف للدخول --</option>';
+      SUPERVISORS_DB.forEach(u => {
+        const opt = document.createElement('option');
+        opt.value = u.name;
+        opt.innerText = u.name;
+        select.appendChild(opt);
+      });
+    }
 
     if (localStorage.getItem("dashboard_theme") === "light") {
       document.body.classList.add("light-mode");
@@ -705,24 +738,35 @@
       document.getElementById('office-login-box').classList.remove('hidden');
     }
 
-    function loginOffice() {
-      const office = document.getElementById('office-name').value;
-      const pass = document.getElementById('office-pass').value;
-      if (pass === "1234") {
-        currentRole = "office";
-        enterDashboard(office);
+    // تسجيل دخول المشرف المخصص والتحقق من رمزه السري
+    function loginSupervisor() {
+      const selectedSv = document.getElementById('supervisor-user-select').value;
+      const pass = document.getElementById('supervisor-pass').value.trim();
+
+      if (!selectedSv) {
+        alert("برجاء اختيار اسم المشرف أولاً.");
+        return;
+      }
+
+      const userObj = SUPERVISORS_DB.find(u => u.name === selectedSv);
+      if (userObj && userObj.pass === pass) {
+        currentRole = "supervisor";
+        loggedInSupervisor = selectedSv;
+        enterDashboard(`المشرف: ${selectedSv}`);
       } else {
-        alert("كلمة المرور غير صحيحة (التجريبية: 1234)");
+        alert("كلمة المرور غير صحيحة الخاصة بهذا المشرف!");
       }
     }
 
+    // تسجيل دخول المسؤول العام
     function loginAdmin() {
-      const pass = document.getElementById('admin-pass').value;
+      const pass = document.getElementById('admin-pass').value.trim();
       if (pass === "admin123") {
         currentRole = "admin";
+        loggedInSupervisor = "";
         enterDashboard("المسؤول العام");
       } else {
-        alert("كلمة مرور المسؤول غير صحيحة (التجريبية: admin123)");
+        alert("كلمة مرور المسؤول غير صحيحة!");
       }
     }
 
@@ -734,10 +778,14 @@
       document.getElementById('current-user-name').innerText = "👤 " + title;
 
       const adminReport = document.getElementById('admin-report-card');
+      const scopeHeader = document.getElementById('stats-header-scope');
+
       if (currentRole === "admin") {
         adminReport.classList.remove('hidden');
+        if (scopeHeader) scopeHeader.innerText = "إجمالي كافة المناطق مجمعة (All Zones)";
       } else {
         adminReport.classList.add('hidden');
+        if (scopeHeader) scopeHeader.innerText = `إحصائيات مناديب المشرف (${loggedInSupervisor})`;
       }
 
       fetchData();
@@ -745,8 +793,11 @@
 
     function logout() {
       currentRole = "";
+      loggedInSupervisor = "";
       document.getElementById('main-dashboard').classList.add('hidden');
       document.getElementById('user-pill').classList.add('hidden');
+      document.getElementById('supervisor-pass').value = '';
+      document.getElementById('admin-pass').value = '';
       showOfficeLogin();
     }
 
@@ -832,6 +883,22 @@
     }
 
     function populateSupervisors() {
+      const svSelect = document.getElementById('supervisor-filter');
+      svSelect.innerHTML = '';
+
+      // إذا كان المستخدم مشرفاً عادياً يتم قفل الفلتر على اسمه فقط
+      if (currentRole === "supervisor") {
+        const opt = document.createElement('option');
+        opt.value = loggedInSupervisor;
+        opt.innerText = loggedInSupervisor;
+        opt.selected = true;
+        svSelect.appendChild(opt);
+        svSelect.disabled = true;
+        return;
+      }
+
+      // إذا كان أدمن: يمكنه التبديل بين كل المشرفين
+      svSelect.disabled = false;
       const svSet = new Set();
       ridersData.forEach(r => {
         if (r.supervisor && r.supervisor.trim() !== '') {
@@ -839,8 +906,11 @@
         }
       });
 
-      const svSelect = document.getElementById('supervisor-filter');
-      svSelect.innerHTML = '<option value="all">كل المشرفين (S.V)</option>';
+      const defaultOpt = document.createElement('option');
+      defaultOpt.value = 'all';
+      defaultOpt.innerText = 'كل المشرفين (S.V)';
+      svSelect.appendChild(defaultOpt);
+
       Array.from(svSet).sort((a, b) => a.localeCompare(b, 'ar')).forEach(sv => {
         const opt = document.createElement('option');
         opt.value = sv;
@@ -885,6 +955,14 @@
       return s.includes('NOT CHOSEN');
     }
 
+    // دالة فحص ما إذا كان الطيار يتبع المشرف المسجل دخوله
+    function isRiderAssignedToSupervisor(r, svName) {
+      const target = (svName || '').trim().toLowerCase();
+      const sv = (r.supervisor || '').trim().toLowerCase();
+      const fb = (r.feedback || '').trim().toLowerCase();
+      return sv.includes(target) || fb.includes(target);
+    }
+
     function updateStats(filteredData, selectedDayKey) {
       const dayNames = {
         today: "اليوم (Today)",
@@ -924,7 +1002,7 @@
       const totalRate = total > 0 ? Math.round((published / total) * 100) : 0;
       const totalRateColor = getRateColor(totalRate);
 
-      document.getElementById('card-label-total').innerText = 'إجمالي الطيارين (المسجلين)';
+      document.getElementById('card-label-total').innerText = currentRole === 'supervisor' ? `إجمالي طيارين (${loggedInSupervisor})` : 'إجمالي الطيارين (المسجلين)';
       document.getElementById('card-label-published').innerText = `${dayTitle}: PUBLISHED (المقبول)`;
       document.getElementById('card-label-not-chosen').innerText = `${dayTitle}: NOT CHOSEN (غير مختار)`;
       document.getElementById('card-label-rate').innerText = `${dayTitle}: نسبة الإسناد (%)`;
@@ -992,7 +1070,6 @@
       return 'badge-default';
     }
 
-    /* دالة تنسيق خلية الـ Feedback وجداول المناطق */
     function renderFeedbackCell(fb) {
       const cleanFb = (fb || '').trim();
       if (!cleanFb || cleanFb === '-') return '-';
@@ -1012,7 +1089,6 @@
       return `<span style="color: var(--warning); font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
     }
 
-    /* دالة تنسيق اسم المشرف في جدول المناطق ليدعم ألوان Remove S.P و Day by day و Holiday */
     function renderSupervisorNameCell(name) {
       const cleanName = (name || '').trim();
       const lowerName = cleanName.toLowerCase();
@@ -1177,6 +1253,7 @@
       renderTable();
     }
 
+    // تصفية وعزل البيانات الصارمة حسب حساب المستخدم
     function getFilteredRiders() {
       const q = document.getElementById('search-box').value.trim().toLowerCase();
       const svFilter = document.getElementById('supervisor-filter').value;
@@ -1184,11 +1261,18 @@
       const statusFilter = document.getElementById('today-filter').value;
 
       return ridersData.filter(r => {
+        // إذا كان الداخل مشرفاً، يتم قفل الفلترة عليه بحيث لا يرى أي مندوب خارج إشرافه
+        if (currentRole === "supervisor") {
+          if (!isRiderAssignedToSupervisor(r, loggedInSupervisor)) {
+            return false;
+          }
+        }
+
         const matchQuery = (r.name && r.name.toLowerCase().includes(q)) ||
                            (r.id && r.id.toLowerCase().includes(q)) ||
                            (r.phone && r.phone.toLowerCase().includes(q));
         
-        const matchSv = (svFilter === 'all') || (r.supervisor && r.supervisor.trim() === svFilter);
+        const matchSv = (currentRole === "supervisor") || (svFilter === 'all') || (r.supervisor && r.supervisor.trim() === svFilter);
 
         let matchStatus = true;
         if (statusFilter !== 'all') {
@@ -1281,12 +1365,18 @@
       a.href = url;
       
       const todayDate = new Date().toISOString().slice(0, 10);
-      a.download = `Riders_Data_${todayDate}.csv`;
+      const prefix = currentRole === 'supervisor' ? `Riders_${loggedInSupervisor}_` : `All_Riders_`;
+      a.download = `${prefix}${todayDate}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }
+
+    // تشغيل تهيئة قائمة المشرفين فور تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', () => {
+      initSupervisorLoginDropdown();
+    });
   </script>
 </body>
 </html>
