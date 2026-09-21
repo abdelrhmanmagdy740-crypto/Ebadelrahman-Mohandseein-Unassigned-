@@ -454,7 +454,9 @@
   <!-- شاشة الشعار الافتتاحي التفاعلية بالفيديو -->
   <div id="intro-screen">
     <div class="intro-video-container">
-      <video id="splash-video" src="intro.mp4" autoplay muted playsinline></video>
+      <video id="splash-video" autoplay muted loop playsinline preload="auto">
+        <source src="intro.mp4" type="video/mp4">
+      </video>
     </div>
     <div class="intro-title">Mohandiseen 3PLs-Dashboard</div>
     <button class="skip-intro-btn" onclick="hideIntro()">تخطي الشعار الافتتاحي ✕</button>
@@ -464,7 +466,9 @@
 
   <header class="navbar">
     <div class="brand-box">
-      <video class="brand-video-mini" src="intro.mp4" autoplay loop muted playsinline></video>
+      <video class="brand-video-mini" autoplay loop muted playsinline preload="auto">
+        <source src="intro.mp4" type="video/mp4">
+      </video>
       <div>
         <div class="brand-title">Mohandiseen 3PLs-Dashboard</div>
         <div class="brand-sub">متابعة إسناد الطيارين (Assign Tracker)</div>
@@ -485,7 +489,9 @@
 
     <!-- شاشة تسجيل دخول المشرفين -->
     <div id="office-login-box" class="auth-wrapper">
-      <video class="login-brand-video" src="intro.mp4" autoplay loop muted playsinline></video>
+      <video class="login-brand-video" autoplay loop muted playsinline preload="auto">
+        <source src="intro.mp4" type="video/mp4">
+      </video>
       <h2 class="auth-title">تسجيل دخول المشرفين</h2>
       <span class="signature-text">With regards : Engineer Abd el-rahman Magdy</span>
       
@@ -508,7 +514,9 @@
 
     <!-- شاشة دخول المسؤول العام -->
     <div id="admin-login-box" class="auth-wrapper hidden">
-      <video class="login-brand-video" src="intro.mp4" autoplay loop muted playsinline></video>
+      <video class="login-brand-video" autoplay loop muted playsinline preload="auto">
+        <source src="intro.mp4" type="video/mp4">
+      </video>
       <h2 class="auth-title">لوحة المسؤول العام</h2>
       <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 22px;">للاطلاع على كل المشرفين والمناطق مجتمعة</p>
 
@@ -657,7 +665,33 @@
     let currentRole = "";
     let loggedInSupervisor = "";
 
-    // إدارة الشاشة الافتتاحية
+    // تشغيل الفيديوهات إجبارياً وتخطي سياسة الحظر
+    function forcePlayAllVideos() {
+      const allVideos = document.querySelectorAll('video');
+      allVideos.forEach(vid => {
+        vid.muted = true;
+        vid.defaultMuted = true;
+        vid.setAttribute('muted', '');
+        vid.setAttribute('playsinline', '');
+        
+        const playPromise = vid.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // في حال الحظر من المتصفح، يتم تشغيله فور أول تفاعل أو لمسة من المستخدم
+            const startOnInteraction = () => {
+              vid.play();
+              window.removeEventListener('click', startOnInteraction);
+              window.removeEventListener('touchstart', startOnInteraction);
+              window.removeEventListener('keydown', startOnInteraction);
+            };
+            window.addEventListener('click', startOnInteraction, { once: true });
+            window.addEventListener('touchstart', startOnInteraction, { once: true });
+            window.addEventListener('keydown', startOnInteraction, { once: true });
+          });
+        }
+      });
+    }
+
     function hideIntro() {
       const intro = document.getElementById('intro-screen');
       if (intro) intro.classList.add('fade-out');
@@ -666,7 +700,6 @@
     const splashVideo = document.getElementById('splash-video');
     if (splashVideo) {
       splashVideo.addEventListener('ended', hideIntro);
-      // إغلاق تلقائي كحد أقصى بعد 5 ثوانٍ
       setTimeout(hideIntro, 5000);
     }
 
@@ -717,11 +750,13 @@
     function showAdminLogin() {
       document.getElementById('office-login-box').classList.add('hidden');
       document.getElementById('admin-login-box').classList.remove('hidden');
+      forcePlayAllVideos();
     }
 
     function showOfficeLogin() {
       document.getElementById('admin-login-box').classList.add('hidden');
       document.getElementById('office-login-box').classList.remove('hidden');
+      forcePlayAllVideos();
     }
 
     function loginSupervisor() {
@@ -773,6 +808,7 @@
       }
 
       fetchData();
+      forcePlayAllVideos();
     }
 
     function logout() {
@@ -1340,6 +1376,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       initSupervisorLoginDropdown();
+      forcePlayAllVideos();
     });
   </script>
 </body>
