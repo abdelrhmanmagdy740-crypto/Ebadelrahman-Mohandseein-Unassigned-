@@ -132,7 +132,53 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       width: 100%;
     }
-    .auth-icon { font-size: 48px; text-align: center; margin-bottom: 12px; line-height: 1; }
+
+    /* تصميم شعار A.M Wasif */
+    .am-brand-badge {
+      display: inline-flex;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 18px;
+      margin: 0 auto 16px auto;
+      background: radial-gradient(circle at center, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.5) 100%);
+      border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25), inset 0 0 15px rgba(56, 189, 248, 0.08);
+      user-select: none;
+    }
+    .am-letters {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 24px;
+      margin-right: -24px;
+      background: linear-gradient(135deg, #38bdf8 0%, #f97316 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Cairo', sans-serif;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+    }
+    .am-middle-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #0f172a;
+      color: #ffffff;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1px solid rgba(249, 115, 22, 0.85);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+      font-family: 'Cairo', sans-serif;
+      white-space: nowrap;
+    }
+
     .auth-title { text-align: center; margin: 0 0 8px 0; font-size: 24px; font-weight: 800; color: var(--text); }
     .signature-text {
       text-align: center;
@@ -476,16 +522,21 @@
 
   <div class="container">
 
-    <!-- شاشة تسجيل دخول المشرفين المخصصة -->
+    <!-- شاشة تسجيل دخول المشرفين مع شعار A.M Wasif الاحترافي -->
     <div id="office-login-box" class="auth-wrapper">
-      <div class="auth-icon">👨‍💼</div>
+      <div style="text-align: center;">
+        <div class="am-brand-badge">
+          <span class="am-letters">A M</span>
+          <span class="am-middle-text">Wasif</span>
+        </div>
+      </div>
       <h2 class="auth-title">تسجيل دخول المشرفين</h2>
       <span class="signature-text">With regards : Engineer Abd el-rahman Magdy</span>
       
       <div class="form-group">
         <label>① اختار اسم المشرف</label>
         <select id="supervisor-user-select" class="custom-login-field">
-          <!-- يتم ملؤها تلقائياً من مصفوفة المشرفين -->
+          <!-- يتم ملؤها تلقائياً -->
         </select>
       </div>
 
@@ -501,9 +552,14 @@
       </div>
     </div>
 
-    <!-- شاشة دخول الإدارة العامة -->
+    <!-- شاشة دخول المسؤول العام مع شعار A.M Wasif -->
     <div id="admin-login-box" class="auth-wrapper hidden">
-      <div class="auth-icon">🔐</div>
+      <div style="text-align: center;">
+        <div class="am-brand-badge">
+          <span class="am-letters">A M</span>
+          <span class="am-middle-text">Wasif</span>
+        </div>
+      </div>
       <h2 class="auth-title">لوحة المسؤول العام</h2>
       <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 25px;">للاطلاع على كل المشرفين والمناطق مجتمعة</p>
 
@@ -553,7 +609,6 @@
         <div id="zones-breakdown-stats"></div>
       </div>
 
-      <!-- تقرير المشرفين: يظهر فقط لحساب الأدمن العام -->
       <div id="admin-report-card" class="card hidden">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
           <div>
@@ -635,9 +690,6 @@
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp0wtmh4YXFihShMs10ducOyrF1ZH9VmZ6NDSNdFHZUlnCCa8ZbHo_I-NShvg7ZXaS/exec";
 
-    /* ==========================================================================
-       قاعدة بيانات حسابات المشرفين وكلمات المرور (يمكنك التعديل أو الإضافة عليها بسهولة)
-       ========================================================================== */
     const SUPERVISORS_DB = [
       { name: "محمد طارق", pass: "1001" },
       { name: "العادل ( دليفري أكس )", pass: "1002" },
@@ -653,10 +705,9 @@
     ];
 
     let ridersData = [];
-    let currentRole = ""; // "admin" أو "supervisor"
-    let loggedInSupervisor = ""; // اسم المشرف المسجل دخوله حالياً
+    let currentRole = "";
+    let loggedInSupervisor = "";
 
-    // تهيئة قائمة أسماء المشرفين في صفحة الدخول
     function initSupervisorLoginDropdown() {
       const select = document.getElementById('supervisor-user-select');
       if (!select) return;
@@ -738,7 +789,6 @@
       document.getElementById('office-login-box').classList.remove('hidden');
     }
 
-    // تسجيل دخول المشرف المخصص والتحقق من رمزه السري
     function loginSupervisor() {
       const selectedSv = document.getElementById('supervisor-user-select').value;
       const pass = document.getElementById('supervisor-pass').value.trim();
@@ -758,7 +808,6 @@
       }
     }
 
-    // تسجيل دخول المسؤول العام
     function loginAdmin() {
       const pass = document.getElementById('admin-pass').value.trim();
       if (pass === "admin123") {
@@ -886,7 +935,6 @@
       const svSelect = document.getElementById('supervisor-filter');
       svSelect.innerHTML = '';
 
-      // إذا كان المستخدم مشرفاً عادياً يتم قفل الفلتر على اسمه فقط
       if (currentRole === "supervisor") {
         const opt = document.createElement('option');
         opt.value = loggedInSupervisor;
@@ -897,7 +945,6 @@
         return;
       }
 
-      // إذا كان أدمن: يمكنه التبديل بين كل المشرفين
       svSelect.disabled = false;
       const svSet = new Set();
       ridersData.forEach(r => {
@@ -955,7 +1002,6 @@
       return s.includes('NOT CHOSEN');
     }
 
-    // دالة فحص ما إذا كان الطيار يتبع المشرف المسجل دخوله
     function isRiderAssignedToSupervisor(r, svName) {
       const target = (svName || '').trim().toLowerCase();
       const sv = (r.supervisor || '').trim().toLowerCase();
@@ -1253,7 +1299,6 @@
       renderTable();
     }
 
-    // تصفية وعزل البيانات الصارمة حسب حساب المستخدم
     function getFilteredRiders() {
       const q = document.getElementById('search-box').value.trim().toLowerCase();
       const svFilter = document.getElementById('supervisor-filter').value;
@@ -1261,7 +1306,6 @@
       const statusFilter = document.getElementById('today-filter').value;
 
       return ridersData.filter(r => {
-        // إذا كان الداخل مشرفاً، يتم قفل الفلترة عليه بحيث لا يرى أي مندوب خارج إشرافه
         if (currentRole === "supervisor") {
           if (!isRiderAssignedToSupervisor(r, loggedInSupervisor)) {
             return false;
@@ -1373,7 +1417,6 @@
       URL.revokeObjectURL(url);
     }
 
-    // تشغيل تهيئة قائمة المشرفين فور تحميل الصفحة
     window.addEventListener('DOMContentLoaded', () => {
       initSupervisorLoginDropdown();
     });
