@@ -365,8 +365,8 @@
       outline: none; 
       font-size: 13px; 
     }
-    .search-input { min-width: 220px; flex: 2; }
-    .filter-select { flex: 1; min-width: 140px; }
+    .search-input { min-width: 200px; flex: 2; }
+    .filter-select { flex: 1; min-width: 130px; }
     
     .table-container { 
       width: 100%;
@@ -632,6 +632,11 @@
             <option value="all">كل المشرفين (S.V)</option>
           </select>
 
+          <!-- فلتر الـ Feedback المضاف حديثاً -->
+          <select id="feedback-filter" class="filter-select" onchange="renderTable()">
+            <option value="all">كل الـ Feedback</option>
+          </select>
+
           <select id="main-day-filter" class="filter-select" onchange="onMainDayFilterChange()">
             <option value="today">اليوم (Today)</option>
             <option value="tomorrow">الغد (Tomorrow)</option>
@@ -794,7 +799,6 @@
 
     function loginAdmin() {
       const pass = document.getElementById('admin-pass').value.trim();
-      // تم تعيين الباسورد الجديد هنا
       if (pass === "boda2002") {
         currentRole = "admin";
         loggedInSupervisor = "";
@@ -895,6 +899,7 @@
         ridersData = rawRows.map(r => normalizeRider(r));
 
         populateSupervisors();
+        populateFeedbackDropdown();
         populateReportSupervisors();
         renderTable();
         if (currentRole === "admin") {
@@ -945,6 +950,36 @@
         opt.innerText = sv;
         svSelect.appendChild(opt);
       });
+    }
+
+    // استخراج وتعبئة خيارات فلتر الـ Feedback ديناميكياً
+    function populateFeedbackDropdown() {
+      const fbSelect = document.getElementById('feedback-filter');
+      if (!fbSelect) return;
+      const currentSelected = fbSelect.value;
+      fbSelect.innerHTML = '<option value="all">كل الـ Feedback</option>';
+
+      const fbSet = new Set();
+      ridersData.forEach(r => {
+        if (currentRole === "supervisor" && !isRiderAssignedToSupervisor(r, loggedInSupervisor)) {
+          return;
+        }
+        const fb = (r.feedback || '').trim();
+        if (fb && fb !== '-' && fb !== '') {
+          fbSet.add(fb);
+        }
+      });
+
+      Array.from(fbSet).sort((a, b) => a.localeCompare(b, 'ar')).forEach(fb => {
+        const opt = document.createElement('option');
+        opt.value = fb;
+        opt.innerText = fb;
+        fbSelect.appendChild(opt);
+      });
+
+      if (fbSet.has(currentSelected)) {
+        fbSelect.value = currentSelected;
+      }
     }
 
     function populateReportSupervisors() {
@@ -1266,6 +1301,7 @@
     function getFilteredRiders() {
       const q = document.getElementById('search-box').value.trim().toLowerCase();
       const svFilter = document.getElementById('supervisor-filter').value;
+      const fbFilter = (document.getElementById('feedback-filter') ? document.getElementById('feedback-filter').value : 'all');
       const selectedDay = document.getElementById('main-day-filter').value;
       const statusFilter = document.getElementById('today-filter').value;
 
@@ -1282,6 +1318,9 @@
         
         const matchSv = (currentRole === "supervisor") || (svFilter === 'all') || (r.supervisor && r.supervisor.trim() === svFilter);
 
+        // شرط فلتر الـ Feedback
+        const matchFb = (fbFilter === 'all') || ((r.feedback || '').trim() === fbFilter);
+
         let matchStatus = true;
         if (statusFilter !== 'all') {
           const dayVal = (r[selectedDay] || '').toUpperCase();
@@ -1289,7 +1328,7 @@
           else if (statusFilter === 'NOT CHOSEN') matchStatus = isStatusNotChosen(dayVal);
         }
 
-        return matchQuery && matchSv && matchStatus;
+        return matchQuery && matchSv && matchFb && matchStatus;
       });
     }
 
