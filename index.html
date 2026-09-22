@@ -545,7 +545,7 @@
     <!-- شاشة دخول المسؤول العام -->
     <div id="admin-login-box" class="auth-wrapper hidden">
       <img class="login-brand-logo" src="logo.png" alt="Logo">
-      <h2 class="auth-title" style="direction: ltr; font-size: 21px;">Engineer Abdulrahman Magdy's Login Panel</h2>
+      <h2 class="auth-title" style="direction: ltr; font-size: 20px;">Engineer Abdulrahman Magdy's Login Panel</h2>
       <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 22px;">للاطلاع على كل المشرفين والمناطق مجتمعة</p>
 
       <div class="form-group">
@@ -734,9 +734,9 @@
 
     function getZoneColor(zoneName, index) {
       const z = (zoneName || '').toLowerCase();
-      if (z.includes('mohandiseen') || z.includes('مهندس')) return "#ea580c"; // برتقالي
-      if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";    // أحمر
-      if (z.includes('shobra') || z.includes('شبرا')) return "#f59e0b";      // عنبري
+      if (z.includes('mohandiseen') || z.includes('مهندس')) return "#ea580c";
+      if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";
+      if (z.includes('shobra') || z.includes('شبرا')) return "#f59e0b";
       const palette = ["#ea580c", "#dc2626", "#f59e0b", "#0284c7", "#16a34a"];
       return palette[index % palette.length];
     }
@@ -794,7 +794,8 @@
 
     function loginAdmin() {
       const pass = document.getElementById('admin-pass').value.trim();
-      if (pass === "admin123") {
+      // تم تعيين الباسورد الجديد هنا
+      if (pass === "boda2002") {
         currentRole = "admin";
         loggedInSupervisor = "";
         enterDashboard("المسؤول العام");
@@ -1381,7 +1382,6 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      // استرجاع تفضيل الثيم المحفوظ
       const savedTheme = localStorage.getItem('dashboard_theme') || 'dark';
       applyTheme(savedTheme);
       initSupervisorLoginDropdown();
