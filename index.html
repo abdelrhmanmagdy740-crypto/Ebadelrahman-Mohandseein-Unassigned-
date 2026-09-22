@@ -46,25 +46,31 @@
       visibility: hidden;
       pointer-events: none;
     }
-    .intro-video-container {
+    
+    @keyframes pulseGlow {
+      0% { transform: scale(0.97); box-shadow: 0 0 35px rgba(212, 175, 55, 0.4), 0 0 50px rgba(185, 28, 28, 0.3); }
+      50% { transform: scale(1.03); box-shadow: 0 0 60px rgba(212, 175, 55, 0.7), 0 0 75px rgba(185, 28, 28, 0.55); }
+      100% { transform: scale(0.97); box-shadow: 0 0 35px rgba(212, 175, 55, 0.4), 0 0 50px rgba(185, 28, 28, 0.3); }
+    }
+
+    .intro-logo-container {
       position: relative;
       width: 250px;
       height: 250px;
       border-radius: 50%;
       padding: 5px;
       background: linear-gradient(135deg, var(--gold-light), var(--red-accent), var(--gold-primary));
-      box-shadow: 0 0 45px rgba(212, 175, 55, 0.45), 0 0 60px rgba(185, 28, 28, 0.35);
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+      animation: pulseGlow 2.5s infinite ease-in-out;
     }
-    .intro-video-container video {
+    .intro-logo-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
-      background: #000;
     }
     .intro-title {
       margin-top: 25px;
@@ -107,14 +113,13 @@
       gap: 12px;
     }
     .brand-box { display: flex; align-items: center; gap: 14px; }
-    .brand-video-mini {
+    .brand-logo-mini {
       width: 44px;
       height: 44px;
       border-radius: 50%;
       border: 2px solid var(--gold-primary);
       box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
       object-fit: cover;
-      background: #000;
     }
     .brand-title { font-size: 17px; font-weight: 800; color: var(--gold-light); line-height: 1.2; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
     .brand-sub { font-size: 12px; color: var(--text-muted); font-weight: 600; }
@@ -159,15 +164,14 @@
       text-align: center;
     }
 
-    .login-brand-video {
-      width: 110px;
-      height: 110px;
+    .login-brand-logo {
+      width: 115px;
+      height: 115px;
       border-radius: 50%;
       border: 3px solid var(--gold-primary);
       box-shadow: 0 0 25px rgba(212, 175, 55, 0.5), 0 0 15px rgba(185, 28, 28, 0.4);
       object-fit: cover;
       margin-bottom: 12px;
-      background: #000;
     }
 
     .auth-title { margin: 0 0 8px 0; font-size: 24px; font-weight: 900; color: var(--gold-light); }
@@ -452,10 +456,10 @@
 </head>
 <body>
 
-  <!-- شاشة الشعار الافتتاحي التفاعلية بالفيديو المباشر -->
+  <!-- شاشة الشعار الافتتاحي التفاعلية باللوجو الملكي -->
   <div id="intro-screen">
-    <div class="intro-video-container">
-      <video id="splash-video" src="intro.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+    <div class="intro-logo-container">
+      <img src="logo.png" alt="A.M Logo" onerror="this.onerror=null; this.src='A.M.K.png';">
     </div>
     <div class="intro-title">Mohandiseen 3PLs-Dashboard</div>
     <button class="skip-intro-btn" onclick="hideIntro()">تخطي الشعار الافتتاحي ✕</button>
@@ -465,7 +469,7 @@
 
   <header class="navbar">
     <div class="brand-box">
-      <video class="brand-video-mini" src="intro.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+      <img class="brand-logo-mini" src="logo.png" alt="Logo" onerror="this.onerror=null; this.src='A.M.K.png';">
       <div>
         <div class="brand-title">Mohandiseen 3PLs-Dashboard</div>
         <div class="brand-sub">متابعة إسناد الطيارين (Assign Tracker)</div>
@@ -486,7 +490,7 @@
 
     <!-- شاشة تسجيل دخول المشرفين -->
     <div id="office-login-box" class="auth-wrapper">
-      <video class="login-brand-video" src="intro.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+      <img class="login-brand-logo" src="logo.png" alt="Logo" onerror="this.onerror=null; this.src='A.M.K.png';">
       <h2 class="auth-title">تسجيل دخول المشرفين</h2>
       <span class="signature-text">With regards : Engineer Abd el-rahman Magdy</span>
       
@@ -509,7 +513,7 @@
 
     <!-- شاشة دخول المسؤول العام -->
     <div id="admin-login-box" class="auth-wrapper hidden">
-      <video class="login-brand-video" src="intro.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+      <img class="login-brand-logo" src="logo.png" alt="Logo" onerror="this.onerror=null; this.src='A.M.K.png';">
       <h2 class="auth-title">لوحة المسؤول العام</h2>
       <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 22px;">للاطلاع على كل المشرفين والمناطق مجتمعة</p>
 
@@ -658,38 +662,13 @@
     let currentRole = "";
     let loggedInSupervisor = "";
 
-    // تشغيل كافة الفيديوهات الصامتة فوراً وتخطي حظر المتصفحات
-    function playAllVideosImmediately() {
-      const vids = document.querySelectorAll('video');
-      vids.forEach(v => {
-        v.muted = true;
-        v.defaultMuted = true;
-        const p = v.play();
-        if (p !== undefined) {
-          p.catch(() => {
-            // تشغيل مؤكد عند أول لمسة للموقع
-            const onTouch = () => {
-              v.play();
-              window.removeEventListener('click', onTouch);
-              window.removeEventListener('touchstart', onTouch);
-            };
-            window.addEventListener('click', onTouch, { once: true });
-            window.addEventListener('touchstart', onTouch, { once: true });
-          });
-        }
-      });
-    }
-
     function hideIntro() {
       const intro = document.getElementById('intro-screen');
       if (intro) intro.classList.add('fade-out');
     }
 
-    const splashVideo = document.getElementById('splash-video');
-    if (splashVideo) {
-      splashVideo.addEventListener('ended', hideIntro);
-      setTimeout(hideIntro, 5000);
-    }
+    // إخفاء الشاشة الافتتاحية تلقائياً بعد 3 ثوانٍ
+    setTimeout(hideIntro, 3000);
 
     function initSupervisorLoginDropdown() {
       const select = document.getElementById('supervisor-user-select');
@@ -738,13 +717,11 @@
     function showAdminLogin() {
       document.getElementById('office-login-box').classList.add('hidden');
       document.getElementById('admin-login-box').classList.remove('hidden');
-      playAllVideosImmediately();
     }
 
     function showOfficeLogin() {
       document.getElementById('admin-login-box').classList.add('hidden');
       document.getElementById('office-login-box').classList.remove('hidden');
-      playAllVideosImmediately();
     }
 
     function loginSupervisor() {
@@ -796,7 +773,6 @@
       }
 
       fetchData();
-      playAllVideosImmediately();
     }
 
     function logout() {
@@ -1364,17 +1340,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       initSupervisorLoginDropdown();
-      playAllVideosImmediately();
     });
-
-    window.addEventListener('load', () => {
-      playAllVideosImmediately();
-    });
-
-    // تشغيل احتياطي إضافي عند أول نقرة في أي مكان بالصفحة
-    document.addEventListener('click', () => {
-      playAllVideosImmediately();
-    }, { once: true });
   </script>
 </body>
 </html>
