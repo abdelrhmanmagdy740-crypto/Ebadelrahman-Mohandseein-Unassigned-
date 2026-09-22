@@ -1,35 +1,49 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mohandiseen 3PLs-Dashboard | متابعة الطيارين</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-black: #080708;
-      --bg-card: #120d0e;
-      --bg-inner: #1a1012;
-      --gold-primary: #d4af37;
-      --gold-light: #f7e7a9;
-      --gold-dark: #aa820a;
-      --red-accent: #b91c1c;
-      --red-hover: #dc2626;
-      --text-white: #ffffff;
-      --text-muted: #d1d5db;
-      --border-gold: rgba(212, 175, 55, 0.4);
-      --border-dark: #372023;
-      --table-border: #45292c;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --input-bg: #1e1315;
+    /* 1. لوحة ألوان الوضع الليلي (Dark Theme) */
+    html[data-theme="dark"] {
+      --bg-main: #0a0a0a;             /* أسود عميق */
+      --bg-card: #141416;             /* رمادي داكن مائل للأسود */
+      --bg-inner: #1c1c1f;            /* رمادي داكن مسطح */
+      --input-bg: #18181b;            /* رمادي داكن للإدخال */
+      --text-main: #ffffff;           /* أبيض ناصع */
+      --text-muted: #9ca3af;          /* رمادي فاتح للنصوص الفرعية */
+      --border-accent: #dc2626;       /* أحمر صريح */
+      --border-subtle: #27272a;       /* رمادي خطوط */
+      --table-border: #3f3f46;        /* رمادي فواصل الجداول */
+      --orange-accent: #f97316;       /* برتقالي حيوي */
+      --red-accent: #ef4444;          /* أحمر تنبيه */
+      --nav-bg: linear-gradient(90deg, #180507 0%, #0c0b0c 100%);
+      --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    /* 2. لوحة ألوان الوضع النهاري (Light Theme) */
+    html[data-theme="light"] {
+      --bg-main: #f8f6f2;             /* أبيض كريمي عاجي */
+      --bg-card: #ffffff;             /* أبيض ناصع */
+      --bg-inner: #f3ede2;            /* بيج دافئ وفخم */
+      --input-bg: #faf7f2;            /* بيج فاتح للإدخال */
+      --text-main: #18181b;           /* أسود ناعم ومريح للعين */
+      --text-muted: #4b5563;          /* رمادي وسط للنصوص */
+      --border-accent: #dc2626;       /* أحمر فخم */
+      --border-subtle: #e5e0d8;       /* بيج رمادي للحدود */
+      --table-border: #d6cfc4;        /* رمادي بيج للفواصل */
+      --orange-accent: #ea580c;       /* برتقالي غني */
+      --red-accent: #dc2626;          /* أحمر */
+      --nav-bg: linear-gradient(90deg, #ffffff 0%, #f7f1e6 100%);
+      --card-shadow: 0 4px 20px rgba(180, 160, 140, 0.2);
     }
 
     * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
-    body { background: var(--bg-black); color: var(--text-white); margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden; }
+    body { background: var(--bg-main); color: var(--text-main); margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden; }
 
-    /* شاشة الشعار الافتتاحي (Splash Intro Screen) */
+    /* شاشة الشعار الافتتاحي (Splash Intro) */
     #intro-screen {
       position: fixed;
       inset: 0;
@@ -48,9 +62,9 @@
     }
     
     @keyframes pulseGlow {
-      0% { transform: scale(0.97); box-shadow: 0 0 35px rgba(212, 175, 55, 0.4), 0 0 50px rgba(185, 28, 28, 0.3); }
-      50% { transform: scale(1.03); box-shadow: 0 0 60px rgba(212, 175, 55, 0.7), 0 0 75px rgba(185, 28, 28, 0.55); }
-      100% { transform: scale(0.97); box-shadow: 0 0 35px rgba(212, 175, 55, 0.4), 0 0 50px rgba(185, 28, 28, 0.3); }
+      0% { transform: scale(0.97); box-shadow: 0 0 35px rgba(220, 38, 38, 0.4), 0 0 50px rgba(249, 115, 22, 0.3); }
+      50% { transform: scale(1.03); box-shadow: 0 0 55px rgba(220, 38, 38, 0.7), 0 0 75px rgba(249, 115, 22, 0.6); }
+      100% { transform: scale(0.97); box-shadow: 0 0 35px rgba(220, 38, 38, 0.4), 0 0 50px rgba(249, 115, 22, 0.3); }
     }
 
     .intro-logo-container {
@@ -59,7 +73,7 @@
       height: 250px;
       border-radius: 50%;
       padding: 5px;
-      background: linear-gradient(135deg, var(--gold-light), var(--red-accent), var(--gold-primary));
+      background: linear-gradient(135deg, var(--orange-accent), var(--border-accent));
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -76,31 +90,30 @@
       margin-top: 25px;
       font-size: 26px;
       font-weight: 900;
-      color: var(--gold-light);
-      text-shadow: 0 2px 10px rgba(212, 175, 55, 0.5);
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(220, 38, 38, 0.6);
       letter-spacing: 1px;
     }
     .skip-intro-btn {
       margin-top: 15px;
       background: rgba(0, 0, 0, 0.6);
-      border: 1px solid var(--gold-primary);
-      color: var(--gold-light);
+      border: 1px solid var(--orange-accent);
+      color: #ffffff;
       padding: 6px 18px;
       border-radius: 20px;
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s;
     }
     .skip-intro-btn:hover {
-      background: var(--gold-primary);
+      background: var(--orange-accent);
       color: #000;
     }
 
     /* الشريط العلوي */
     .navbar {
-      background: linear-gradient(90deg, #15080a 0%, #0d0607 100%);
-      border-bottom: 2px solid var(--gold-primary);
+      background: var(--nav-bg);
+      border-bottom: 2px solid var(--border-accent);
       padding: 10px 20px;
       display: flex;
       justify-content: space-between;
@@ -108,7 +121,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
       flex-wrap: wrap;
       gap: 12px;
     }
@@ -117,21 +130,38 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      border: 2px solid var(--gold-primary);
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+      border: 2px solid var(--orange-accent);
+      box-shadow: 0 0 10px rgba(249, 115, 22, 0.35);
       object-fit: cover;
     }
-    .brand-title { font-size: 17px; font-weight: 800; color: var(--gold-light); line-height: 1.2; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+    .brand-title { font-size: 17px; font-weight: 800; color: var(--text-main); line-height: 1.2; }
     .brand-sub { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 
     .nav-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
+    .theme-toggle-btn {
+      background: var(--bg-inner);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .theme-toggle-btn:hover {
+      border-color: var(--orange-accent);
+    }
+
     .last-update-tag {
       font-size: 11px;
       font-weight: 700;
-      color: var(--gold-light);
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid var(--border-gold);
+      color: var(--orange-accent);
+      background: var(--bg-inner);
+      border: 1px solid var(--border-subtle);
       padding: 6px 12px;
       border-radius: 6px;
       display: inline-flex;
@@ -144,22 +174,22 @@
 
     .card {
       background: var(--bg-card);
-      border: 1px solid var(--border-gold);
+      border: 1px solid var(--border-subtle);
       border-radius: 14px;
       padding: 20px;
       margin-bottom: 20px;
-      box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+      box-shadow: var(--card-shadow);
     }
 
-    /* واجهة تسجيل الدخول بالألوان الملكية */
+    /* واجهات تسجيل الدخول */
     .auth-wrapper {
       max-width: 450px;
       margin: 40px auto;
-      background: linear-gradient(180deg, #18090b 0%, #0d0405 100%);
-      border: 2px solid var(--gold-primary);
+      background: var(--bg-card);
+      border: 2px solid var(--border-accent);
       border-radius: 20px;
       padding: 30px 24px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(185, 28, 28, 0.25);
+      box-shadow: var(--card-shadow);
       width: 100%;
       text-align: center;
     }
@@ -168,16 +198,16 @@
       width: 115px;
       height: 115px;
       border-radius: 50%;
-      border: 3px solid var(--gold-primary);
-      box-shadow: 0 0 25px rgba(212, 175, 55, 0.5), 0 0 15px rgba(185, 28, 28, 0.4);
+      border: 3px solid var(--orange-accent);
+      box-shadow: 0 0 25px rgba(249, 115, 22, 0.4);
       object-fit: cover;
       margin-bottom: 12px;
     }
 
-    .auth-title { margin: 0 0 8px 0; font-size: 24px; font-weight: 900; color: var(--gold-light); }
+    .auth-title { margin: 0 0 8px 0; font-size: 24px; font-weight: 900; color: var(--text-main); }
     .signature-text {
       text-align: center;
-      color: #ef4444;
+      color: var(--red-accent);
       font-family: 'Caveat', cursive, sans-serif;
       font-size: 21px;
       letter-spacing: 0.5px;
@@ -185,63 +215,62 @@
       direction: ltr;
       display: block;
       font-weight: 700;
-      text-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
     }
 
     .form-group { margin-bottom: 18px; text-align: right; }
-    .form-group label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 700; color: var(--gold-light); }
+    .form-group label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 700; color: var(--text-main); }
 
     select.custom-login-field, input.custom-pass-input {
       width: 100%;
       padding: 12px 14px;
       background: var(--input-bg);
-      border: 1px solid var(--gold-primary);
+      border: 1px solid var(--border-subtle);
       border-radius: 8px;
-      color: var(--text-white);
+      color: var(--text-main);
       font-size: 14px;
       font-weight: 600;
       outline: none;
       text-align: right;
     }
     input.custom-pass-input { font-size: 18px; letter-spacing: 2px; }
-    select.custom-login-field option { background: #120d0e; color: #fff; }
+    select.custom-login-field option { background: var(--bg-card); color: var(--text-main); }
 
-    .btn-login-gold {
-      background: linear-gradient(135deg, var(--gold-primary), #b38600);
-      color: #0a0505;
+    .btn-login-action {
+      background: linear-gradient(135deg, var(--border-accent), var(--orange-accent));
+      color: #ffffff;
       width: 100%;
       padding: 13px;
       font-size: 16px;
       font-weight: 900;
       border-radius: 8px;
-      border: 1px solid var(--gold-light);
+      border: none;
       cursor: pointer;
       margin-top: 6px;
-      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
       transition: all 0.2s;
     }
-    .btn-login-gold:hover {
-      background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+    .btn-login-action:hover {
       transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
     }
 
     .switch-link { text-align: center; margin-top: 18px; }
     .switch-link a {
-      color: var(--gold-primary);
+      color: var(--orange-accent);
       text-decoration: none;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
     }
-    .switch-link a:hover { text-decoration: underline; color: var(--gold-light); }
+    .switch-link a:hover { text-decoration: underline; }
 
     .btn {
       padding: 8px 14px; border-radius: 8px; border: none; font-weight: 700;
       cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
       gap: 6px; font-size: 12px;
     }
-    .btn-outline { background: transparent; border: 1px solid var(--gold-primary); color: var(--gold-light); }
-    .btn-outline:hover { background: rgba(212, 175, 55, 0.15); }
+    .btn-outline { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-main); }
+    .btn-outline:hover { border-color: var(--border-accent); }
     .btn-excel { background: #059669; color: #fff; border: 1px solid #047857; }
     .btn-excel:hover { background: #047857; }
 
@@ -252,9 +281,9 @@
       justify-content: space-between;
       margin-bottom: 10px;
       padding: 8px 14px;
-      background: rgba(212, 175, 55, 0.05);
+      background: var(--bg-inner);
       border-radius: 8px;
-      border-right: 4px solid var(--gold-primary);
+      border-right: 4px solid var(--border-accent);
       flex-wrap: wrap;
       gap: 8px;
     }
@@ -264,33 +293,33 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--gold-light);
+      color: var(--text-main);
     }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
     .stat-card {
-      background: var(--bg-inner);
-      border: 1px solid var(--border-dark);
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
       border-radius: 10px;
       padding: 14px 16px;
-      border-right: 4px solid var(--gold-primary);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border-right: 4px solid var(--orange-accent);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-    .stat-val { font-size: 23px; font-weight: 900; color: var(--text-white); margin-top: 4px; }
+    .stat-val { font-size: 23px; font-weight: 900; color: var(--text-main); margin-top: 4px; }
     .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 700; }
 
     .day-section-block { margin-bottom: 25px; }
     .day-section-title {
       font-size: 14px;
       font-weight: 800;
-      color: var(--gold-light);
+      color: var(--text-main);
       margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(185, 28, 28, 0.15);
+      background: var(--bg-inner);
       padding: 8px 14px;
       border-radius: 8px;
-      border-right: 4px solid var(--red-accent);
+      border-right: 4px solid var(--border-accent);
     }
     .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
     .zone-column-card {
@@ -299,9 +328,8 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      border: 1px solid var(--border-gold);
-      height: auto;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--card-shadow);
     }
     .zone-card-header {
       background: var(--bg-inner);
@@ -309,14 +337,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid var(--border-dark);
+      border-bottom: 1px solid var(--border-subtle);
     }
     .zone-card-header .title-box { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; }
     .zone-card-header .stats-badge { display: flex; align-items: center; gap: 8px; font-size: 12px; }
     .zone-total-rate { padding: 2px 7px; border-radius: 4px; font-weight: 800; font-size: 12px; }
     .zone-total-counts { color: var(--text-muted); font-size: 12px; }
     
-    .zone-table-container { width: 100%; overflow-x: auto; max-height: none !important; }
+    .zone-table-container { width: 100%; overflow-x: auto; }
     .zone-table-container table td, 
     .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; text-align: center !important; }
 
@@ -331,9 +359,9 @@
     .search-input, .filter-select { 
       padding: 9px 12px; 
       background: var(--input-bg); 
-      border: 1px solid var(--border-gold); 
+      border: 1px solid var(--border-subtle); 
       border-radius: 7px; 
-      color: var(--text-white); 
+      color: var(--text-main); 
       outline: none; 
       font-size: 13px; 
     }
@@ -352,7 +380,7 @@
     th { 
       background: var(--bg-inner); 
       padding: 12px 10px; 
-      color: var(--gold-light); 
+      color: var(--text-main); 
       font-weight: 800; 
       text-align: center !important; 
       border-bottom: 2px solid var(--table-border); 
@@ -365,10 +393,10 @@
       text-align: center !important; 
       border-top: 2px solid var(--table-border); 
       border-left: 2px solid var(--table-border); 
-      color: var(--text-white); 
+      color: var(--text-main); 
     }
     td:last-child { border-left: none; }
-    tbody tr:hover { background: rgba(212, 175, 55, 0.04); }
+    tbody tr:hover { background: rgba(249, 115, 22, 0.05); }
 
     .col-sv { min-width: 150px; font-weight: 700; }
     .col-fb { min-width: 140px; }
@@ -379,13 +407,13 @@
     .col-id { min-width: 90px; }
 
     .copyable { cursor: pointer; user-select: none; }
-    .copyable:hover { background: rgba(212, 175, 55, 0.15); }
+    .copyable:hover { background: rgba(249, 115, 22, 0.15); }
     .copyable:active { transform: scale(0.98); }
 
     .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
-    .badge-published { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
-    .badge-not-chosen { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
-    .badge-default { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid var(--border-dark); }
+    .badge-published { background: rgba(34, 197, 94, 0.15); color: #16a34a; border: 1px solid rgba(34, 197, 94, 0.4); }
+    .badge-not-chosen { background: rgba(239, 68, 68, 0.15); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .badge-default { background: var(--bg-inner); color: var(--text-muted); border: 1px solid var(--border-subtle); }
 
     .badge-fb-remove {
       background-color: #dc2626 !important;
@@ -394,7 +422,6 @@
       border-radius: 6px;
       font-weight: 800;
       display: inline-block;
-      border: 1px solid #b91c1c;
       box-shadow: 0 2px 5px rgba(220, 38, 38, 0.35);
     }
     .badge-fb-day {
@@ -404,7 +431,6 @@
       border-radius: 6px;
       font-weight: 800;
       display: inline-block;
-      border: 1px solid #15803d;
       box-shadow: 0 2px 5px rgba(22, 163, 74, 0.35);
     }
     .badge-fb-holiday {
@@ -414,7 +440,6 @@
       border-radius: 6px;
       font-weight: 800;
       display: inline-block;
-      border: 1px solid #172554;
       box-shadow: 0 2px 5px rgba(30, 58, 138, 0.4);
     }
 
@@ -423,14 +448,14 @@
       bottom: 25px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: #18090b;
-      color: var(--gold-light);
-      border: 1px solid var(--gold-primary);
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-accent);
       padding: 10px 20px;
       border-radius: 8px;
       font-size: 13px;
       font-weight: 700;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
       z-index: 9999;
       opacity: 0;
       transition: transform 0.25s ease, opacity 0.25s ease;
@@ -441,7 +466,7 @@
     }
     #copy-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-    .loading-state { text-align: center; padding: 35px; color: var(--gold-light); font-size: 15px; font-weight: bold; }
+    .loading-state { text-align: center; padding: 35px; color: var(--orange-accent); font-size: 15px; font-weight: bold; }
     .hidden { display: none !important; }
 
     @media (max-width: 768px) {
@@ -456,20 +481,20 @@
 </head>
 <body>
 
-  <!-- شاشة الشعار الافتتاحي التفاعلية باللوجو الملكي -->
+  <!-- شاشة الشعار الافتتاحي التفاعلية باللوجو -->
   <div id="intro-screen">
     <div class="intro-logo-container">
-      <img src="logo.png" alt="A.M Logo" onerror="this.onerror=null; this.src='A.M.K.png';">
+      <img src="logo.png" alt="Logo">
     </div>
     <div class="intro-title">Mohandiseen 3PLs-Dashboard</div>
     <button class="skip-intro-btn" onclick="hideIntro()">تخطي الشعار الافتتاحي ✕</button>
   </div>
 
-  <div id="copy-toast">📋 تم النسخ: <span id="toast-text" style="color: #fff;"></span></div>
+  <div id="copy-toast">📋 تم النسخ: <span id="toast-text" style="color: var(--orange-accent);"></span></div>
 
   <header class="navbar">
     <div class="brand-box">
-      <img class="brand-logo-mini" src="logo.png" alt="Logo" onerror="this.onerror=null; this.src='A.M.K.png';">
+      <img class="brand-logo-mini" src="logo.png" alt="Logo">
       <div>
         <div class="brand-title">Mohandiseen 3PLs-Dashboard</div>
         <div class="brand-sub">متابعة إسناد الطيارين (Assign Tracker)</div>
@@ -477,10 +502,16 @@
     </div>
     
     <div class="nav-actions">
+      <!-- زر التبديل بين النهاري والليلي -->
+      <button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()">
+        <span id="theme-icon">☀️</span>
+        <span id="theme-label">نهاري</span>
+      </button>
+
       <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
         <span id="last-update-time" class="last-update-tag">🕒 جاري جلب وقت التحديث...</span>
         <button class="btn btn-outline" onclick="fetchData()">🔄 تحديث البيانات</button>
-        <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 700; color: var(--gold-light);"></span>
+        <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 700; color: var(--orange-accent);"></span>
         <button class="btn btn-outline" onclick="logout()">خروج</button>
       </div>
     </div>
@@ -490,7 +521,7 @@
 
     <!-- شاشة تسجيل دخول المشرفين -->
     <div id="office-login-box" class="auth-wrapper">
-      <img class="login-brand-logo" src="logo.png" alt="Logo" onerror="this.onerror=null; this.src='A.M.K.png';">
+      <img class="login-brand-logo" src="logo.png" alt="Logo">
       <h2 class="auth-title">تسجيل دخول المشرفين</h2>
       <span class="signature-text">With regards : Engineer Abd el-rahman Magdy</span>
       
@@ -504,7 +535,7 @@
         <input type="password" id="supervisor-pass" class="custom-pass-input" placeholder="••••••••">
       </div>
 
-      <button class="btn-login-gold" onclick="loginSupervisor()">تسجيل الدخول</button>
+      <button class="btn-login-action" onclick="loginSupervisor()">تسجيل الدخول</button>
       
       <div class="switch-link">
         <a onclick="showAdminLogin()">⚙ دخول المسؤول العام (Admin)</a>
@@ -513,7 +544,7 @@
 
     <!-- شاشة دخول المسؤول العام -->
     <div id="admin-login-box" class="auth-wrapper hidden">
-      <img class="login-brand-logo" src="logo.png" alt="Logo" onerror="this.onerror=null; this.src='A.M.K.png';">
+      <img class="login-brand-logo" src="logo.png" alt="Logo">
       <h2 class="auth-title">لوحة المسؤول العام</h2>
       <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 22px;">للاطلاع على كل المشرفين والمناطق مجتمعة</p>
 
@@ -522,7 +553,7 @@
         <input type="password" id="admin-pass" class="custom-pass-input" placeholder="أدخل باسورد الإدارة...">
       </div>
 
-      <button class="btn-login-gold" onclick="loginAdmin()">دخول المسؤول</button>
+      <button class="btn-login-action" onclick="loginAdmin()">دخول المسؤول</button>
 
       <div class="switch-link">
         <a onclick="showOfficeLogin()">← رجوع لتسجيل دخول المشرفين</a>
@@ -538,22 +569,22 @@
               <span>🌐</span>
               <span id="stats-header-scope">إحصائيات المناديب المسندين</span>
             </div>
-            <span id="selected-day-badge" style="font-size: 12px; color: var(--gold-light); font-weight: bold;">اليوم (Today)</span>
+            <span id="selected-day-badge" style="font-size: 12px; color: var(--orange-accent); font-weight: bold;">اليوم (Today)</span>
           </div>
           <div class="stats-grid">
-            <div class="stat-card" style="border-right-color: var(--gold-primary);">
+            <div class="stat-card" style="border-right-color: var(--orange-accent);">
               <div class="stat-label" id="card-label-total">إجمالي الطيارين</div>
               <div class="stat-val" id="total-riders">0</div>
             </div>
-            <div class="stat-card" style="border-right-color: var(--success);">
+            <div class="stat-card" style="border-right-color: #16a34a;">
               <div class="stat-label" id="card-label-published">Today: PUBLISHED (المقبول)</div>
               <div class="stat-val" id="today-published">0</div>
             </div>
-            <div class="stat-card" style="border-right-color: var(--danger);">
+            <div class="stat-card" style="border-right-color: var(--red-accent);">
               <div class="stat-label" id="card-label-not-chosen">Today: NOT CHOSEN (غير مختار)</div>
               <div class="stat-val" id="today-not-chosen">0</div>
             </div>
-            <div class="stat-card" id="main-rate-card" style="border-right-color: var(--warning);">
+            <div class="stat-card" id="main-rate-card" style="border-right-color: var(--orange-accent);">
               <div class="stat-label" id="card-label-rate">Today: نسبة الإسناد (%)</div>
               <div class="stat-val" id="selected-day-rate">0%</div>
             </div>
@@ -564,22 +595,22 @@
       </div>
 
       <div id="admin-report-card" class="card hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-dark); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
           <div>
-            <h3 style="margin: 0; font-size: 15px; color: var(--gold-light);">📊 توزيع ونسب إسناد المشرفين حسب المناطق (خاص بالمسؤول)</h3>
+            <h3 style="margin: 0; font-size: 15px; color: var(--text-main);">📊 توزيع ونسب إسناد المشرفين حسب المناطق (خاص بالمسؤول)</h3>
             <span style="font-size: 12px; color: var(--text-muted);">محسوب من واقع عمود الـ Feedback مقارنة بإجمالي مناديب المنطقة</span>
           </div>
 
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 6px;">
-              <label style="margin: 0; font-size: 12px; color: var(--gold-light); font-weight: bold;">المشرف:</label>
+              <label style="margin: 0; font-size: 12px; color: var(--text-main); font-weight: bold;">المشرف:</label>
               <select id="report-supervisor-select" style="width: auto; padding: 6px 12px; font-size: 12px;" class="filter-select" onchange="renderSupervisorReport()">
                 <option value="all">كل المشرفين</option>
               </select>
             </div>
 
             <div style="display: flex; align-items: center; gap: 6px;">
-              <label style="margin: 0; font-size: 12px; color: var(--gold-light); font-weight: bold;">اليوم المعروض:</label>
+              <label style="margin: 0; font-size: 12px; color: var(--text-main); font-weight: bold;">اليوم المعروض:</label>
               <select id="report-day-select" style="width: auto; padding: 6px 12px; font-size: 12px;" class="filter-select" onchange="renderSupervisorReport()">
                 <option value="all_days">كل الأيام (الـ 3 أيام معاً)</option>
                 <option value="today">اليوم (Today)</option>
@@ -662,13 +693,32 @@
     let currentRole = "";
     let loggedInSupervisor = "";
 
+    // إدارة الثيم (ليلي / نهاري)
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('dashboard_theme', theme);
+      const icon = document.getElementById('theme-icon');
+      const label = document.getElementById('theme-label');
+      if (theme === 'light') {
+        if (icon) icon.innerText = '🌙';
+        if (label) label.innerText = 'ليلي';
+      } else {
+        if (icon) icon.innerText = '☀️';
+        if (label) label.innerText = 'نهاري';
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const nextTheme = current === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+    }
+
     function hideIntro() {
       const intro = document.getElementById('intro-screen');
       if (intro) intro.classList.add('fade-out');
     }
-
-    // إخفاء الشاشة الافتتاحية تلقائياً بعد 3 ثوانٍ
-    setTimeout(hideIntro, 3000);
+    setTimeout(hideIntro, 2500);
 
     function initSupervisorLoginDropdown() {
       const select = document.getElementById('supervisor-user-select');
@@ -684,18 +734,17 @@
 
     function getZoneColor(zoneName, index) {
       const z = (zoneName || '').toLowerCase();
-      if (z.includes('mohandiseen') || z.includes('مهندس')) return "#d4af37";
-      if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";
-      if (z.includes('shobra') || z.includes('شبرا')) return "#f59e0b";
-      
-      const palette = ["#d4af37", "#dc2626", "#f59e0b", "#38bdf8", "#34d399"];
+      if (z.includes('mohandiseen') || z.includes('مهندس')) return "#ea580c"; // برتقالي
+      if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";    // أحمر
+      if (z.includes('shobra') || z.includes('شبرا')) return "#f59e0b";      // عنبري
+      const palette = ["#ea580c", "#dc2626", "#f59e0b", "#0284c7", "#16a34a"];
       return palette[index % palette.length];
     }
 
     function getRateColor(rate) {
-      if (rate > 80) return "var(--success)";
-      if (rate >= 70 && rate <= 80) return "var(--warning)";
-      return "var(--danger)";
+      if (rate > 80) return "#16a34a";
+      if (rate >= 70 && rate <= 80) return "#ea580c";
+      return "#dc2626";
     }
 
     function copyToClipboard(text, event) {
@@ -830,11 +879,7 @@
       }
       
       try {
-        const res = await fetch(SCRIPT_URL, {
-          method: "GET",
-          redirect: "follow"
-        });
-        
+        const res = await fetch(SCRIPT_URL, { method: "GET", redirect: "follow" });
         const json = await res.json();
 
         let rawRows = [];
@@ -1026,13 +1071,13 @@
               <div class="stat-label">إجمالي طيارين المنطقة</div>
               <div class="stat-val" style="color: ${themeColor};">${zData.total}</div>
             </div>
-            <div class="stat-card" style="border-right-color: var(--success);">
+            <div class="stat-card" style="border-right-color: #16a34a;">
               <div class="stat-label">المقبول (PUBLISHED)</div>
-              <div class="stat-val" style="color: var(--success);">${zData.published}</div>
+              <div class="stat-val" style="color: #16a34a;">${zData.published}</div>
             </div>
-            <div class="stat-card" style="border-right-color: var(--danger);">
+            <div class="stat-card" style="border-right-color: var(--red-accent);">
               <div class="stat-label">غير مختار (NOT CHOSEN)</div>
-              <div class="stat-val" style="color: var(--danger);">${zData.notChosen}</div>
+              <div class="stat-val" style="color: var(--red-accent);">${zData.notChosen}</div>
             </div>
             <div class="stat-card" style="border-right-color: ${rateColor};">
               <div class="stat-label">نسبة إسناد المنطقة (%)</div>
@@ -1056,22 +1101,19 @@
       if (!cleanFb || cleanFb === '-') return '-';
 
       const lowerFb = cleanFb.toLowerCase();
-
       if (lowerFb.includes('holiday')) return `<span class="badge-fb-holiday">${cleanFb}</span>`;
       if (lowerFb.includes('remove') || lowerFb.includes('s.p')) return `<span class="badge-fb-remove">${cleanFb}</span>`;
       if (lowerFb.includes('day by day') || lowerFb === 'day') return `<span class="badge-fb-day">${cleanFb}</span>`;
 
-      return `<span style="color: var(--gold-light); font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
+      return `<span style="color: var(--orange-accent); font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
     }
 
     function renderSupervisorNameCell(name) {
       const cleanName = (name || '').trim();
       const lowerName = cleanName.toLowerCase();
-
       if (lowerName.includes('holiday')) return `<span class="badge-fb-holiday">${cleanName}</span>`;
       if (lowerName.includes('remove') || lowerName.includes('s.p')) return `<span class="badge-fb-remove">${cleanName}</span>`;
       if (lowerName.includes('day by day') || lowerName === 'day') return `<span class="badge-fb-day">${cleanName}</span>`;
-
       return cleanName;
     }
 
@@ -1144,7 +1186,7 @@
               <td style="text-align: center !important; font-weight: bold; color: ${rateColor};">${rate}%</td>
               <td style="text-align: center !important; color: var(--text-muted);">${sv.total}</td>
               <td style="text-align: center !important; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
-              <td style="text-align: center !important; font-weight: 600; color: var(--text-white);" class="copyable" onclick="copyToClipboard('${sv.name}', event)" title="انقر للنسخ">${renderSupervisorNameCell(sv.name)}</td>
+              <td style="text-align: center !important; font-weight: 600; color: var(--text-main);" class="copyable" onclick="copyToClipboard('${sv.name}', event)" title="انقر للنسخ">${renderSupervisorNameCell(sv.name)}</td>
             </tr>
           `;
         });
@@ -1161,7 +1203,7 @@
             </div>
             <div class="stats-badge">
               <span class="zone-total-counts">${zoneData.totalPublishedInZone} / ${zoneData.totalRidersInZone}</span>
-              <span class="zone-total-rate" style="color: ${overallColor}; border: 1px solid ${overallColor}40; background: rgba(0,0,0,0.4);">${overallZoneRate}%</span>
+              <span class="zone-total-rate" style="color: ${overallColor}; border: 1px solid ${overallColor}40; background: var(--bg-inner);">${overallZoneRate}%</span>
             </div>
           </div>
           <div class="zone-table-container">
@@ -1271,7 +1313,7 @@
         const svVal = r.supervisor || '';
 
         tr.innerHTML = `
-          <td class="copyable col-id" onclick="copyToClipboard('${idVal}', event)" title="انقر لنسخ الـ ID" style="font-weight: bold; color: var(--gold-light); text-align: center !important;">${idVal}</td>
+          <td class="copyable col-id" onclick="copyToClipboard('${idVal}', event)" title="انقر لنسخ الـ ID" style="font-weight: bold; color: var(--orange-accent); text-align: center !important;">${idVal}</td>
           <td class="copyable col-name" onclick="copyToClipboard('${nameVal}', event)" title="انقر لنسخ الاسم" style="text-align: center !important;"><strong>${nameVal}</strong></td>
           <td class="copyable col-area" onclick="copyToClipboard('${areaVal}', event)" title="انقر لنسخ المنطقة" style="text-align: center !important;">${areaVal}</td>
           <td class="copyable col-phone" onclick="copyToClipboard('${phoneVal}', event)" title="انقر لنسخ الهاتف" style="text-align: center !important;">
@@ -1339,6 +1381,9 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      // استرجاع تفضيل الثيم المحفوظ
+      const savedTheme = localStorage.getItem('dashboard_theme') || 'dark';
+      applyTheme(savedTheme);
       initSupervisorLoginDropdown();
     });
   </script>
