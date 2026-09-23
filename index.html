@@ -405,7 +405,7 @@
     .col-name { min-width: 250px; font-weight: 700; }
     .col-area { min-width: 130px; }
     .col-phone { min-width: 130px; }
-    .col-yesterday { min-width: 110px; }
+    .col-yesterday { min-width: 110px; font-weight: 800; }
     .col-badge { min-width: 110px; }
     .col-fb { min-width: 140px; }
     .col-sv { min-width: 150px; font-weight: 700; }
@@ -793,6 +793,32 @@
       return "#dc2626";
     }
 
+    // دالة تنظيف وتنسيق الساعات الفعلية ومنع ظهور التاريخ ISO
+    function formatHoursValue(val) {
+      const s = (val || '').trim();
+      if (!s || s === '-' || s === 'null' || s === 'undefined') return '0.00';
+
+      // فحص صيغة الـ ISO String: مثلاً 2026-09-01T21:00:00.000Z
+      if (s.includes('T') && (s.includes('Z') || s.includes('+'))) {
+        const d = new Date(s);
+        if (!isNaN(d.getTime())) {
+          // استخراج الوقت الفعلي المسجل في الخلية
+          const hrs = d.getUTCHours();
+          const mins = d.getUTCMinutes();
+          const decimalHours = (hrs + (mins / 60)).toFixed(2);
+          return decimalHours;
+        }
+      }
+
+      // إذا كانت القيمة رقماً عادياً
+      const num = parseFloat(s);
+      if (!isNaN(num)) {
+        return num.toFixed(2);
+      }
+
+      return s;
+    }
+
     function copyToClipboard(text, event) {
       if (event) event.stopPropagation();
       const cleanText = (text || '').trim();
@@ -901,7 +927,6 @@
       }
     }
 
-    // دالة موحدة وقوية لاستخراج قيم الأعمدة A حتى J بدقة
     function normalizeRider(raw, index) {
       const getVal = (keys) => {
         for (let k of keys) {
@@ -923,7 +948,7 @@
           name: String(raw[1] || '').trim(),
           area: String(raw[2] || '').trim(),
           phone: String(raw[3] || '').trim(),
-          yesterday: String(raw[4] || '').trim(),
+          yesterday: formatHoursValue(String(raw[4] || '')),
           today: String(raw[5] || '').trim(),
           tomorrow: String(raw[6] || '').trim(),
           tomorrowLater: String(raw[7] || '').trim(),
@@ -932,7 +957,6 @@
         };
       }
 
-      // البحث عن عمود الساعات الفعلية / تشغيلة الأمس بشتى المسميات الممكنة
       const yesterdayFound = getVal([
         'الساعات الفعليه', 'الساعات الفعلية', 'ساعات العمل', 'ساعات', 'الساعات',
         'تشغيله الامس', 'تشغيلة الأمس', 'تشغيله الأمس', 'تشغيلة الامس',
@@ -944,7 +968,7 @@
         name: getVal(['الاسم', 'Name']),
         area: getVal(['المنطقة', 'Area', 'Zone', 'الزون']),
         phone: getVal(['الهاتف', 'Phone', 'الموبايل', 'رقم الهاتف']),
-        yesterday: yesterdayFound,
+        yesterday: formatHoursValue(yesterdayFound),
         today: getVal(['Today', 'اليوم']),
         tomorrow: getVal(['Tomorrow', 'الغد']),
         tomorrowLater: getVal(['Tomorrow Later', 'الغد لاحقاً']),
@@ -1231,7 +1255,6 @@
       });
     }
 
-    // تمييز الحالات بما فيها NO_SHOW و Suspended باللون الأبيض
     function getBadgeClass(val) {
       const s = (val || '').toUpperCase().trim();
       if (s.includes('NO_SHOW') || s.includes('NOSHOW') || s.includes('SUSPENDED')) {
@@ -1464,7 +1487,7 @@
         const nameVal = r.name || '';
         const areaVal = r.area || '';
         const phoneVal = r.phone || '';
-        const yesterdayVal = r.yesterday || '';
+        const yesterdayVal = r.yesterday || '0.00';
         const todayVal = r.today || '';
         const tomorrowVal = r.tomorrow || '';
         const tomorrowLaterVal = r.tomorrowLater || '';
@@ -1479,8 +1502,8 @@
           <td class="copyable col-phone" onclick="copyToClipboard('${phoneVal}', event)" title="انقر لنسخ الهاتف" style="text-align: center !important;">
             <span style="direction: ltr; display: inline-block;">📞 ${phoneVal}</span>
           </td>
-          <td class="copyable col-yesterday" onclick="copyToClipboard('${yesterdayVal}', event)" title="انقر للنسخ" style="text-align: center !important;">
-            <span class="badge ${getBadgeClass(yesterdayVal)}">${yesterdayVal || '-'}</span>
+          <td class="copyable col-yesterday" onclick="copyToClipboard('${yesterdayVal}', event)" title="انقر للنسخ" style="text-align: center !important; font-weight: bold; color: var(--text-main);">
+            ${yesterdayVal}
           </td>
           <td class="copyable col-badge" onclick="copyToClipboard('${todayVal}', event)" title="انقر للنسخ" style="text-align: center !important;">
             <span class="badge ${getBadgeClass(r.today)}">${todayVal || '-'}</span>
@@ -1521,7 +1544,7 @@
           `"${(row.name || '').replace(/"/g, '""')}"`,
           `"${(row.area || '').replace(/"/g, '""')}"`,
           `"${(row.phone || '').replace(/"/g, '""')}"`,
-          `"${(row.yesterday || '').replace(/"/g, '""')}"`,
+          `"${(row.yesterday || '0.00').replace(/"/g, '""')}"`,
           `"${(row.today || '').replace(/"/g, '""')}"`,
           `"${(row.tomorrow || '').replace(/"/g, '""')}"`,
           `"${(row.tomorrowLater || '').replace(/"/g, '""')}"`,
