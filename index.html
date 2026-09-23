@@ -966,18 +966,8 @@
       }
       
       try {
-        const res = await fetch(SCRIPT_URL, {
-          method: "GET",
-          redirect: "follow",
-          headers: {
-            "Accept": "application/json"
-          }
-        });
-
-        if (!res.ok) {
-          throw new Error("HTTP " + res.status);
-        }
-
+        // الاتصال المباشر الطبيعي بدون headers لتفادي حظر CORS
+        const res = await fetch(SCRIPT_URL);
         const json = await res.json();
 
         let rawRows = [];
