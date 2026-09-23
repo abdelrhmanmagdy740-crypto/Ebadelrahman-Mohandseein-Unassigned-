@@ -25,18 +25,18 @@
 
     /* 2. لوحة ألوان الوضع النهاري المحددة (Off-White, Mid-Gray, Black, Burgundy, Beige, Red) */
     html[data-theme="light"] {
-      --bg-main: #fcfbf9;             /* أوف وايت عاجي هادئ */
-      --bg-card: #f5f0eb;             /* بيج دافئ ومريح للكروت */
-      --bg-inner: #eee7de;            /* بيج متناسق للرؤوس والبطاقات الداخلية */
-      --input-bg: #ffffff;            /* أبيض ساطع لحقول الإدخال */
-      --text-main: #111111;           /* أسود صريح للوضوح وقوة القراءة */
-      --text-muted: #4b5563;          /* رمادي وسطي متزن للنصوص الفرعية */
-      --border-accent: #7f1d1d;       /* نبيتي ملكي غني للحدود الرئيسية والبار العلوي */
-      --border-subtle: #9ca3af;       /* رمادي وسطي أنيق للفواصل والحدود */
-      --table-border: #888d96;        /* رمادي وسطي واضح لجداول البيانات */
-      --orange-accent: #831843;       /* نبيتي فاخر للتأكيدات */
-      --burgundy: #7f1d1d;            /* درجة النبيتي الإضافية */
-      --red-accent: #dc2626;          /* أحمر حيوي للتنبيهات والأزرار */
+      --bg-main: #fcfbf9;
+      --bg-card: #f5f0eb;
+      --bg-inner: #eee7de;
+      --input-bg: #ffffff;
+      --text-main: #111111;
+      --text-muted: #4b5563;
+      --border-accent: #7f1d1d;
+      --border-subtle: #9ca3af;
+      --table-border: #888d96;
+      --orange-accent: #831843;
+      --burgundy: #7f1d1d;
+      --red-accent: #dc2626;
       --nav-bg: linear-gradient(90deg, #f5f0eb 0%, #fcfbf9 100%);
       --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     }
@@ -417,6 +417,22 @@
     .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
     .badge-published { background: rgba(34, 197, 94, 0.15); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.4); }
     .badge-not-chosen { background: rgba(220, 38, 38, 0.15); color: #b91c1c; border: 1px solid rgba(220, 38, 38, 0.4); }
+    
+    /* بادج الحالات الخاصة (NO_SHOW & SUSPENDED) باللون الأبيض */
+    .badge-white-highlight {
+      background: #27272a !important;
+      color: #ffffff !important;
+      border: 1px solid #52525b !important;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+    html[data-theme="light"] .badge-white-highlight {
+      background: #18181b !important;
+      color: #ffffff !important;
+      border: 1px solid #000000 !important;
+    }
+
     .badge-default { background: var(--bg-inner); color: var(--text-muted); border: 1px solid var(--border-subtle); }
 
     .badge-fb-remove {
@@ -656,6 +672,8 @@
             <option value="all">كل الحالات</option>
             <option value="PUBLISHED">PUBLISHED & EVALUATED</option>
             <option value="NOT CHOSEN">NOT CHOSEN</option>
+            <option value="NO_SHOW">NO_SHOW</option>
+            <option value="Suspended">Suspended</option>
           </select>
 
           <button class="btn btn-excel" onclick="exportToExcel()">📥 تصدير Excel</button>
@@ -670,7 +688,7 @@
                 <th class="col-name">الاسم</th>
                 <th class="col-area">المنطقة</th>
                 <th class="col-phone">الهاتف</th>
-                <th class="col-yesterday">تشغيلة الأمس</th>
+                <th class="col-yesterday">الساعات الفعلية / الأمس</th>
                 <th class="col-badge">اليوم (Today)</th>
                 <th class="col-badge">الغد (Tomorrow)</th>
                 <th class="col-badge">الغد لاحقاً</th>
@@ -754,9 +772,9 @@
       const z = (zoneName || '').toLowerCase();
 
       if (currentTheme === 'light') {
-        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#7f1d1d"; // نبيتي
-        if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";    // أحمر
-        if (z.includes('shobra') || z.includes('شبرا')) return "#4b5563";      // رمادي وسطي
+        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#7f1d1d";
+        if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";
+        if (z.includes('shobra') || z.includes('شبرا')) return "#4b5563";
         const palette = ["#7f1d1d", "#dc2626", "#4b5563", "#991b1b", "#1f2937"];
         return palette[index % palette.length];
       } else {
@@ -883,12 +901,14 @@
       }
     }
 
-    // دالة موحدة لاستخراج قيم الأعمدة A حتى J بدقة
+    // دالة موحدة وقوية لاستخراج قيم الأعمدة A حتى J بدقة
     function normalizeRider(raw, index) {
       const getVal = (keys) => {
         for (let k of keys) {
           for (let rawKey of Object.keys(raw)) {
-            if (rawKey.trim().toLowerCase() === k.trim().toLowerCase() && raw[rawKey] !== undefined) {
+            const cleanRaw = rawKey.trim().toLowerCase().replace(/[\s_\-]/g, '');
+            const cleanTarget = k.trim().toLowerCase().replace(/[\s_\-]/g, '');
+            if (cleanRaw === cleanTarget && raw[rawKey] !== undefined && raw[rawKey] !== null) {
               const strVal = String(raw[rawKey]).trim();
               if (strVal !== '') return strVal;
             }
@@ -912,12 +932,19 @@
         };
       }
 
+      // البحث عن عمود الساعات الفعلية / تشغيلة الأمس بشتى المسميات الممكنة
+      const yesterdayFound = getVal([
+        'الساعات الفعليه', 'الساعات الفعلية', 'ساعات العمل', 'ساعات', 'الساعات',
+        'تشغيله الامس', 'تشغيلة الأمس', 'تشغيله الأمس', 'تشغيلة الامس',
+        'الامس', 'الأمس', 'Yesterday', 'Actual Hours', 'Hours'
+      ]);
+
       return {
         id: getVal(['ID', 'الكود', 'كود']),
         name: getVal(['الاسم', 'Name']),
         area: getVal(['المنطقة', 'Area', 'Zone', 'الزون']),
         phone: getVal(['الهاتف', 'Phone', 'الموبايل', 'رقم الهاتف']),
-        yesterday: getVal(['تشغيله الامس', 'تشغيلة الأمس', 'تشغيله الأمس', 'تشغيلة الامس', 'Yesterday']),
+        yesterday: yesterdayFound,
         today: getVal(['Today', 'اليوم']),
         tomorrow: getVal(['Tomorrow', 'الغد']),
         tomorrowLater: getVal(['Tomorrow Later', 'الغد لاحقاً']),
@@ -1204,10 +1231,14 @@
       });
     }
 
+    // تمييز الحالات بما فيها NO_SHOW و Suspended باللون الأبيض
     function getBadgeClass(val) {
-      val = (val || '').toUpperCase();
-      if (val.includes('PUBLISHED') || val.includes('EVALUATED')) return 'badge-published';
-      if (val.includes('NOT CHOSEN')) return 'badge-not-chosen';
+      const s = (val || '').toUpperCase().trim();
+      if (s.includes('NO_SHOW') || s.includes('NOSHOW') || s.includes('SUSPENDED')) {
+        return 'badge-white-highlight';
+      }
+      if (s.includes('PUBLISHED') || s.includes('EVALUATED')) return 'badge-published';
+      if (s.includes('NOT CHOSEN')) return 'badge-not-chosen';
       return 'badge-default';
     }
 
@@ -1408,6 +1439,8 @@
           const dayVal = (r[selectedDay] || '').toUpperCase();
           if (statusFilter === 'PUBLISHED') matchStatus = isStatusPublished(dayVal);
           else if (statusFilter === 'NOT CHOSEN') matchStatus = isStatusNotChosen(dayVal);
+          else if (statusFilter === 'NO_SHOW') matchStatus = dayVal.includes('NO_SHOW') || dayVal.includes('NOSHOW');
+          else if (statusFilter === 'Suspended') matchStatus = dayVal.includes('SUSPENDED');
         }
 
         return matchQuery && matchSv && matchZone && matchFb && matchStatus;
@@ -1478,7 +1511,7 @@
         return;
       }
 
-      const headers = ["#", "ID", "الاسم", "المنطقة", "الهاتف", "تشغيلة الأمس", "اليوم (Today)", "الغد (Tomorrow)", "الغد لاحقاً", "Feedback", "المشرف (S.V)"];
+      const headers = ["#", "ID", "الاسم", "المنطقة", "الهاتف", "الساعات الفعلية / الأمس", "اليوم (Today)", "الغد (Tomorrow)", "الغد لاحقاً", "Feedback", "المشرف (S.V)"];
       let csvContent = headers.join(",") + "\r\n";
 
       dataToExport.forEach((row, index) => {
