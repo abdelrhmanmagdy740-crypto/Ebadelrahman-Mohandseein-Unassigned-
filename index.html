@@ -23,21 +23,22 @@
       --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
     }
 
-    /* 2. لوحة ألوان الوضع النهاري (Light Theme) */
+    /* 2. لوحة ألوان الوضع النهاري المحددة (Off-White, Mid-Gray, Black, Burgundy, Beige, Red) */
     html[data-theme="light"] {
-      --bg-main: #f8f6f2;
-      --bg-card: #ffffff;
-      --bg-inner: #f3ede2;
-      --input-bg: #faf7f2;
-      --text-main: #18181b;
-      --text-muted: #4b5563;
-      --border-accent: #dc2626;
-      --border-subtle: #e5e0d8;
-      --table-border: #d6cfc4;
-      --orange-accent: #ea580c;
-      --red-accent: #dc2626;
-      --nav-bg: linear-gradient(90deg, #ffffff 0%, #f7f1e6 100%);
-      --card-shadow: 0 4px 20px rgba(180, 160, 140, 0.2);
+      --bg-main: #fcfbf9;             /* أوف وايت عاجي هادئ */
+      --bg-card: #f5f0eb;             /* بيج دافئ ومريح للكروت */
+      --bg-inner: #eee7de;            /* بيج متناسق للرؤوس والبطاقات الداخلية */
+      --input-bg: #ffffff;            /* أبيض ساطع لحقول الإدخال */
+      --text-main: #111111;           /* أسود صريح للوضوح وقوة القراءة */
+      --text-muted: #4b5563;          /* رمادي وسطي متزن للنصوص الفرعية */
+      --border-accent: #7f1d1d;       /* نبيتي ملكي غني للحدود الرئيسية والبار العلوي */
+      --border-subtle: #9ca3af;       /* رمادي وسطي أنيق للفواصل والحدود */
+      --table-border: #888d96;        /* رمادي وسطي واضح لجداول البيانات */
+      --orange-accent: #831843;       /* نبيتي فاخر للتأكيدات */
+      --burgundy: #7f1d1d;            /* درجة النبيتي الإضافية */
+      --red-accent: #dc2626;          /* أحمر حيوي للتنبيهات والأزرار */
+      --nav-bg: linear-gradient(90deg, #f5f0eb 0%, #fcfbf9 100%);
+      --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     }
 
     * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
@@ -121,7 +122,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
       flex-wrap: wrap;
       gap: 12px;
     }
@@ -130,8 +131,8 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      border: 2px solid var(--orange-accent);
-      box-shadow: 0 0 10px rgba(249, 115, 22, 0.35);
+      border: 2px solid var(--border-accent);
+      box-shadow: 0 0 10px rgba(127, 29, 29, 0.25);
       object-fit: cover;
     }
     .brand-title { font-size: 17px; font-weight: 800; color: var(--text-main); line-height: 1.2; }
@@ -153,13 +154,13 @@
       gap: 6px;
     }
     .theme-toggle-btn:hover {
-      border-color: var(--orange-accent);
+      border-color: var(--border-accent);
     }
 
     .last-update-tag {
       font-size: 11px;
       font-weight: 700;
-      color: var(--orange-accent);
+      color: var(--border-accent);
       background: var(--bg-inner);
       border: 1px solid var(--border-subtle);
       padding: 6px 12px;
@@ -198,8 +199,8 @@
       width: 115px;
       height: 115px;
       border-radius: 50%;
-      border: 3px solid var(--orange-accent);
-      box-shadow: 0 0 25px rgba(249, 115, 22, 0.4);
+      border: 3px solid var(--border-accent);
+      box-shadow: 0 0 20px rgba(127, 29, 29, 0.35);
       object-fit: cover;
       margin-bottom: 12px;
     }
@@ -236,7 +237,7 @@
     select.custom-login-field option { background: var(--bg-card); color: var(--text-main); }
 
     .btn-login-action {
-      background: linear-gradient(135deg, var(--border-accent), var(--orange-accent));
+      background: linear-gradient(135deg, var(--border-accent), var(--red-accent));
       color: #ffffff;
       width: 100%;
       padding: 13px;
@@ -246,22 +247,23 @@
       border: none;
       cursor: pointer;
       margin-top: 6px;
-      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+      box-shadow: 0 4px 15px rgba(127, 29, 29, 0.3);
       transition: all 0.2s;
     }
     .btn-login-action:hover {
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+      box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
     }
 
     .switch-link { text-align: center; margin-top: 18px; }
     .switch-link a {
-      color: var(--orange-accent);
+      color: var(--border-accent);
       text-decoration: none;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
     }
+    html[data-theme="dark"] .switch-link a { color: var(--orange-accent); }
     .switch-link a:hover { text-decoration: underline; }
 
     .btn {
@@ -301,8 +303,8 @@
       border: 1px solid var(--border-subtle);
       border-radius: 10px;
       padding: 14px 16px;
-      border-right: 4px solid var(--orange-accent);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-right: 4px solid var(--border-accent);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     }
     .stat-val { font-size: 23px; font-weight: 900; color: var(--text-main); margin-top: 4px; }
     .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 700; }
@@ -396,7 +398,7 @@
       color: var(--text-main); 
     }
     td:last-child { border-left: none; }
-    tbody tr:hover { background: rgba(249, 115, 22, 0.05); }
+    tbody tr:hover { background: rgba(127, 29, 29, 0.05); }
 
     .col-idx { min-width: 50px; font-weight: 800; color: var(--text-muted); }
     .col-id { min-width: 90px; }
@@ -409,12 +411,12 @@
     .col-sv { min-width: 150px; font-weight: 700; }
 
     .copyable { cursor: pointer; user-select: none; }
-    .copyable:hover { background: rgba(249, 115, 22, 0.15); }
+    .copyable:hover { background: rgba(127, 29, 29, 0.1); }
     .copyable:active { transform: scale(0.98); }
 
     .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
-    .badge-published { background: rgba(34, 197, 94, 0.15); color: #16a34a; border: 1px solid rgba(34, 197, 94, 0.4); }
-    .badge-not-chosen { background: rgba(239, 68, 68, 0.15); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .badge-published { background: rgba(34, 197, 94, 0.15); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.4); }
+    .badge-not-chosen { background: rgba(220, 38, 38, 0.15); color: #b91c1c; border: 1px solid rgba(220, 38, 38, 0.4); }
     .badge-default { background: var(--bg-inner); color: var(--text-muted); border: 1px solid var(--border-subtle); }
 
     .badge-fb-remove {
@@ -457,7 +459,7 @@
       border-radius: 8px;
       font-size: 13px;
       font-weight: 700;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
       z-index: 9999;
       opacity: 0;
       transition: transform 0.25s ease, opacity 0.25s ease;
@@ -468,7 +470,7 @@
     }
     #copy-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-    .loading-state { text-align: center; padding: 35px; color: var(--orange-accent); font-size: 15px; font-weight: bold; }
+    .loading-state { text-align: center; padding: 35px; color: var(--border-accent); font-size: 15px; font-weight: bold; }
     .hidden { display: none !important; }
 
     @media (max-width: 768px) {
@@ -492,7 +494,7 @@
     <button class="skip-intro-btn" onclick="hideIntro()">تخطي الشعار الافتتاحي ✕</button>
   </div>
 
-  <div id="copy-toast">📋 تم النسخ: <span id="toast-text" style="color: var(--orange-accent);"></span></div>
+  <div id="copy-toast">📋 تم النسخ: <span id="toast-text" style="color: var(--red-accent);"></span></div>
 
   <header class="navbar">
     <div class="brand-box">
@@ -513,7 +515,7 @@
       <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
         <span id="last-update-time" class="last-update-tag">🕒 جاري جلب وقت التحديث...</span>
         <button class="btn btn-outline" onclick="fetchData()">🔄 تحديث البيانات</button>
-        <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 700; color: var(--orange-accent);"></span>
+        <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 700; color: var(--border-accent);"></span>
         <button class="btn btn-outline" onclick="logout()">خروج</button>
       </div>
     </div>
@@ -571,10 +573,10 @@
               <span>🌐</span>
               <span id="stats-header-scope">إحصائيات المناديب المسندين</span>
             </div>
-            <span id="selected-day-badge" style="font-size: 12px; color: var(--orange-accent); font-weight: bold;">اليوم (Today)</span>
+            <span id="selected-day-badge" style="font-size: 12px; color: var(--border-accent); font-weight: bold;">اليوم (Today)</span>
           </div>
           <div class="stats-grid">
-            <div class="stat-card" style="border-right-color: var(--orange-accent);">
+            <div class="stat-card" style="border-right-color: var(--border-accent);">
               <div class="stat-label" id="card-label-total">إجمالي الطيارين</div>
               <div class="stat-val" id="total-riders">0</div>
             </div>
@@ -586,7 +588,7 @@
               <div class="stat-label" id="card-label-not-chosen">Today: NOT CHOSEN (غير مختار)</div>
               <div class="stat-val" id="today-not-chosen">0</div>
             </div>
-            <div class="stat-card" id="main-rate-card" style="border-right-color: var(--orange-accent);">
+            <div class="stat-card" id="main-rate-card" style="border-right-color: var(--border-accent);">
               <div class="stat-label" id="card-label-rate">Today: نسبة الإسناد (%)</div>
               <div class="stat-val" id="selected-day-rate">0%</div>
             </div>
@@ -634,7 +636,7 @@
             <option value="all">كل المشرفين (S.V)</option>
           </select>
 
-          <!-- فلتر المناطق / الزونات (Zone Filter) المضاف حديثاً -->
+          <!-- فلتر المناطق / الزونات -->
           <select id="zone-filter" class="filter-select" onchange="renderTable()">
             <option value="all">كل المناطق (Zones)</option>
           </select>
@@ -748,17 +750,28 @@
     }
 
     function getZoneColor(zoneName, index) {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
       const z = (zoneName || '').toLowerCase();
-      if (z.includes('mohandiseen') || z.includes('مهندس')) return "#ea580c";
-      if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";
-      if (z.includes('shobra') || z.includes('شبرا')) return "#f59e0b";
-      const palette = ["#ea580c", "#dc2626", "#f59e0b", "#0284c7", "#16a34a"];
-      return palette[index % palette.length];
+
+      if (currentTheme === 'light') {
+        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#7f1d1d"; // نبيتي
+        if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";    // أحمر
+        if (z.includes('shobra') || z.includes('شبرا')) return "#4b5563";      // رمادي وسطي
+        const palette = ["#7f1d1d", "#dc2626", "#4b5563", "#991b1b", "#1f2937"];
+        return palette[index % palette.length];
+      } else {
+        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#ea580c";
+        if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";
+        if (z.includes('shobra') || z.includes('شبرا')) return "#f59e0b";
+        const palette = ["#ea580c", "#dc2626", "#f59e0b", "#0284c7", "#16a34a"];
+        return palette[index % palette.length];
+      }
     }
 
     function getRateColor(rate) {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
       if (rate > 80) return "#16a34a";
-      if (rate >= 70 && rate <= 80) return "#ea580c";
+      if (rate >= 70 && rate <= 80) return currentTheme === 'light' ? "#7f1d1d" : "#ea580c";
       return "#dc2626";
     }
 
@@ -990,7 +1003,6 @@
       });
     }
 
-    // استخراج وتعبئة خيارات فلتر الزونات / المناطق ديناميكياً
     function populateZonesDropdown() {
       const zoneSelect = document.getElementById('zone-filter');
       if (!zoneSelect) return;
@@ -1208,7 +1220,10 @@
       if (lowerFb.includes('remove') || lowerFb.includes('s.p')) return `<span class="badge-fb-remove">${cleanFb}</span>`;
       if (lowerFb.includes('day by day') || lowerFb === 'day') return `<span class="badge-fb-day">${cleanFb}</span>`;
 
-      return `<span style="color: var(--orange-accent); font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const customColor = currentTheme === 'light' ? 'var(--border-accent)' : 'var(--orange-accent)';
+
+      return `<span style="color: ${customColor}; font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
     }
 
     function renderSupervisorNameCell(name) {
@@ -1385,11 +1400,7 @@
                            (r.phone && r.phone.toLowerCase().includes(q));
         
         const matchSv = (currentRole === "supervisor") || (svFilter === 'all') || (r.supervisor && r.supervisor.trim() === svFilter);
-        
-        // شرط فلتر المنطقة / الزون
         const matchZone = (zoneFilter === 'all') || ((r.area || '').trim() === zoneFilter);
-
-        // شرط فلتر الـ Feedback
         const matchFb = (fbFilter === 'all') || ((r.feedback || '').trim() === fbFilter);
 
         let matchStatus = true;
@@ -1409,6 +1420,8 @@
 
       const selectedDay = document.getElementById('main-day-filter').value;
       const filtered = getFilteredRiders();
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const idColor = currentTheme === 'light' ? 'var(--border-accent)' : 'var(--orange-accent)';
 
       filtered.forEach((r, idx) => {
         const tr = document.createElement('tr');
@@ -1427,7 +1440,7 @@
 
         tr.innerHTML = `
           <td class="col-idx">${rowNum}</td>
-          <td class="copyable col-id" onclick="copyToClipboard('${idVal}', event)" title="انقر لنسخ الـ ID" style="font-weight: bold; color: var(--orange-accent); text-align: center !important;">${idVal}</td>
+          <td class="copyable col-id" onclick="copyToClipboard('${idVal}', event)" title="انقر لنسخ الـ ID" style="font-weight: bold; color: ${idColor}; text-align: center !important;">${idVal}</td>
           <td class="copyable col-name" onclick="copyToClipboard('${nameVal}', event)" title="انقر لنسخ الاسم" style="text-align: center !important;"><strong>${nameVal}</strong></td>
           <td class="copyable col-area" onclick="copyToClipboard('${areaVal}', event)" title="انقر لنسخ المنطقة" style="text-align: center !important;">${areaVal}</td>
           <td class="copyable col-phone" onclick="copyToClipboard('${phoneVal}', event)" title="انقر لنسخ الهاتف" style="text-align: center !important;">
