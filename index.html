@@ -8,34 +8,34 @@
   <style>
     /* 1. لوحة ألوان الوضع الليلي (Dark Theme) */
     html[data-theme="dark"] {
-      --bg-main: #0a0a0a;             /* أسود عميق */
-      --bg-card: #141416;             /* رمادي داكن مائل للأسود */
-      --bg-inner: #1c1c1f;            /* رمادي داكن مسطح */
-      --input-bg: #18181b;            /* رمادي داكن للإدخال */
-      --text-main: #ffffff;           /* أبيض ناصع */
-      --text-muted: #9ca3af;          /* رمادي فاتح للنصوص الفرعية */
-      --border-accent: #dc2626;       /* أحمر صريح */
-      --border-subtle: #27272a;       /* رمادي خطوط */
-      --table-border: #3f3f46;        /* رمادي فواصل الجداول */
-      --orange-accent: #f97316;       /* برتقالي حيوي */
-      --red-accent: #ef4444;          /* أحمر تنبيه */
+      --bg-main: #0a0a0a;
+      --bg-card: #141416;
+      --bg-inner: #1c1c1f;
+      --input-bg: #18181b;
+      --text-main: #ffffff;
+      --text-muted: #9ca3af;
+      --border-accent: #dc2626;
+      --border-subtle: #27272a;
+      --table-border: #3f3f46;
+      --orange-accent: #f97316;
+      --red-accent: #ef4444;
       --nav-bg: linear-gradient(90deg, #180507 0%, #0c0b0c 100%);
       --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
     }
 
     /* 2. لوحة ألوان الوضع النهاري (Light Theme) */
     html[data-theme="light"] {
-      --bg-main: #f8f6f2;             /* أبيض كريمي عاجي */
-      --bg-card: #ffffff;             /* أبيض ناصع */
-      --bg-inner: #f3ede2;            /* بيج دافئ وفخم */
-      --input-bg: #faf7f2;            /* بيج فاتح للإدخال */
-      --text-main: #18181b;           /* أسود ناعم ومريح للعين */
-      --text-muted: #4b5563;          /* رمادي وسط للنصوص */
-      --border-accent: #dc2626;       /* أحمر فخم */
-      --border-subtle: #e5e0d8;       /* بيج رمادي للحدود */
-      --table-border: #d6cfc4;        /* رمادي بيج للفواصل */
-      --orange-accent: #ea580c;       /* برتقالي غني */
-      --red-accent: #dc2626;          /* أحمر */
+      --bg-main: #f8f6f2;
+      --bg-card: #ffffff;
+      --bg-inner: #f3ede2;
+      --input-bg: #faf7f2;
+      --text-main: #18181b;
+      --text-muted: #4b5563;
+      --border-accent: #dc2626;
+      --border-subtle: #e5e0d8;
+      --table-border: #d6cfc4;
+      --orange-accent: #ea580c;
+      --red-accent: #dc2626;
       --nav-bg: linear-gradient(90deg, #ffffff 0%, #f7f1e6 100%);
       --card-shadow: 0 4px 20px rgba(180, 160, 140, 0.2);
     }
@@ -365,8 +365,8 @@
       outline: none; 
       font-size: 13px; 
     }
-    .search-input { min-width: 200px; flex: 2; }
-    .filter-select { flex: 1; min-width: 130px; }
+    .search-input { min-width: 180px; flex: 2; }
+    .filter-select { flex: 1; min-width: 125px; }
     
     .table-container { 
       width: 100%;
@@ -398,13 +398,15 @@
     td:last-child { border-left: none; }
     tbody tr:hover { background: rgba(249, 115, 22, 0.05); }
 
-    .col-sv { min-width: 150px; font-weight: 700; }
-    .col-fb { min-width: 140px; }
+    .col-idx { min-width: 50px; font-weight: 800; color: var(--text-muted); }
+    .col-id { min-width: 90px; }
     .col-name { min-width: 250px; font-weight: 700; }
     .col-area { min-width: 130px; }
     .col-phone { min-width: 130px; }
+    .col-yesterday { min-width: 110px; }
     .col-badge { min-width: 110px; }
-    .col-id { min-width: 90px; }
+    .col-fb { min-width: 140px; }
+    .col-sv { min-width: 150px; font-weight: 700; }
 
     .copyable { cursor: pointer; user-select: none; }
     .copyable:hover { background: rgba(249, 115, 22, 0.15); }
@@ -481,7 +483,7 @@
 </head>
 <body>
 
-  <!-- شاشة الشعار الافتتاحي التفاعلية باللوجو -->
+  <!-- شاشة الشعار الافتتاحي -->
   <div id="intro-screen">
     <div class="intro-logo-container">
       <img src="logo.png" alt="Logo">
@@ -632,7 +634,12 @@
             <option value="all">كل المشرفين (S.V)</option>
           </select>
 
-          <!-- فلتر الـ Feedback المضاف حديثاً -->
+          <!-- فلتر المناطق / الزونات (Zone Filter) المضاف حديثاً -->
+          <select id="zone-filter" class="filter-select" onchange="renderTable()">
+            <option value="all">كل المناطق (Zones)</option>
+          </select>
+
+          <!-- فلتر الـ Feedback -->
           <select id="feedback-filter" class="filter-select" onchange="renderTable()">
             <option value="all">كل الـ Feedback</option>
           </select>
@@ -656,10 +663,12 @@
           <table>
             <thead>
               <tr>
+                <th class="col-idx">#</th>
                 <th class="col-id">ID</th>
                 <th class="col-name">الاسم</th>
                 <th class="col-area">المنطقة</th>
                 <th class="col-phone">الهاتف</th>
+                <th class="col-yesterday">تشغيلة الأمس</th>
                 <th class="col-badge">اليوم (Today)</th>
                 <th class="col-badge">الغد (Tomorrow)</th>
                 <th class="col-badge">الغد لاحقاً</th>
@@ -691,7 +700,7 @@
       { name: "حسين صلاح", pass: "1008" },
       { name: "اسماعيل علي", pass: "1009" },
       { name: "عبدالرحمن حسين", pass: "1010" },
-       { name: "العادل ( روماني سامي )", pass: "1012" },
+      { name: "العادل ( روماني سامي )", pass: "1012" },
       { name: "ريفو", pass: "1011" }
     ];
 
@@ -816,6 +825,12 @@
       document.getElementById('user-pill').classList.remove('hidden');
       document.getElementById('current-user-name').innerText = "👤 " + title;
 
+      document.getElementById('search-box').value = '';
+      const fbSelect = document.getElementById('feedback-filter');
+      if (fbSelect) fbSelect.value = 'all';
+      const zoneSelect = document.getElementById('zone-filter');
+      if (zoneSelect) zoneSelect.value = 'all';
+
       const adminReport = document.getElementById('admin-report-card');
       const scopeHeader = document.getElementById('stats-header-scope');
 
@@ -837,6 +852,10 @@
       document.getElementById('user-pill').classList.add('hidden');
       document.getElementById('supervisor-pass').value = '';
       document.getElementById('admin-pass').value = '';
+      const fbSelect = document.getElementById('feedback-filter');
+      if (fbSelect) fbSelect.value = 'all';
+      const zoneSelect = document.getElementById('zone-filter');
+      if (zoneSelect) zoneSelect.value = 'all';
       showOfficeLogin();
     }
 
@@ -851,7 +870,8 @@
       }
     }
 
-    function normalizeRider(raw) {
+    // دالة موحدة لاستخراج قيم الأعمدة A حتى J بدقة
+    function normalizeRider(raw, index) {
       const getVal = (keys) => {
         for (let k of keys) {
           for (let rawKey of Object.keys(raw)) {
@@ -864,16 +884,32 @@
         return '';
       };
 
+      if (Array.isArray(raw)) {
+        return {
+          id: String(raw[0] || '').trim(),
+          name: String(raw[1] || '').trim(),
+          area: String(raw[2] || '').trim(),
+          phone: String(raw[3] || '').trim(),
+          yesterday: String(raw[4] || '').trim(),
+          today: String(raw[5] || '').trim(),
+          tomorrow: String(raw[6] || '').trim(),
+          tomorrowLater: String(raw[7] || '').trim(),
+          feedback: String(raw[8] || '').trim(),
+          supervisor: String(raw[9] || '').trim()
+        };
+      }
+
       return {
         id: getVal(['ID', 'الكود', 'كود']),
         name: getVal(['الاسم', 'Name']),
-        area: getVal(['المنطقة', 'Area', 'Zone']),
+        area: getVal(['المنطقة', 'Area', 'Zone', 'الزون']),
         phone: getVal(['الهاتف', 'Phone', 'الموبايل', 'رقم الهاتف']),
+        yesterday: getVal(['تشغيله الامس', 'تشغيلة الأمس', 'تشغيله الأمس', 'تشغيلة الامس', 'Yesterday']),
         today: getVal(['Today', 'اليوم']),
         tomorrow: getVal(['Tomorrow', 'الغد']),
         tomorrowLater: getVal(['Tomorrow Later', 'الغد لاحقاً']),
-        feedback: getVal(['Feedback', 'Fedback', 'فيدباك', 'الملاحظات', 'ملاحظات']),
-        supervisor: getVal(['s.v', 'المشرف', 'المشرف (S.V)', 'Supervisor', 'SV'])
+        feedback: getVal(['Fedback', 'Feedback', 'فيدباك', 'الملاحظات', 'ملاحظات']),
+        supervisor: getVal(['S.V', 's.v', 'المشرف', 'المشرف (S.V)', 'Supervisor', 'SV'])
       };
     }
 
@@ -897,9 +933,10 @@
           displaySheetLastUpdate(null);
         }
 
-        ridersData = rawRows.map(r => normalizeRider(r));
+        ridersData = rawRows.map((r, i) => normalizeRider(r, i));
 
         populateSupervisors();
+        populateZonesDropdown();
         populateFeedbackDropdown();
         populateReportSupervisors();
         renderTable();
@@ -953,7 +990,36 @@
       });
     }
 
-    // استخراج وتعبئة خيارات فلتر الـ Feedback ديناميكياً
+    // استخراج وتعبئة خيارات فلتر الزونات / المناطق ديناميكياً
+    function populateZonesDropdown() {
+      const zoneSelect = document.getElementById('zone-filter');
+      if (!zoneSelect) return;
+      const currentSelected = zoneSelect.value;
+      zoneSelect.innerHTML = '<option value="all">كل المناطق (Zones)</option>';
+
+      const zoneSet = new Set();
+      ridersData.forEach(r => {
+        if (currentRole === "supervisor" && !isRiderAssignedToSupervisor(r, loggedInSupervisor)) {
+          return;
+        }
+        const zone = (r.area || '').trim();
+        if (zone && zone !== '-' && zone !== '') {
+          zoneSet.add(zone);
+        }
+      });
+
+      Array.from(zoneSet).sort((a, b) => a.localeCompare(b, 'ar')).forEach(zone => {
+        const opt = document.createElement('option');
+        opt.value = zone;
+        opt.innerText = zone;
+        zoneSelect.appendChild(opt);
+      });
+
+      if (zoneSet.has(currentSelected)) {
+        zoneSelect.value = currentSelected;
+      }
+    }
+
     function populateFeedbackDropdown() {
       const fbSelect = document.getElementById('feedback-filter');
       if (!fbSelect) return;
@@ -1302,6 +1368,7 @@
     function getFilteredRiders() {
       const q = document.getElementById('search-box').value.trim().toLowerCase();
       const svFilter = document.getElementById('supervisor-filter').value;
+      const zoneFilter = (document.getElementById('zone-filter') ? document.getElementById('zone-filter').value : 'all');
       const fbFilter = (document.getElementById('feedback-filter') ? document.getElementById('feedback-filter').value : 'all');
       const selectedDay = document.getElementById('main-day-filter').value;
       const statusFilter = document.getElementById('today-filter').value;
@@ -1318,6 +1385,9 @@
                            (r.phone && r.phone.toLowerCase().includes(q));
         
         const matchSv = (currentRole === "supervisor") || (svFilter === 'all') || (r.supervisor && r.supervisor.trim() === svFilter);
+        
+        // شرط فلتر المنطقة / الزون
+        const matchZone = (zoneFilter === 'all') || ((r.area || '').trim() === zoneFilter);
 
         // شرط فلتر الـ Feedback
         const matchFb = (fbFilter === 'all') || ((r.feedback || '').trim() === fbFilter);
@@ -1329,7 +1399,7 @@
           else if (statusFilter === 'NOT CHOSEN') matchStatus = isStatusNotChosen(dayVal);
         }
 
-        return matchQuery && matchSv && matchFb && matchStatus;
+        return matchQuery && matchSv && matchZone && matchFb && matchStatus;
       });
     }
 
@@ -1340,13 +1410,15 @@
       const selectedDay = document.getElementById('main-day-filter').value;
       const filtered = getFilteredRiders();
 
-      filtered.forEach(r => {
+      filtered.forEach((r, idx) => {
         const tr = document.createElement('tr');
         
+        const rowNum = idx + 1;
         const idVal = r.id || '';
         const nameVal = r.name || '';
         const areaVal = r.area || '';
         const phoneVal = r.phone || '';
+        const yesterdayVal = r.yesterday || '';
         const todayVal = r.today || '';
         const tomorrowVal = r.tomorrow || '';
         const tomorrowLaterVal = r.tomorrowLater || '';
@@ -1354,11 +1426,15 @@
         const svVal = r.supervisor || '';
 
         tr.innerHTML = `
+          <td class="col-idx">${rowNum}</td>
           <td class="copyable col-id" onclick="copyToClipboard('${idVal}', event)" title="انقر لنسخ الـ ID" style="font-weight: bold; color: var(--orange-accent); text-align: center !important;">${idVal}</td>
           <td class="copyable col-name" onclick="copyToClipboard('${nameVal}', event)" title="انقر لنسخ الاسم" style="text-align: center !important;"><strong>${nameVal}</strong></td>
           <td class="copyable col-area" onclick="copyToClipboard('${areaVal}', event)" title="انقر لنسخ المنطقة" style="text-align: center !important;">${areaVal}</td>
           <td class="copyable col-phone" onclick="copyToClipboard('${phoneVal}', event)" title="انقر لنسخ الهاتف" style="text-align: center !important;">
             <span style="direction: ltr; display: inline-block;">📞 ${phoneVal}</span>
+          </td>
+          <td class="copyable col-yesterday" onclick="copyToClipboard('${yesterdayVal}', event)" title="انقر للنسخ" style="text-align: center !important;">
+            <span class="badge ${getBadgeClass(yesterdayVal)}">${yesterdayVal || '-'}</span>
           </td>
           <td class="copyable col-badge" onclick="copyToClipboard('${todayVal}', event)" title="انقر للنسخ" style="text-align: center !important;">
             <span class="badge ${getBadgeClass(r.today)}">${todayVal || '-'}</span>
@@ -1389,15 +1465,17 @@
         return;
       }
 
-      const headers = ["ID", "الاسم", "المنطقة", "الهاتف", "اليوم (Today)", "الغد (Tomorrow)", "الغد لاحقاً", "Feedback", "المشرف (S.V)"];
+      const headers = ["#", "ID", "الاسم", "المنطقة", "الهاتف", "تشغيلة الأمس", "اليوم (Today)", "الغد (Tomorrow)", "الغد لاحقاً", "Feedback", "المشرف (S.V)"];
       let csvContent = headers.join(",") + "\r\n";
 
-      dataToExport.forEach(row => {
+      dataToExport.forEach((row, index) => {
         const rowData = [
+          `"${index + 1}"`,
           `"${(row.id || '').replace(/"/g, '""')}"`,
           `"${(row.name || '').replace(/"/g, '""')}"`,
           `"${(row.area || '').replace(/"/g, '""')}"`,
           `"${(row.phone || '').replace(/"/g, '""')}"`,
+          `"${(row.yesterday || '').replace(/"/g, '""')}"`,
           `"${(row.today || '').replace(/"/g, '""')}"`,
           `"${(row.tomorrow || '').replace(/"/g, '""')}"`,
           `"${(row.tomorrowLater || '').replace(/"/g, '""')}"`,
