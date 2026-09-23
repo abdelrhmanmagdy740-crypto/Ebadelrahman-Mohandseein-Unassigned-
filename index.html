@@ -451,7 +451,7 @@
       border-radius: 6px;
       font-weight: 800;
       display: inline-block;
-      box-shadow: 0 2px 5px rgba(22, 163, 74, 0.35);
+      box-shadow: 0 2px 5px rgba(220, 38, 38, 0.35);
     }
     .badge-fb-holiday {
       background-color: #1e3a8a !important;
@@ -597,11 +597,11 @@
               <div class="stat-val" id="total-riders">0</div>
             </div>
             <div class="stat-card" style="border-right-color: #16a34a;">
-              <div class="stat-label" id="card-label-published">Today: PUBLISHED (المقبول)</div>
+              <div class="stat-label" id="card-label-published">المقبول (PUBLISHED & EVALUATED)</div>
               <div class="stat-val" id="today-published">0</div>
             </div>
             <div class="stat-card" style="border-right-color: var(--red-accent);">
-              <div class="stat-label" id="card-label-not-chosen">Today: NOT CHOSEN (غير مختار)</div>
+              <div class="stat-label" id="card-label-not-chosen">غير مختار (NOT CHOSEN & NO_SHOW)</div>
               <div class="stat-val" id="today-not-chosen">0</div>
             </div>
             <div class="stat-card" id="main-rate-card" style="border-right-color: var(--border-accent);">
@@ -670,9 +670,9 @@
 
           <select id="today-filter" class="filter-select" onchange="renderTable()">
             <option value="all">كل الحالات</option>
-            <option value="PUBLISHED">PUBLISHED & EVALUATED</option>
-            <option value="NOT CHOSEN">NOT CHOSEN</option>
-            <option value="NO_SHOW">NO_SHOW</option>
+            <option value="PUBLISHED">PUBLISHED & EVALUATED (المقبول)</option>
+            <option value="NOT CHOSEN">NOT CHOSEN & NO_SHOW (غير مختار)</option>
+            <option value="NO_SHOW">NO_SHOW فقط</option>
             <option value="Suspended">Suspended</option>
           </select>
 
@@ -966,7 +966,6 @@
       }
       
       try {
-        // الاتصال المباشر الطبيعي بدون headers لتفادي حظر CORS
         const res = await fetch(SCRIPT_URL);
         const json = await res.json();
 
@@ -1120,14 +1119,16 @@
       }
     }
 
+    // حساب المقبول: يشمل PUBLISHED و EVALUATED
     function isStatusPublished(statusStr) {
       const s = (statusStr || '').toUpperCase();
       return s.includes('PUBLISHED') || s.includes('EVALUATED');
     }
 
+    // حساب غير المختار: يشمل NOT CHOSEN و NO_SHOW
     function isStatusNotChosen(statusStr) {
       const s = (statusStr || '').toUpperCase();
-      return s.includes('NOT CHOSEN');
+      return s.includes('NOT CHOSEN') || s.includes('NO_SHOW') || s.includes('NOSHOW');
     }
 
     function isRiderAssignedToSupervisor(r, svName) {
@@ -1164,10 +1165,14 @@
 
         zoneStats[zone].total++;
 
+        // احتساب المقبول (PUBLISHED & EVALUATED)
         if (isStatusPublished(status)) {
           published++;
           zoneStats[zone].published++;
-        } else if (isStatusNotChosen(status)) {
+        }
+        
+        // احتساب غير المختار (NOT CHOSEN & NO_SHOW)
+        if (isStatusNotChosen(status)) {
           notChosen++;
           zoneStats[zone].notChosen++;
         }
@@ -1177,8 +1182,8 @@
       const totalRateColor = getRateColor(totalRate);
 
       document.getElementById('card-label-total').innerText = currentRole === 'supervisor' ? `إجمالي طيارين (${loggedInSupervisor})` : 'إجمالي الطيارين';
-      document.getElementById('card-label-published').innerText = `${dayTitle}: المقبول`;
-      document.getElementById('card-label-not-chosen').innerText = `${dayTitle}: غير مختار`;
+      document.getElementById('card-label-published').innerText = `المقبول (PUBLISHED & EVALUATED)`;
+      document.getElementById('card-label-not-chosen').innerText = `غير مختار (NOT CHOSEN & NO_SHOW)`;
       document.getElementById('card-label-rate').innerText = `${dayTitle}: نسبة الإسناد (%)`;
 
       document.getElementById('total-riders').innerText = total;
@@ -1220,11 +1225,11 @@
               <div class="stat-val" style="color: ${themeColor};">${zData.total}</div>
             </div>
             <div class="stat-card" style="border-right-color: #16a34a;">
-              <div class="stat-label">المقبول (PUBLISHED)</div>
+              <div class="stat-label">المقبول (PUBLISHED & EVALUATED)</div>
               <div class="stat-val" style="color: #16a34a;">${zData.published}</div>
             </div>
             <div class="stat-card" style="border-right-color: var(--red-accent);">
-              <div class="stat-label">غير مختار (NOT CHOSEN)</div>
+              <div class="stat-label">غير مختار (NOT CHOSEN & NO_SHOW)</div>
               <div class="stat-val" style="color: var(--red-accent);">${zData.notChosen}</div>
             </div>
             <div class="stat-card" style="border-right-color: ${rateColor};">
