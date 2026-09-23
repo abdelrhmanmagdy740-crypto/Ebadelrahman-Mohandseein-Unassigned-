@@ -707,7 +707,6 @@
   </div>
 
   <script>
-    // تم تحديث الرابط هنا بالإصدار الجديد 8
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRcAB39S8h26BgnCg3nvho8lIzqdDWHZvJj0bJD_w3lDGeZgSwgRjFR2Ba0drZ1CIze/exec";
 
     const SUPERVISORS_DB = [
@@ -794,7 +793,7 @@
       return "#dc2626";
     }
 
-    // تنظيف وعرض القيمة كما هي في الشيت بالضبط
+    // استخراج وعرض القيمة كنص مباشر مطابق للشيت
     function cleanDisplayValue(val) {
       if (val === undefined || val === null) return '0.00';
       const s = String(val).trim();
@@ -967,7 +966,18 @@
       }
       
       try {
-        const res = await fetch(SCRIPT_URL, { method: "GET", redirect: "follow" });
+        const res = await fetch(SCRIPT_URL, {
+          method: "GET",
+          redirect: "follow",
+          headers: {
+            "Accept": "application/json"
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error("HTTP " + res.status);
+        }
+
         const json = await res.json();
 
         let rawRows = [];
@@ -992,7 +1002,7 @@
       } catch (err) {
         console.error("Fetch Error:", err);
         if (spinner) {
-          spinner.innerText = "⚠️ تعذر جلب البيانات. تأكد من إعدادات النشر في Apps Script.";
+          spinner.innerText = "⚠️ تعذر جلب البيانات. اضغط زر '🔄 تحديث البيانات' بالأعلى.";
         }
       } finally {
         if (spinner && ridersData.length > 0) {
