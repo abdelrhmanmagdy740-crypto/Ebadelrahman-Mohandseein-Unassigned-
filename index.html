@@ -6,24 +6,24 @@
   <title>Mohandiseen 3PLs-Dashboard | متابعة الطيارين</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    /* 1. لوحة ألوان الوضع الليلي (Dark Theme) */
+    /* 1. لوحة ألوان الوضع الليلي (الأسود + الأبيض + الرمادي الغامق + النبيتي) */
     html[data-theme="dark"] {
-      --bg-main: #0a0a0a;
-      --bg-card: #141416;
-      --bg-inner: #1c1c1f;
-      --input-bg: #18181b;
-      --text-main: #ffffff;
-      --text-muted: #9ca3af;
-      --border-accent: #dc2626;
-      --border-subtle: #27272a;
-      --table-border: #3f3f46;
-      --orange-accent: #f97316;
-      --red-accent: #ef4444;
-      --nav-bg: linear-gradient(90deg, #180507 0%, #0c0b0c 100%);
-      --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      --bg-main: #09090b;             /* أسود غامق */
+      --bg-card: #141416;             /* رمادي غامق أنيق */
+      --bg-inner: #1e1e24;            /* رمادي مسطح للبطاقات الداخلية */
+      --input-bg: #121215;            /* حقول إدخال غامقة */
+      --text-main: #ffffff;           /* أبيض صريح */
+      --text-muted: #a1a1aa;          /* رمادي وسط للنصوص الفرعية */
+      --border-accent: #881337;       /* نبيتي فخم */
+      --border-subtle: #27272a;       /* خطوط رمادية داكنة */
+      --table-border: #3f3f46;        /* فواصل الجداول */
+      --orange-accent: #9f1239;       /* نبيتي ساطع للتمييز */
+      --red-accent: #ef4444;          /* أحمر للتنبيه */
+      --nav-bg: linear-gradient(90deg, #1c050a 0%, #09090b 100%);
+      --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.75);
     }
 
-    /* 2. لوحة ألوان الوضع النهاري المحددة (Off-White, Mid-Gray, Black, Burgundy, Beige, Red) */
+    /* 2. لوحة ألوان الوضع النهاري (Off-White, Mid-Gray, Black, Burgundy, Beige, Red) */
     html[data-theme="light"] {
       --bg-main: #fcfbf9;
       --bg-card: #f5f0eb;
@@ -63,9 +63,9 @@
     }
     
     @keyframes pulseGlow {
-      0% { transform: scale(0.97); box-shadow: 0 0 35px rgba(220, 38, 38, 0.4), 0 0 50px rgba(249, 115, 22, 0.3); }
-      50% { transform: scale(1.03); box-shadow: 0 0 55px rgba(220, 38, 38, 0.7), 0 0 75px rgba(249, 115, 22, 0.6); }
-      100% { transform: scale(0.97); box-shadow: 0 0 35px rgba(220, 38, 38, 0.4), 0 0 50px rgba(249, 115, 22, 0.3); }
+      0% { transform: scale(0.97); box-shadow: 0 0 35px rgba(136, 19, 55, 0.4), 0 0 50px rgba(159, 18, 57, 0.3); }
+      50% { transform: scale(1.03); box-shadow: 0 0 55px rgba(136, 19, 55, 0.7), 0 0 75px rgba(159, 18, 57, 0.6); }
+      100% { transform: scale(0.97); box-shadow: 0 0 35px rgba(136, 19, 55, 0.4), 0 0 50px rgba(159, 18, 57, 0.3); }
     }
 
     .intro-logo-container {
@@ -74,7 +74,7 @@
       height: 250px;
       border-radius: 50%;
       padding: 5px;
-      background: linear-gradient(135deg, var(--orange-accent), var(--border-accent));
+      background: linear-gradient(135deg, var(--border-accent), var(--orange-accent));
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -92,13 +92,13 @@
       font-size: 26px;
       font-weight: 900;
       color: #ffffff;
-      text-shadow: 0 2px 10px rgba(220, 38, 38, 0.6);
+      text-shadow: 0 2px 10px rgba(136, 19, 55, 0.6);
       letter-spacing: 1px;
     }
     .skip-intro-btn {
       margin-top: 15px;
       background: rgba(0, 0, 0, 0.6);
-      border: 1px solid var(--orange-accent);
+      border: 1px solid var(--border-accent);
       color: #ffffff;
       padding: 6px 18px;
       border-radius: 20px;
@@ -107,8 +107,8 @@
       cursor: pointer;
     }
     .skip-intro-btn:hover {
-      background: var(--orange-accent);
-      color: #000;
+      background: var(--border-accent);
+      color: #fff;
     }
 
     /* الشريط العلوي */
@@ -122,7 +122,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       flex-wrap: wrap;
       gap: 12px;
     }
@@ -132,7 +132,7 @@
       height: 44px;
       border-radius: 50%;
       border: 2px solid var(--border-accent);
-      box-shadow: 0 0 10px rgba(127, 29, 29, 0.25);
+      box-shadow: 0 0 10px rgba(136, 19, 55, 0.35);
       object-fit: cover;
     }
     .brand-title { font-size: 17px; font-weight: 800; color: var(--text-main); line-height: 1.2; }
@@ -160,7 +160,7 @@
     .last-update-tag {
       font-size: 11px;
       font-weight: 700;
-      color: var(--border-accent);
+      color: #fb7185;
       background: var(--bg-inner);
       border: 1px solid var(--border-subtle);
       padding: 6px 12px;
@@ -200,7 +200,7 @@
       height: 115px;
       border-radius: 50%;
       border: 3px solid var(--border-accent);
-      box-shadow: 0 0 20px rgba(127, 29, 29, 0.35);
+      box-shadow: 0 0 20px rgba(136, 19, 55, 0.4);
       object-fit: cover;
       margin-bottom: 12px;
     }
@@ -208,7 +208,7 @@
     .auth-title { margin: 0 0 8px 0; font-size: 24px; font-weight: 900; color: var(--text-main); }
     .signature-text {
       text-align: center;
-      color: var(--red-accent);
+      color: #fb7185;
       font-family: 'Caveat', cursive, sans-serif;
       font-size: 21px;
       letter-spacing: 0.5px;
@@ -237,7 +237,7 @@
     select.custom-login-field option { background: var(--bg-card); color: var(--text-main); }
 
     .btn-login-action {
-      background: linear-gradient(135deg, var(--border-accent), var(--red-accent));
+      background: linear-gradient(135deg, var(--border-accent), #e11d48);
       color: #ffffff;
       width: 100%;
       padding: 13px;
@@ -247,23 +247,22 @@
       border: none;
       cursor: pointer;
       margin-top: 6px;
-      box-shadow: 0 4px 15px rgba(127, 29, 29, 0.3);
+      box-shadow: 0 4px 15px rgba(136, 19, 55, 0.4);
       transition: all 0.2s;
     }
     .btn-login-action:hover {
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
     }
 
     .switch-link { text-align: center; margin-top: 18px; }
     .switch-link a {
-      color: var(--border-accent);
+      color: #fb7185;
       text-decoration: none;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
     }
-    html[data-theme="dark"] .switch-link a { color: var(--orange-accent); }
     .switch-link a:hover { text-decoration: underline; }
 
     .btn {
@@ -304,7 +303,7 @@
       border-radius: 10px;
       padding: 14px 16px;
       border-right: 4px solid var(--border-accent);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
     .stat-val { font-size: 23px; font-weight: 900; color: var(--text-main); margin-top: 4px; }
     .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 700; }
@@ -398,7 +397,7 @@
       color: var(--text-main); 
     }
     td:last-child { border-left: none; }
-    tbody tr:hover { background: rgba(127, 29, 29, 0.05); }
+    tbody tr:hover { background: rgba(136, 19, 55, 0.08); }
 
     .col-idx { min-width: 50px; font-weight: 800; color: var(--text-muted); }
     .col-id { min-width: 90px; }
@@ -411,47 +410,77 @@
     .col-sv { min-width: 150px; font-weight: 700; }
 
     .copyable { cursor: pointer; user-select: none; }
-    .copyable:hover { background: rgba(127, 29, 29, 0.1); }
+    .copyable:hover { background: rgba(136, 19, 55, 0.15); }
     .copyable:active { transform: scale(0.98); }
 
+    /* ====== ستايلات الحالات (Badges) الجديدة بدقة ====== */
     .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
-    .badge-published { background: rgba(34, 197, 94, 0.15); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.4); }
-    .badge-not-chosen { background: rgba(220, 38, 38, 0.15); color: #b91c1c; border: 1px solid rgba(220, 38, 38, 0.4); }
-    
-    /* بادج الحالات الخاصة (NO_SHOW & SUSPENDED) باللون الأبيض الناصع */
-    .badge-white-highlight {
-      background: #27272a !important;
+
+    /* PUBLISHED -> أزرق فاتح */
+    .badge-published {
+      background: rgba(14, 165, 233, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+    html[data-theme="light"] .badge-published {
+      background: rgba(2, 132, 199, 0.12);
+      color: #0284c7;
+      border: 1px solid rgba(2, 132, 199, 0.35);
+    }
+
+    /* EVALUATED -> أخضر */
+    .badge-evaluated {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+    }
+    html[data-theme="light"] .badge-evaluated {
+      background: rgba(22, 163, 74, 0.12);
+      color: #16a34a;
+      border: 1px solid rgba(22, 163, 74, 0.35);
+    }
+
+    /* NOT CHOSEN -> أحمر */
+    .badge-not-chosen {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+    html[data-theme="light"] .badge-not-chosen {
+      background: rgba(220, 38, 38, 0.12);
+      color: #dc2626;
+      border: 1px solid rgba(220, 38, 38, 0.35);
+    }
+
+    /* NO_SHOW & Suspended -> أحمر داكن نبيتي مع نص أبيض */
+    .badge-dark-red-highlight {
+      background: #7f1d1d !important;
       color: #ffffff !important;
-      border: 1px solid #52525b !important;
+      border: 1px solid #991b1b !important;
       font-weight: 900;
       letter-spacing: 0.5px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-    }
-    html[data-theme="light"] .badge-white-highlight {
-      background: #18181b !important;
-      color: #ffffff !important;
-      border: 1px solid #000000 !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
     }
 
     .badge-default { background: var(--bg-inner); color: var(--text-muted); border: 1px solid var(--border-subtle); }
 
     .badge-fb-remove {
-      background-color: #dc2626 !important;
+      background-color: #991b1b !important;
       color: #ffffff !important;
       padding: 4px 10px;
       border-radius: 6px;
       font-weight: 800;
       display: inline-block;
-      box-shadow: 0 2px 5px rgba(220, 38, 38, 0.35);
+      box-shadow: 0 2px 5px rgba(153, 27, 27, 0.35);
     }
     .badge-fb-day {
-      background-color: #16a34a !important;
+      background-color: #15803d !important;
       color: #ffffff !important;
       padding: 4px 10px;
       border-radius: 6px;
       font-weight: 800;
       display: inline-block;
-      box-shadow: 0 2px 5px rgba(220, 38, 38, 0.35);
+      box-shadow: 0 2px 5px rgba(21, 128, 61, 0.35);
     }
     .badge-fb-holiday {
       background-color: #1e3a8a !important;
@@ -475,7 +504,7 @@
       border-radius: 8px;
       font-size: 13px;
       font-weight: 700;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
       z-index: 9999;
       opacity: 0;
       transition: transform 0.25s ease, opacity 0.25s ease;
@@ -486,7 +515,7 @@
     }
     #copy-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-    .loading-state { text-align: center; padding: 35px; color: var(--border-accent); font-size: 15px; font-weight: bold; }
+    .loading-state { text-align: center; padding: 35px; color: #fb7185; font-size: 15px; font-weight: bold; }
     .hidden { display: none !important; }
 
     @media (max-width: 768px) {
@@ -510,7 +539,7 @@
     <button class="skip-intro-btn" onclick="hideIntro()">تخطي الشعار الافتتاحي ✕</button>
   </div>
 
-  <div id="copy-toast">📋 تم النسخ: <span id="toast-text" style="color: var(--red-accent);"></span></div>
+  <div id="copy-toast">📋 تم النسخ: <span id="toast-text" style="color: #fb7185;"></span></div>
 
   <header class="navbar">
     <div class="brand-box">
@@ -531,7 +560,7 @@
       <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
         <span id="last-update-time" class="last-update-tag">🕒 جاري جلب وقت التحديث...</span>
         <button class="btn btn-outline" onclick="fetchData()">🔄 تحديث البيانات</button>
-        <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 700; color: var(--border-accent);"></span>
+        <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 700; color: #fb7185;"></span>
         <button class="btn btn-outline" onclick="logout()">خروج</button>
       </div>
     </div>
@@ -589,18 +618,18 @@
               <span>🌐</span>
               <span id="stats-header-scope">إحصائيات المناديب المسندين</span>
             </div>
-            <span id="selected-day-badge" style="font-size: 12px; color: var(--border-accent); font-weight: bold;">اليوم (Today)</span>
+            <span id="selected-day-badge" style="font-size: 12px; color: #fb7185; font-weight: bold;">اليوم (Today)</span>
           </div>
           <div class="stats-grid">
             <div class="stat-card" style="border-right-color: var(--border-accent);">
               <div class="stat-label" id="card-label-total">إجمالي الطيارين</div>
               <div class="stat-val" id="total-riders">0</div>
             </div>
-            <div class="stat-card" style="border-right-color: #16a34a;">
+            <div class="stat-card" style="border-right-color: #0284c7;">
               <div class="stat-label" id="card-label-published">المقبول (PUBLISHED & EVALUATED)</div>
               <div class="stat-val" id="today-published">0</div>
             </div>
-            <div class="stat-card" style="border-right-color: var(--red-accent);">
+            <div class="stat-card" style="border-right-color: #ef4444;">
               <div class="stat-label" id="card-label-not-chosen">غير مختار (NOT CHOSEN & NO_SHOW)</div>
               <div class="stat-val" id="today-not-chosen">0</div>
             </div>
@@ -670,10 +699,13 @@
 
           <select id="today-filter" class="filter-select" onchange="renderTable()">
             <option value="all">كل الحالات</option>
-            <option value="PUBLISHED">PUBLISHED & EVALUATED (المقبول)</option>
-            <option value="NOT CHOSEN">NOT CHOSEN & NO_SHOW (غير مختار)</option>
-            <option value="NO_SHOW">NO_SHOW فقط</option>
-            <option value="Suspended">Suspended</option>
+            <option value="PUBLISHED_ONLY">PUBLISHED (أزرق فاتح)</option>
+            <option value="EVALUATED_ONLY">EVALUATED (أخضر)</option>
+            <option value="PUBLISHED">PUBLISHED & EVALUATED (المقبول كلياً)</option>
+            <option value="NOT_CHOSEN_ONLY">NOT CHOSEN (أحمر)</option>
+            <option value="NOT CHOSEN">NOT CHOSEN & NO_SHOW (غير مختار كلياً)</option>
+            <option value="NO_SHOW">NO_SHOW (أحمر داكن)</option>
+            <option value="Suspended">Suspended (أحمر داكن)</option>
           </select>
 
           <button class="btn btn-excel" onclick="exportToExcel()">📥 تصدير Excel</button>
@@ -778,22 +810,20 @@
         const palette = ["#7f1d1d", "#dc2626", "#4b5563", "#991b1b", "#1f2937"];
         return palette[index % palette.length];
       } else {
-        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#ea580c";
-        if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";
-        if (z.includes('shobra') || z.includes('شبرا')) return "#f59e0b";
-        const palette = ["#ea580c", "#dc2626", "#f59e0b", "#0284c7", "#16a34a"];
+        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#9f1239";
+        if (z.includes('hadayek') || z.includes('حدائق')) return "#e11d48";
+        if (z.includes('shobra') || z.includes('شبرا')) return "#a1a1aa";
+        const palette = ["#9f1239", "#e11d48", "#a1a1aa", "#38bdf8", "#22c55e"];
         return palette[index % palette.length];
       }
     }
 
     function getRateColor(rate) {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-      if (rate > 80) return "#16a34a";
-      if (rate >= 70 && rate <= 80) return currentTheme === 'light' ? "#7f1d1d" : "#ea580c";
-      return "#dc2626";
+      if (rate > 80) return "#22c55e";
+      if (rate >= 70 && rate <= 80) return "#38bdf8";
+      return "#ef4444";
     }
 
-    // استخراج وعرض القيمة كنص مباشر مطابق للشيت
     function cleanDisplayValue(val) {
       if (val === undefined || val === null) return '0.00';
       const s = String(val).trim();
@@ -1119,13 +1149,11 @@
       }
     }
 
-    // حساب المقبول: يشمل PUBLISHED و EVALUATED
     function isStatusPublished(statusStr) {
       const s = (statusStr || '').toUpperCase();
       return s.includes('PUBLISHED') || s.includes('EVALUATED');
     }
 
-    // حساب غير المختار: يشمل NOT CHOSEN و NO_SHOW
     function isStatusNotChosen(statusStr) {
       const s = (statusStr || '').toUpperCase();
       return s.includes('NOT CHOSEN') || s.includes('NO_SHOW') || s.includes('NOSHOW');
@@ -1165,13 +1193,11 @@
 
         zoneStats[zone].total++;
 
-        // احتساب المقبول (PUBLISHED & EVALUATED)
         if (isStatusPublished(status)) {
           published++;
           zoneStats[zone].published++;
         }
         
-        // احتساب غير المختار (NOT CHOSEN & NO_SHOW)
         if (isStatusNotChosen(status)) {
           notChosen++;
           zoneStats[zone].notChosen++;
@@ -1224,13 +1250,13 @@
               <div class="stat-label">إجمالي طيارين المنطقة</div>
               <div class="stat-val" style="color: ${themeColor};">${zData.total}</div>
             </div>
-            <div class="stat-card" style="border-right-color: #16a34a;">
+            <div class="stat-card" style="border-right-color: #0284c7;">
               <div class="stat-label">المقبول (PUBLISHED & EVALUATED)</div>
-              <div class="stat-val" style="color: #16a34a;">${zData.published}</div>
+              <div class="stat-val" style="color: #0284c7;">${zData.published}</div>
             </div>
-            <div class="stat-card" style="border-right-color: var(--red-accent);">
+            <div class="stat-card" style="border-right-color: #ef4444;">
               <div class="stat-label">غير مختار (NOT CHOSEN & NO_SHOW)</div>
-              <div class="stat-val" style="color: var(--red-accent);">${zData.notChosen}</div>
+              <div class="stat-val" style="color: #ef4444;">${zData.notChosen}</div>
             </div>
             <div class="stat-card" style="border-right-color: ${rateColor};">
               <div class="stat-label">نسبة إسناد المنطقة (%)</div>
@@ -1242,13 +1268,30 @@
       });
     }
 
+    // دالة تحديد شكل البادج بدقة تامة طبقاً للطلب
     function getBadgeClass(val) {
       const s = (val || '').toUpperCase().trim();
+      
+      // NO_SHOW أو Suspended -> أحمر داكن نبيتي بنص أبيض
       if (s.includes('NO_SHOW') || s.includes('NOSHOW') || s.includes('SUSPENDED')) {
-        return 'badge-white-highlight';
+        return 'badge-dark-red-highlight';
       }
-      if (s.includes('PUBLISHED') || s.includes('EVALUATED')) return 'badge-published';
-      if (s.includes('NOT CHOSEN')) return 'badge-not-chosen';
+      
+      // EVALUATED -> أخضر
+      if (s.includes('EVALUATED')) {
+        return 'badge-evaluated';
+      }
+
+      // PUBLISHED -> أزرق فاتح
+      if (s.includes('PUBLISHED')) {
+        return 'badge-published';
+      }
+
+      // NOT CHOSEN -> أحمر
+      if (s.includes('NOT CHOSEN')) {
+        return 'badge-not-chosen';
+      }
+
       return 'badge-default';
     }
 
@@ -1262,7 +1305,7 @@
       if (lowerFb.includes('day by day') || lowerFb === 'day') return `<span class="badge-fb-day">${cleanFb}</span>`;
 
       const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-      const customColor = currentTheme === 'light' ? 'var(--border-accent)' : 'var(--orange-accent)';
+      const customColor = currentTheme === 'light' ? 'var(--border-accent)' : '#fb7185';
 
       return `<span style="color: ${customColor}; font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
     }
@@ -1447,7 +1490,10 @@
         let matchStatus = true;
         if (statusFilter !== 'all') {
           const dayVal = (r[selectedDay] || '').toUpperCase();
-          if (statusFilter === 'PUBLISHED') matchStatus = isStatusPublished(dayVal);
+          if (statusFilter === 'PUBLISHED_ONLY') matchStatus = dayVal.includes('PUBLISHED') && !dayVal.includes('EVALUATED');
+          else if (statusFilter === 'EVALUATED_ONLY') matchStatus = dayVal.includes('EVALUATED');
+          else if (statusFilter === 'PUBLISHED') matchStatus = isStatusPublished(dayVal);
+          else if (statusFilter === 'NOT_CHOSEN_ONLY') matchStatus = dayVal.includes('NOT CHOSEN');
           else if (statusFilter === 'NOT CHOSEN') matchStatus = isStatusNotChosen(dayVal);
           else if (statusFilter === 'NO_SHOW') matchStatus = dayVal.includes('NO_SHOW') || dayVal.includes('NOSHOW');
           else if (statusFilter === 'Suspended') matchStatus = dayVal.includes('SUSPENDED');
@@ -1464,7 +1510,7 @@
       const selectedDay = document.getElementById('main-day-filter').value;
       const filtered = getFilteredRiders();
       const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-      const idColor = currentTheme === 'light' ? 'var(--border-accent)' : 'var(--orange-accent)';
+      const idColor = currentTheme === 'light' ? 'var(--border-accent)' : '#fb7185';
 
       filtered.forEach((r, idx) => {
         const tr = document.createElement('tr');
