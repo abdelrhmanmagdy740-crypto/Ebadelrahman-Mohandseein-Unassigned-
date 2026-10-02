@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mohandiseen 3PLs-Dashboard | متابعة الطيارين</title>
+  <title>Mohandiseen 3PLs-Dashboard | بوابة العمليات اللوجستية</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    /* 1. لوحة ألوان الوضع الليلي (الأسود + الأبيض + الرمادي الغامق + النبيتي) */
+    /* 1. السمة الليلية: الأسود + الأبيض + الرمادي الغامق + النبيتي */
     html[data-theme="dark"] {
-      --bg-main: #09090b;             /* أسود غامق */
-      --bg-card: #141416;             /* رمادي غامق أنيق */
-      --bg-inner: #1e1e24;            /* رمادي مسطح للبطاقات الداخلية */
-      --input-bg: #121215;            /* حقول إدخال غامقة */
-      --text-main: #ffffff;           /* أبيض صريح */
-      --text-muted: #a1a1aa;          /* رمادي وسط للنصوص الفرعية */
-      --border-accent: #881337;       /* نبيتي فخم */
-      --border-subtle: #27272a;       /* خطوط رمادية داكنة */
-      --table-border: #3f3f46;        /* فواصل الجداول */
-      --orange-accent: #9f1239;       /* نبيتي ساطع للتمييز */
-      --red-accent: #ef4444;          /* أحمر للتنبيه */
+      --bg-main: #09090b;
+      --bg-card: #141416;
+      --bg-inner: #1e1e24;
+      --input-bg: #121215;
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+      --border-accent: #881337;
+      --border-subtle: #27272a;
+      --table-border: #3f3f46;
+      --orange-accent: #9f1239;
+      --red-accent: #ef4444;
       --nav-bg: linear-gradient(90deg, #1c050a 0%, #09090b 100%);
       --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.75);
     }
 
-    /* 2. لوحة ألوان الوضع النهاري (Off-White, Mid-Gray, Black, Burgundy, Beige, Red) */
+    /* 2. السمة النهارية */
     html[data-theme="light"] {
       --bg-main: #fcfbf9;
       --bg-card: #f5f0eb;
@@ -44,493 +44,277 @@
     * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
     body { background: var(--bg-main); color: var(--text-main); margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden; }
 
-    /* شاشة الشعار الافتتاحي (Splash Intro) */
     #intro-screen {
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background: radial-gradient(circle at center, #260508 0%, #050505 100%);
-      z-index: 99999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center;
       transition: opacity 0.8s ease, visibility 0.8s ease;
     }
-    #intro-screen.fade-out {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
+    #intro-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
     
     @keyframes pulseGlow {
-      0% { transform: scale(0.97); box-shadow: 0 0 35px rgba(136, 19, 55, 0.4), 0 0 50px rgba(159, 18, 57, 0.3); }
-      50% { transform: scale(1.03); box-shadow: 0 0 55px rgba(136, 19, 55, 0.7), 0 0 75px rgba(159, 18, 57, 0.6); }
-      100% { transform: scale(0.97); box-shadow: 0 0 35px rgba(136, 19, 55, 0.4), 0 0 50px rgba(159, 18, 57, 0.3); }
+      0% { transform: scale(0.97); box-shadow: 0 0 35px rgba(136, 19, 55, 0.4); }
+      50% { transform: scale(1.03); box-shadow: 0 0 55px rgba(136, 19, 55, 0.7); }
+      100% { transform: scale(0.97); box-shadow: 0 0 35px rgba(136, 19, 55, 0.4); }
     }
 
     .intro-logo-container {
-      position: relative;
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-      padding: 5px;
+      width: 240px; height: 240px; border-radius: 50%; padding: 5px;
       background: linear-gradient(135deg, var(--border-accent), var(--orange-accent));
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
       animation: pulseGlow 2.5s infinite ease-in-out;
     }
-    .intro-logo-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-    .intro-title {
-      margin-top: 25px;
-      font-size: 26px;
-      font-weight: 900;
-      color: #ffffff;
-      text-shadow: 0 2px 10px rgba(136, 19, 55, 0.6);
-      letter-spacing: 1px;
-    }
+    .intro-logo-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .intro-title { margin-top: 25px; font-size: 26px; font-weight: 900; color: #ffffff; letter-spacing: 1px; }
     .skip-intro-btn {
-      margin-top: 15px;
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid var(--border-accent);
-      color: #ffffff;
-      padding: 6px 18px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .skip-intro-btn:hover {
-      background: var(--border-accent);
-      color: #fff;
+      margin-top: 15px; background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border-accent);
+      color: #ffffff; padding: 6px 18px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer;
     }
 
-    /* الشريط العلوي */
     .navbar {
-      background: var(--nav-bg);
-      border-bottom: 2px solid var(--border-accent);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      flex-wrap: wrap;
-      gap: 12px;
+      background: var(--nav-bg); border-bottom: 2px solid var(--border-accent);
+      padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+      position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      flex-wrap: wrap; gap: 12px;
     }
     .brand-box { display: flex; align-items: center; gap: 14px; }
-    .brand-logo-mini {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 2px solid var(--border-accent);
-      box-shadow: 0 0 10px rgba(136, 19, 55, 0.35);
-      object-fit: cover;
-    }
+    .brand-logo-mini { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--border-accent); object-fit: cover; }
     .brand-title { font-size: 17px; font-weight: 800; color: var(--text-main); line-height: 1.2; }
     .brand-sub { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 
     .nav-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-
     .theme-toggle-btn {
+      background: var(--bg-inner); border: 1px solid var(--border-subtle); color: var(--text-main);
+      padding: 7px 13px; border-radius: 8px; font-size: 13px; font-weight: 800; cursor: pointer;
+    }
+    .last-update-tag {
+      font-size: 11px; font-weight: 700; color: #fb7185; background: var(--bg-inner);
+      border: 1px solid var(--border-subtle); padding: 6px 12px; border-radius: 6px; white-space: nowrap;
+    }
+
+    /* شريط القوائم المصنفة (Dropdown Categories Navbar) */
+    .portal-categories-bar {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 66px;
+      z-index: 90;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .cat-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .cat-btn {
       background: var(--bg-inner);
       border: 1px solid var(--border-subtle);
       color: var(--text-main);
-      padding: 7px 13px;
+      padding: 8px 14px;
       border-radius: 8px;
       font-size: 13px;
       font-weight: 800;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      transition: all 0.2s ease;
     }
-    .theme-toggle-btn:hover {
+
+    .cat-btn:hover, .cat-dropdown:hover .cat-btn {
+      background: rgba(136, 19, 55, 0.2);
       border-color: var(--border-accent);
-    }
-
-    .last-update-tag {
-      font-size: 11px;
-      font-weight: 700;
-      color: #fb7185;
-      background: var(--bg-inner);
-      border: 1px solid var(--border-subtle);
-      padding: 6px 12px;
-      border-radius: 6px;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
-    }
-
-    .container { width: 98%; max-width: 1800px; margin: 15px auto; padding: 0 10px; }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: var(--card-shadow);
-    }
-
-    /* واجهات تسجيل الدخول */
-    .auth-wrapper {
-      max-width: 450px;
-      margin: 40px auto;
-      background: var(--bg-card);
-      border: 2px solid var(--border-accent);
-      border-radius: 20px;
-      padding: 30px 24px;
-      box-shadow: var(--card-shadow);
-      width: 100%;
-      text-align: center;
-    }
-
-    .login-brand-logo {
-      width: 115px;
-      height: 115px;
-      border-radius: 50%;
-      border: 3px solid var(--border-accent);
-      box-shadow: 0 0 20px rgba(136, 19, 55, 0.4);
-      object-fit: cover;
-      margin-bottom: 12px;
-    }
-
-    .auth-title { margin: 0 0 8px 0; font-size: 24px; font-weight: 900; color: var(--text-main); }
-    .signature-text {
-      text-align: center;
-      color: #fb7185;
-      font-family: 'Caveat', cursive, sans-serif;
-      font-size: 21px;
-      letter-spacing: 0.5px;
-      margin-bottom: 22px;
-      direction: ltr;
-      display: block;
-      font-weight: 700;
-    }
-
-    .form-group { margin-bottom: 18px; text-align: right; }
-    .form-group label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 700; color: var(--text-main); }
-
-    select.custom-login-field, input.custom-pass-input {
-      width: 100%;
-      padding: 12px 14px;
-      background: var(--input-bg);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      color: var(--text-main);
-      font-size: 14px;
-      font-weight: 600;
-      outline: none;
-      text-align: right;
-    }
-    input.custom-pass-input { font-size: 18px; letter-spacing: 2px; }
-    select.custom-login-field option { background: var(--bg-card); color: var(--text-main); }
-
-    .btn-login-action {
-      background: linear-gradient(135deg, var(--border-accent), #e11d48);
       color: #ffffff;
-      width: 100%;
-      padding: 13px;
-      font-size: 16px;
-      font-weight: 900;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      margin-top: 6px;
-      box-shadow: 0 4px 15px rgba(136, 19, 55, 0.4);
-      transition: all 0.2s;
-    }
-    .btn-login-action:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
     }
 
-    .switch-link { text-align: center; margin-top: 18px; }
-    .switch-link a {
+    .cat-btn.has-active {
+      border-color: var(--orange-accent);
+      background: linear-gradient(135deg, rgba(136, 19, 55, 0.4), rgba(159, 18, 57, 0.2));
       color: #fb7185;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
     }
-    .switch-link a:hover { text-decoration: underline; }
 
-    .btn {
-      padding: 8px 14px; border-radius: 8px; border: none; font-weight: 700;
-      cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
-      gap: 6px; font-size: 12px;
+    .cat-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      background: var(--bg-card);
+      min-width: 260px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      border: 1px solid var(--border-accent);
+      border-radius: 10px;
+      z-index: 1000;
+      overflow: hidden;
+      padding: 6px 0;
     }
-    .btn-outline { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-main); }
-    .btn-outline:hover { border-color: var(--border-accent); }
-    .btn-excel { background: #059669; color: #fff; border: 1px solid #047857; }
-    .btn-excel:hover { background: #047857; }
 
-    .stats-section-block { margin-bottom: 20px; }
-    .stats-block-header {
+    .cat-dropdown:hover .cat-menu {
+      display: block;
+    }
+
+    .cat-item-btn {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
-      padding: 8px 14px;
-      background: var(--bg-inner);
-      border-radius: 8px;
-      border-right: 4px solid var(--border-accent);
-      flex-wrap: wrap;
-      gap: 8px;
+      width: 100%;
+      padding: 10px 16px;
+      text-align: right;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
-    .stats-block-header .zone-title-tag {
-      font-size: 14px;
+
+    .cat-item-btn:hover {
+      background: rgba(136, 19, 55, 0.25);
+      color: #ffffff;
+      padding-right: 20px;
+    }
+
+    .cat-item-btn.active-item {
+      background: linear-gradient(90deg, rgba(136, 19, 55, 0.5) 0%, rgba(159, 18, 57, 0.3) 100%);
+      color: #ffffff;
       font-weight: 900;
-      display: flex;
+      border-right: 4px solid #fb7185;
+    }
+
+    .current-active-badge {
+      margin-right: auto;
+      background: var(--bg-inner);
+      border: 1px solid var(--border-accent);
+      color: #fb7185;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      color: var(--text-main);
+      gap: 6px;
+    }
+
+    .container { width: 98%; max-width: 1800px; margin: 15px auto; padding: 0 10px; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px;
+      padding: 20px; margin-bottom: 20px; box-shadow: var(--card-shadow);
+    }
+
+    /* تسجيل الدخول */
+    .auth-wrapper {
+      max-width: 450px; margin: 40px auto; background: var(--bg-card); border: 2px solid var(--border-accent);
+      border-radius: 20px; padding: 30px 24px; box-shadow: var(--card-shadow); text-align: center;
+    }
+    .login-brand-logo { width: 115px; height: 115px; border-radius: 50%; border: 3px solid var(--border-accent); object-fit: cover; margin-bottom: 12px; }
+    .auth-title { margin: 0 0 8px 0; font-size: 24px; font-weight: 900; color: var(--text-main); }
+    .signature-text {
+      text-align: center; color: #fb7185; font-family: 'Caveat', cursive, sans-serif;
+      font-size: 21px; margin-bottom: 22px; direction: ltr; font-weight: 700;
+    }
+    .form-group { margin-bottom: 18px; text-align: right; }
+    .form-group label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 700; }
+    select.custom-login-field, input.custom-pass-input {
+      width: 100%; padding: 12px 14px; background: var(--input-bg); border: 1px solid var(--border-subtle);
+      border-radius: 8px; color: var(--text-main); font-size: 14px; font-weight: 600; outline: none;
+    }
+    .btn-login-action {
+      background: linear-gradient(135deg, var(--border-accent), #e11d48);
+      color: #ffffff; width: 100%; padding: 13px; font-size: 16px; font-weight: 900;
+      border-radius: 8px; border: none; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 15px rgba(136, 19, 55, 0.4);
+    }
+    .switch-link { text-align: center; margin-top: 18px; }
+    .switch-link a { color: #fb7185; text-decoration: none; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+    .btn { padding: 8px 14px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; }
+    .btn-outline { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-main); }
+    .btn-outline:hover { border-color: var(--border-accent); }
+    .btn-excel { background: #059669; color: #fff; border: 1px solid #047857; }
+
+    /* الكروت والإحصائيات */
+    .stats-section-block { margin-bottom: 20px; }
+    .stats-block-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+      padding: 8px 14px; background: var(--bg-inner); border-radius: 8px; border-right: 4px solid var(--border-accent); flex-wrap: wrap; gap: 8px;
     }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
     .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 10px;
-      padding: 14px 16px;
-      border-right: 4px solid var(--border-accent);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px;
+      padding: 14px 16px; border-right: 4px solid var(--border-accent); box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
     .stat-val { font-size: 23px; font-weight: 900; color: var(--text-main); margin-top: 4px; }
     .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 700; }
 
     .day-section-block { margin-bottom: 25px; }
     .day-section-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--bg-inner);
-      padding: 8px 14px;
-      border-radius: 8px;
-      border-right: 4px solid var(--border-accent);
+      font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px; background: var(--bg-inner); padding: 8px 14px; border-radius: 8px; border-right: 4px solid var(--border-accent);
     }
     .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
     .zone-column-card {
-      background: var(--bg-card);
-      border-radius: 10px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--card-shadow);
+      background: var(--bg-card); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column;
+      border: 1px solid var(--border-subtle); box-shadow: var(--card-shadow);
     }
-    .zone-card-header {
-      background: var(--bg-inner);
-      padding: 12px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .zone-card-header .title-box { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; }
-    .zone-card-header .stats-badge { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+    .zone-card-header { background: var(--bg-inner); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); }
     .zone-total-rate { padding: 2px 7px; border-radius: 4px; font-weight: 800; font-size: 12px; }
-    .zone-total-counts { color: var(--text-muted); font-size: 12px; }
-    
     .zone-table-container { width: 100%; overflow-x: auto; }
-    .zone-table-container table td, 
-    .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; text-align: center !important; }
+    .zone-table-container table td, .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; text-align: center !important; }
 
-    .table-header-tools { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      gap: 10px; 
-      flex-wrap: wrap; 
-      margin-bottom: 18px; 
-    }
-    .search-input, .filter-select { 
-      padding: 9px 12px; 
-      background: var(--input-bg); 
-      border: 1px solid var(--border-subtle); 
-      border-radius: 7px; 
-      color: var(--text-main); 
-      outline: none; 
-      font-size: 13px; 
+    .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+    .search-input, .filter-select {
+      padding: 9px 12px; background: var(--input-bg); border: 1px solid var(--border-subtle);
+      border-radius: 7px; color: var(--text-main); outline: none; font-size: 13px;
     }
     .search-input { min-width: 180px; flex: 2; }
     .filter-select { flex: 1; min-width: 125px; }
     
     .table-container { 
-      width: 100%;
-      overflow-x: auto; 
-      border-radius: 10px; 
-      border: 2px solid var(--table-border); 
-      background: var(--bg-card);
-      -webkit-overflow-scrolling: touch;
+      width: 100%; overflow-x: auto; border-radius: 10px; border: 2px solid var(--table-border); 
+      background: var(--bg-card); -webkit-overflow-scrolling: touch;
     }
     table { width: 100%; border-collapse: collapse; font-size: 12px; white-space: nowrap; }
     th { 
-      background: var(--bg-inner); 
-      padding: 12px 10px; 
-      color: var(--text-main); 
-      font-weight: 800; 
-      text-align: center !important; 
-      border-bottom: 2px solid var(--table-border); 
-      border-left: 2px solid var(--table-border); 
+      background: var(--bg-inner); padding: 12px 10px; color: var(--text-main); font-weight: 800; 
+      text-align: center !important; border-bottom: 2px solid var(--table-border); border-left: 2px solid var(--table-border); 
     }
-    th:last-child { border-left: none; }
-
-    td { 
-      padding: 10px 12px; 
-      text-align: center !important; 
-      border-top: 2px solid var(--table-border); 
-      border-left: 2px solid var(--table-border); 
-      color: var(--text-main); 
-    }
-    td:last-child { border-left: none; }
+    td { padding: 10px 12px; text-align: center !important; border-top: 2px solid var(--table-border); border-left: 2px solid var(--table-border); color: var(--text-main); }
     tbody tr:hover { background: rgba(136, 19, 55, 0.08); }
-
-    .col-idx { min-width: 50px; font-weight: 800; color: var(--text-muted); }
-    .col-id { min-width: 90px; }
-    .col-name { min-width: 250px; font-weight: 700; }
-    .col-area { min-width: 130px; }
-    .col-phone { min-width: 130px; }
-    .col-yesterday { min-width: 110px; font-weight: 800; }
-    .col-badge { min-width: 110px; }
-    .col-fb { min-width: 140px; }
-    .col-sv { min-width: 150px; font-weight: 700; }
 
     .copyable { cursor: pointer; user-select: none; }
     .copyable:hover { background: rgba(136, 19, 55, 0.15); }
-    .copyable:active { transform: scale(0.98); }
 
-    /* ====== ستايلات الحالات (Badges) الجديدة بدقة ====== */
+    /* البادجات المعتمدة */
     .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
-
-    /* PUBLISHED -> أزرق فاتح */
-    .badge-published {
-      background: rgba(14, 165, 233, 0.15);
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.4);
-    }
-    html[data-theme="light"] .badge-published {
-      background: rgba(2, 132, 199, 0.12);
-      color: #0284c7;
-      border: 1px solid rgba(2, 132, 199, 0.35);
-    }
-
-    /* EVALUATED -> أخضر */
-    .badge-evaluated {
-      background: rgba(34, 197, 94, 0.15);
-      color: #22c55e;
-      border: 1px solid rgba(34, 197, 94, 0.4);
-    }
-    html[data-theme="light"] .badge-evaluated {
-      background: rgba(22, 163, 74, 0.12);
-      color: #16a34a;
-      border: 1px solid rgba(22, 163, 74, 0.35);
-    }
-
-    /* NOT CHOSEN -> أحمر */
-    .badge-not-chosen {
-      background: rgba(239, 68, 68, 0.15);
-      color: #ef4444;
-      border: 1px solid rgba(239, 68, 68, 0.4);
-    }
-    html[data-theme="light"] .badge-not-chosen {
-      background: rgba(220, 38, 38, 0.12);
-      color: #dc2626;
-      border: 1px solid rgba(220, 38, 38, 0.35);
-    }
-
-    /* NO_SHOW & Suspended -> أحمر داكن نبيتي مع نص أبيض */
-    .badge-dark-red-highlight {
-      background: #7f1d1d !important;
-      color: #ffffff !important;
-      border: 1px solid #991b1b !important;
-      font-weight: 900;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
-    }
-
+    .badge-published { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+    .badge-evaluated { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.4); }
+    .badge-not-chosen { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .badge-dark-red-highlight { background: #7f1d1d !important; color: #ffffff !important; border: 1px solid #991b1b !important; font-weight: 900; }
     .badge-default { background: var(--bg-inner); color: var(--text-muted); border: 1px solid var(--border-subtle); }
-
-    .badge-fb-remove {
-      background-color: #991b1b !important;
-      color: #ffffff !important;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-weight: 800;
-      display: inline-block;
-      box-shadow: 0 2px 5px rgba(153, 27, 27, 0.35);
-    }
-    .badge-fb-day {
-      background-color: #15803d !important;
-      color: #ffffff !important;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-weight: 800;
-      display: inline-block;
-      box-shadow: 0 2px 5px rgba(21, 128, 61, 0.35);
-    }
-    .badge-fb-holiday {
-      background-color: #1e3a8a !important;
-      color: #ffffff !important;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-weight: 800;
-      display: inline-block;
-      box-shadow: 0 2px 5px rgba(30, 58, 138, 0.4);
-    }
+    .badge-fb-remove { background-color: #991b1b !important; color: #ffffff !important; padding: 4px 10px; border-radius: 6px; font-weight: 800; }
+    .badge-fb-day { background-color: #15803d !important; color: #ffffff !important; padding: 4px 10px; border-radius: 6px; font-weight: 800; }
+    .badge-fb-holiday { background-color: #1e3a8a !important; color: #ffffff !important; padding: 4px 10px; border-radius: 6px; font-weight: 800; }
 
     #copy-toast {
-      position: fixed;
-      bottom: 25px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: var(--bg-card);
-      color: var(--text-main);
-      border: 1px solid var(--border-accent);
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 700;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      z-index: 9999;
-      opacity: 0;
-      transition: transform 0.25s ease, opacity 0.25s ease;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-accent);
+      padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; z-index: 9999;
+      opacity: 0; transition: transform 0.25s ease, opacity 0.25s ease; pointer-events: none;
     }
     #copy-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
     .loading-state { text-align: center; padding: 35px; color: #fb7185; font-size: 15px; font-weight: bold; }
     .hidden { display: none !important; }
-
-    @media (max-width: 768px) {
-      .navbar { padding: 10px 14px; flex-direction: column; align-items: flex-start; }
-      .nav-actions { width: 100%; justify-content: space-between; }
-      .table-header-tools { flex-direction: column; align-items: stretch; }
-      .search-input, .filter-select, .btn-excel { width: 100%; min-width: 100%; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .zones-grid { grid-template-columns: 1fr; }
-    }
   </style>
 </head>
 <body>
 
-  <!-- شاشة الشعار الافتتاحي -->
+  <!-- شاشة اللوجو الافتتاحية -->
   <div id="intro-screen">
     <div class="intro-logo-container">
       <img src="logo.png" alt="Logo">
@@ -546,12 +330,11 @@
       <img class="brand-logo-mini" src="logo.png" alt="Logo">
       <div>
         <div class="brand-title">Mohandiseen 3PLs-Dashboard</div>
-        <div class="brand-sub">متابعة إسناد الطيارين (Assign Tracker)</div>
+        <div class="brand-sub">بوابة العمليات اللوجستية (Operations Portal)</div>
       </div>
     </div>
     
     <div class="nav-actions">
-      <!-- زر التبديل بين النهاري والليلي -->
       <button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()">
         <span id="theme-icon">☀️</span>
         <span id="theme-label">نهاري</span>
@@ -559,16 +342,133 @@
 
       <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
         <span id="last-update-time" class="last-update-tag">🕒 جاري جلب وقت التحديث...</span>
-        <button class="btn btn-outline" onclick="fetchData()">🔄 تحديث البيانات</button>
+        <button class="btn btn-outline" onclick="refreshCurrentTab()">🔄 تحديث البيانات</button>
         <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 700; color: #fb7185;"></span>
         <button class="btn btn-outline" onclick="logout()">خروج</button>
       </div>
     </div>
   </header>
 
+  <!-- شريط القوائم المصنفة الـ 5 المعتمد -->
+  <nav id="portal-nav-bar" class="portal-categories-bar hidden">
+
+    <!-- 1. عمليات الإسناد والتوزيع -->
+    <div class="cat-dropdown">
+      <button class="cat-btn has-active" id="btn-cat-assign">
+        <span>🛵 عمليات الإسناد والتوزيع</span>
+        <span>▼</span>
+      </button>
+      <div class="cat-menu">
+        <button class="cat-item-btn active-item" onclick="switchPortalTab('Manual Assigned')">
+          <span>📋 Manual Assigned</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Hedcount Mohandssein')">
+          <span>👥 Hedcount Mohandssein</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. الأداء والعمليات -->
+    <div class="cat-dropdown">
+      <button class="cat-btn" id="btn-cat-performance">
+        <span>📈 الأداء والعمليات</span>
+        <span>▼</span>
+      </button>
+      <div class="cat-menu">
+        <button class="cat-item-btn" onclick="switchPortalTab('Rider\'s daliy performance')">
+          <span>⏱️ Daily performance</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Rider\'s monthly performance')">
+          <span>📅 Monthly performance</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Contract Follow up')">
+          <span>📝 Contract Follow up</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Report on cancelled orders')">
+          <span>❌ Cancelled orders</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. التعيينات والحسابات -->
+    <div class="cat-dropdown">
+      <button class="cat-btn" id="btn-cat-accounts">
+        <span>👥 التعيينات والحسابات</span>
+        <span>▼</span>
+      </button>
+      <div class="cat-menu">
+        <button class="cat-item-btn" onclick="switchPortalTab('New rider\'s accounts')">
+          <span>✨ New rider accounts</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Reactivation rider\'s accounts')">
+          <span>🔄 Reactivation accounts</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 4. الشؤون الإدارية والمالية -->
+    <div class="cat-dropdown">
+      <button class="cat-btn" id="btn-cat-admin">
+        <span>💼 الشؤون الإدارية والمالية</span>
+        <span>▼</span>
+      </button>
+      <div class="cat-menu">
+        <button class="cat-item-btn" onclick="switchPortalTab('Wallet details')">
+          <span>💰 Wallet details</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Equipment')">
+          <span>🪖 Equipment</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 5. الجودة والأمان -->
+    <div class="cat-dropdown">
+      <button class="cat-btn" id="btn-cat-security">
+        <span>⚖️ الجودة والأمان</span>
+        <span>▼</span>
+      </button>
+      <div class="cat-menu">
+        <button class="cat-item-btn" onclick="switchPortalTab('Security Inquiry')">
+          <span>🛡️ Security Inquiry</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Actions & Coaching')">
+          <span>🎯 Actions & Coaching</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Legal Settlements')">
+          <span>⚖️ Legal Settlements</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Invalid hiring')">
+          <span>⚠️ Invalid hiring</span>
+          <span style="font-size:10px;">●</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- بادج الشيت المفتوح حالياً -->
+    <div class="current-active-badge">
+      <span>الصفحة الحالية:</span>
+      <span id="active-sheet-indicator">Manual Assigned</span>
+    </div>
+
+  </nav>
+
   <div class="container">
 
-    <!-- شاشة تسجيل دخول المشرفين -->
+    <!-- تسجيل دخول المشرفين -->
     <div id="office-login-box" class="auth-wrapper">
       <img class="login-brand-logo" src="logo.png" alt="Logo">
       <h2 class="auth-title">تسجيل دخول المشرفين</h2>
@@ -585,17 +485,14 @@
       </div>
 
       <button class="btn-login-action" onclick="loginSupervisor()">تسجيل الدخول</button>
-      
-      <div class="switch-link">
-        <a onclick="showAdminLogin()">⚙ دخول المسؤول العام (Admin)</a>
-      </div>
+      <div class="switch-link"><a onclick="showAdminLogin()">⚙ دخول المسؤول العام (Admin)</a></div>
     </div>
 
-    <!-- شاشة دخول المسؤول العام -->
+    <!-- تسجيل دخول المسؤول العام -->
     <div id="admin-login-box" class="auth-wrapper hidden">
       <img class="login-brand-logo" src="logo.png" alt="Logo">
       <h2 class="auth-title" style="direction: ltr; font-size: 20px;">Engineer Abdulrahman Magdy's Login Panel</h2>
-      <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 22px;">للاطلاع على كل المشرفين والمناطق مجتمعة</p>
+      <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 22px;">للاطلاع على كافة الأقسام والشيتات مجتمعة</p>
 
       <div class="form-group">
         <label>باسورد المسؤول</label>
@@ -603,21 +500,15 @@
       </div>
 
       <button class="btn-login-action" onclick="loginAdmin()">دخول المسؤول</button>
-
-      <div class="switch-link">
-        <a onclick="showOfficeLogin()">← رجوع لتسجيل دخول المشرفين</a>
-      </div>
+      <div class="switch-link"><a onclick="showOfficeLogin()">← رجوع لتسجيل دخول المشرفين</a></div>
     </div>
 
-    <div id="main-dashboard" class="hidden">
-      
+    <!-- ================== 1. تبويب Manual Assigned ================== -->
+    <div id="view-manual-assigned" class="dashboard-portal-view hidden">
       <div id="top-stats-container">
         <div class="stats-section-block">
           <div class="stats-block-header">
-            <div class="zone-title-tag">
-              <span>🌐</span>
-              <span id="stats-header-scope">إحصائيات المناديب المسندين</span>
-            </div>
+            <div class="zone-title-tag"><span>🌐</span><span id="stats-header-scope">إحصائيات المناديب المسندين</span></div>
             <span id="selected-day-badge" style="font-size: 12px; color: #fb7185; font-weight: bold;">اليوم (Today)</span>
           </div>
           <div class="stats-grid">
@@ -639,7 +530,6 @@
             </div>
           </div>
         </div>
-
         <div id="zones-breakdown-stats"></div>
       </div>
 
@@ -649,17 +539,15 @@
             <h3 style="margin: 0; font-size: 15px; color: var(--text-main);">📊 توزيع ونسب إسناد المشرفين حسب المناطق (خاص بالمسؤول)</h3>
             <span style="font-size: 12px; color: var(--text-muted);">محسوب من واقع عمود الـ Feedback مقارنة بإجمالي مناديب المنطقة</span>
           </div>
-
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 6px;">
-              <label style="margin: 0; font-size: 12px; color: var(--text-main); font-weight: bold;">المشرف:</label>
+              <label style="margin: 0; font-size: 12px; font-weight: bold;">المشرف:</label>
               <select id="report-supervisor-select" style="width: auto; padding: 6px 12px; font-size: 12px;" class="filter-select" onchange="renderSupervisorReport()">
                 <option value="all">كل المشرفين</option>
               </select>
             </div>
-
             <div style="display: flex; align-items: center; gap: 6px;">
-              <label style="margin: 0; font-size: 12px; color: var(--text-main); font-weight: bold;">اليوم المعروض:</label>
+              <label style="margin: 0; font-size: 12px; font-weight: bold;">اليوم المعروض:</label>
               <select id="report-day-select" style="width: auto; padding: 6px 12px; font-size: 12px;" class="filter-select" onchange="renderSupervisorReport()">
                 <option value="all_days">كل الأيام (الـ 3 أيام معاً)</option>
                 <option value="today">اليوم (Today)</option>
@@ -669,34 +557,20 @@
             </div>
           </div>
         </div>
-
         <div id="zones-container"></div>
       </div>
 
       <div class="card">
         <div class="table-header-tools">
           <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث بالاسم، الـ ID، أو الهاتف..." onkeyup="renderTable()">
-          
-          <select id="supervisor-filter" class="filter-select" onchange="renderTable()">
-            <option value="all">كل المشرفين (S.V)</option>
-          </select>
-
-          <!-- فلتر المناطق / الزونات -->
-          <select id="zone-filter" class="filter-select" onchange="renderTable()">
-            <option value="all">كل المناطق (Zones)</option>
-          </select>
-
-          <!-- فلتر الـ Feedback -->
-          <select id="feedback-filter" class="filter-select" onchange="renderTable()">
-            <option value="all">كل الـ Feedback</option>
-          </select>
-
+          <select id="supervisor-filter" class="filter-select" onchange="renderTable()"><option value="all">كل المشرفين (S.V)</option></select>
+          <select id="zone-filter" class="filter-select" onchange="renderTable()"><option value="all">كل المناطق (Zones)</option></select>
+          <select id="feedback-filter" class="filter-select" onchange="renderTable()"><option value="all">كل الـ Feedback</option></select>
           <select id="main-day-filter" class="filter-select" onchange="onMainDayFilterChange()">
             <option value="today">اليوم (Today)</option>
             <option value="tomorrow">الغد (Tomorrow)</option>
             <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
           </select>
-
           <select id="today-filter" class="filter-select" onchange="renderTable()">
             <option value="all">كل الحالات</option>
             <option value="PUBLISHED_ONLY">PUBLISHED (أزرق فاتح)</option>
@@ -707,7 +581,6 @@
             <option value="NO_SHOW">NO_SHOW (أحمر داكن)</option>
             <option value="Suspended">Suspended (أحمر داكن)</option>
           </select>
-
           <button class="btn btn-excel" onclick="exportToExcel()">📥 تصدير Excel</button>
         </div>
 
@@ -733,7 +606,30 @@
           <div id="loading-spinner" class="loading-state">⏳ جاري جلب البيانات من Google Sheets...</div>
         </div>
       </div>
+    </div>
 
+    <!-- ================== 2. الحاوية الديناميكية لباقي الـ 13 صفحة ================== -->
+    <div id="view-generic-portal" class="dashboard-portal-view hidden">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 14px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h3 id="generic-tab-title" style="margin: 0; font-size: 18px; color: var(--text-main);">📄 اسم الشيت</h3>
+            <span id="generic-tab-count" style="font-size: 12px; color: var(--text-muted);">إجمالي السجلات: 0</span>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <input type="text" id="generic-search-box" class="search-input" placeholder="🔍 بحث في هذا الجدول..." onkeyup="filterGenericTable()" style="min-width: 250px;">
+            <button class="btn btn-excel" onclick="exportGenericExcel()">📥 تصدير Excel</button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table id="generic-portal-table">
+            <thead id="generic-table-head"></thead>
+            <tbody id="generic-table-body"></tbody>
+          </table>
+          <div id="generic-loading-spinner" class="loading-state">⏳ جاري جلب بيانات الشيت...</div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -759,8 +655,10 @@
     let ridersData = [];
     let currentRole = "";
     let loggedInSupervisor = "";
+    let activeSheetTab = "Manual Assigned";
+    let genericSheetData = [];
+    let genericSheetHeaders = [];
 
-    // إدارة الثيم (ليلي / نهاري)
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('dashboard_theme', theme);
@@ -777,8 +675,7 @@
 
     function toggleTheme() {
       const current = document.documentElement.getAttribute('data-theme') || 'dark';
-      const nextTheme = current === 'dark' ? 'light' : 'dark';
-      applyTheme(nextTheme);
+      applyTheme(current === 'dark' ? 'light' : 'dark');
     }
 
     function hideIntro() {
@@ -799,43 +696,10 @@
       });
     }
 
-    function getZoneColor(zoneName, index) {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-      const z = (zoneName || '').toLowerCase();
-
-      if (currentTheme === 'light') {
-        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#7f1d1d";
-        if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";
-        if (z.includes('shobra') || z.includes('شبرا')) return "#4b5563";
-        const palette = ["#7f1d1d", "#dc2626", "#4b5563", "#991b1b", "#1f2937"];
-        return palette[index % palette.length];
-      } else {
-        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#9f1239";
-        if (z.includes('hadayek') || z.includes('حدائق')) return "#e11d48";
-        if (z.includes('shobra') || z.includes('شبرا')) return "#a1a1aa";
-        const palette = ["#9f1239", "#e11d48", "#a1a1aa", "#38bdf8", "#22c55e"];
-        return palette[index % palette.length];
-      }
-    }
-
-    function getRateColor(rate) {
-      if (rate > 80) return "#22c55e";
-      if (rate >= 70 && rate <= 80) return "#38bdf8";
-      return "#ef4444";
-    }
-
-    function cleanDisplayValue(val) {
-      if (val === undefined || val === null) return '0.00';
-      const s = String(val).trim();
-      if (s === '' || s === '-' || s === 'null' || s === 'undefined') return '0.00';
-      return s;
-    }
-
     function copyToClipboard(text, event) {
       if (event) event.stopPropagation();
       const cleanText = (text || '').trim();
       if (!cleanText || cleanText === '-') return;
-
       navigator.clipboard.writeText(cleanText).then(() => {
         const toast = document.getElementById("copy-toast");
         const toastText = document.getElementById("toast-text");
@@ -844,7 +708,7 @@
           toast.classList.add("show");
           setTimeout(() => { toast.classList.remove("show"); }, 2000);
         }
-      }).catch(err => { console.error("فشل النسخ:", err); });
+      });
     }
 
     function showAdminLogin() {
@@ -860,12 +724,7 @@
     function loginSupervisor() {
       const selectedSv = document.getElementById('supervisor-user-select').value;
       const pass = document.getElementById('supervisor-pass').value.trim();
-
-      if (!selectedSv) {
-        alert("برجاء اختيار اسم المشرف أولاً.");
-        return;
-      }
-
+      if (!selectedSv) return alert("برجاء اختيار اسم المشرف أولاً.");
       const userObj = SUPERVISORS_DB.find(u => u.name === selectedSv);
       if (userObj && userObj.pass === pass) {
         currentRole = "supervisor";
@@ -890,42 +749,76 @@
     function enterDashboard(title) {
       document.getElementById('office-login-box').classList.add('hidden');
       document.getElementById('admin-login-box').classList.add('hidden');
-      document.getElementById('main-dashboard').classList.remove('hidden');
+      document.getElementById('portal-nav-bar').classList.remove('hidden');
       document.getElementById('user-pill').classList.remove('hidden');
       document.getElementById('current-user-name').innerText = "👤 " + title;
 
-      document.getElementById('search-box').value = '';
-      const fbSelect = document.getElementById('feedback-filter');
-      if (fbSelect) fbSelect.value = 'all';
-      const zoneSelect = document.getElementById('zone-filter');
-      if (zoneSelect) zoneSelect.value = 'all';
-
       const adminReport = document.getElementById('admin-report-card');
       const scopeHeader = document.getElementById('stats-header-scope');
-
       if (currentRole === "admin") {
-        adminReport.classList.remove('hidden');
+        if (adminReport) adminReport.classList.remove('hidden');
         if (scopeHeader) scopeHeader.innerText = "إجمالي كافة المناطق مجمعة (All Zones)";
       } else {
-        adminReport.classList.add('hidden');
+        if (adminReport) adminReport.classList.add('hidden');
         if (scopeHeader) scopeHeader.innerText = `إحصائيات مناديب المشرف (${loggedInSupervisor})`;
       }
 
-      fetchData();
+      switchPortalTab('Manual Assigned');
     }
 
     function logout() {
       currentRole = "";
       loggedInSupervisor = "";
-      document.getElementById('main-dashboard').classList.add('hidden');
+      document.getElementById('portal-nav-bar').classList.add('hidden');
+      document.getElementById('view-manual-assigned').classList.add('hidden');
+      document.getElementById('view-generic-portal').classList.add('hidden');
       document.getElementById('user-pill').classList.add('hidden');
       document.getElementById('supervisor-pass').value = '';
       document.getElementById('admin-pass').value = '';
-      const fbSelect = document.getElementById('feedback-filter');
-      if (fbSelect) fbSelect.value = 'all';
-      const zoneSelect = document.getElementById('zone-filter');
-      if (zoneSelect) zoneSelect.value = 'all';
       showOfficeLogin();
+    }
+
+    function refreshCurrentTab() {
+      if (activeSheetTab === 'Manual Assigned') {
+        fetchManualAssignedData();
+      } else {
+        fetchGenericSheetData(activeSheetTab);
+      }
+    }
+
+    /* =================== التنقل بين التبويبات المنسدلة =================== */
+    function switchPortalTab(sheetName) {
+      activeSheetTab = sheetName;
+
+      // تحديث البادج العلوي
+      const indicator = document.getElementById('active-sheet-indicator');
+      if (indicator) indicator.innerText = sheetName;
+
+      // تحديث تمييز الأزرار داخل القوائم
+      document.querySelectorAll('.cat-item-btn').forEach(btn => {
+        btn.classList.toggle('active-item', btn.innerText.includes(sheetName));
+      });
+
+      // تحديد الزر الرئيسي المفتوح منه الشيت الحالي
+      document.querySelectorAll('.cat-dropdown').forEach(dropdown => {
+        const catBtn = dropdown.querySelector('.cat-btn');
+        const hasActiveItem = dropdown.querySelector('.cat-item-btn.active-item');
+        if (catBtn) {
+          catBtn.classList.toggle('has-active', !!hasActiveItem);
+        }
+      });
+
+      if (sheetName === 'Manual Assigned') {
+        document.getElementById('view-generic-portal').classList.add('hidden');
+        document.getElementById('view-manual-assigned').classList.remove('hidden');
+        fetchManualAssignedData();
+      } else {
+        document.getElementById('view-manual-assigned').classList.add('hidden');
+        document.getElementById('view-generic-portal').classList.remove('hidden');
+        document.getElementById('generic-tab-title').innerText = `📄 جدول: ${sheetName}`;
+        document.getElementById('generic-search-box').value = '';
+        fetchGenericSheetData(sheetName);
+      }
     }
 
     function displaySheetLastUpdate(timestampStr) {
@@ -939,7 +832,14 @@
       }
     }
 
-    function normalizeRider(raw, index) {
+    /* =================== معالجة شيت Manual Assigned =================== */
+    function cleanDisplayValue(val) {
+      if (val === undefined || val === null) return '0.00';
+      const s = String(val).trim();
+      return (s === '' || s === '-' || s === 'null' || s === 'undefined') ? '0.00' : s;
+    }
+
+    function normalizeRider(raw) {
       const getVal = (keys) => {
         for (let k of keys) {
           for (let rawKey of Object.keys(raw)) {
@@ -988,164 +888,28 @@
       };
     }
 
-    async function fetchData() {
+    async function fetchManualAssignedData() {
       const spinner = document.getElementById('loading-spinner');
-      if (spinner) {
-        spinner.classList.remove('hidden');
-        spinner.innerText = "⏳ جاري جلب وتحديث البيانات من Google Sheets...";
-      }
+      if (spinner) { spinner.classList.remove('hidden'); spinner.innerText = "⏳ جاري جلب بيانات Manual Assigned..."; }
       
       try {
-        const res = await fetch(SCRIPT_URL);
+        const res = await fetch(`${SCRIPT_URL}?sheet=Manual Assigned`);
         const json = await res.json();
+        let rawRows = json.data || (Array.isArray(json) ? json : []);
+        displaySheetLastUpdate(json.lastUpdated);
 
-        let rawRows = [];
-        if (json && json.data) {
-          rawRows = json.data || [];
-          displaySheetLastUpdate(json.lastUpdated);
-        } else if (Array.isArray(json)) {
-          rawRows = json;
-          displaySheetLastUpdate(null);
-        }
-
-        ridersData = rawRows.map((r, i) => normalizeRider(r, i));
-
+        ridersData = rawRows.map(r => normalizeRider(r));
         populateSupervisors();
         populateZonesDropdown();
         populateFeedbackDropdown();
         populateReportSupervisors();
         renderTable();
-        if (currentRole === "admin") {
-          renderSupervisorReport();
-        }
+        if (currentRole === "admin") renderSupervisorReport();
       } catch (err) {
         console.error("Fetch Error:", err);
-        if (spinner) {
-          spinner.innerText = "⚠️ تعذر جلب البيانات. اضغط زر '🔄 تحديث البيانات' بالأعلى.";
-        }
+        if (spinner) spinner.innerText = "⚠️ تعذر جلب البيانات. اضغط زر '🔄 تحديث البيانات'.";
       } finally {
-        if (spinner && ridersData.length > 0) {
-          spinner.classList.add('hidden');
-        }
-      }
-    }
-
-    function populateSupervisors() {
-      const svSelect = document.getElementById('supervisor-filter');
-      svSelect.innerHTML = '';
-
-      if (currentRole === "supervisor") {
-        const opt = document.createElement('option');
-        opt.value = loggedInSupervisor;
-        opt.innerText = loggedInSupervisor;
-        opt.selected = true;
-        svSelect.appendChild(opt);
-        svSelect.disabled = true;
-        return;
-      }
-
-      svSelect.disabled = false;
-      const svSet = new Set();
-      ridersData.forEach(r => {
-        if (r.supervisor && r.supervisor.trim() !== '') {
-          svSet.add(r.supervisor.trim());
-        }
-      });
-
-      const defaultOpt = document.createElement('option');
-      defaultOpt.value = 'all';
-      defaultOpt.innerText = 'كل المشرفين (S.V)';
-      svSelect.appendChild(defaultOpt);
-
-      Array.from(svSet).sort((a, b) => a.localeCompare(b, 'ar')).forEach(sv => {
-        const opt = document.createElement('option');
-        opt.value = sv;
-        opt.innerText = sv;
-        svSelect.appendChild(opt);
-      });
-    }
-
-    function populateZonesDropdown() {
-      const zoneSelect = document.getElementById('zone-filter');
-      if (!zoneSelect) return;
-      const currentSelected = zoneSelect.value;
-      zoneSelect.innerHTML = '<option value="all">كل المناطق (Zones)</option>';
-
-      const zoneSet = new Set();
-      ridersData.forEach(r => {
-        if (currentRole === "supervisor" && !isRiderAssignedToSupervisor(r, loggedInSupervisor)) {
-          return;
-        }
-        const zone = (r.area || '').trim();
-        if (zone && zone !== '-' && zone !== '') {
-          zoneSet.add(zone);
-        }
-      });
-
-      Array.from(zoneSet).sort((a, b) => a.localeCompare(b, 'ar')).forEach(zone => {
-        const opt = document.createElement('option');
-        opt.value = zone;
-        opt.innerText = zone;
-        zoneSelect.appendChild(opt);
-      });
-
-      if (zoneSet.has(currentSelected)) {
-        zoneSelect.value = currentSelected;
-      }
-    }
-
-    function populateFeedbackDropdown() {
-      const fbSelect = document.getElementById('feedback-filter');
-      if (!fbSelect) return;
-      const currentSelected = fbSelect.value;
-      fbSelect.innerHTML = '<option value="all">كل الـ Feedback</option>';
-
-      const fbSet = new Set();
-      ridersData.forEach(r => {
-        if (currentRole === "supervisor" && !isRiderAssignedToSupervisor(r, loggedInSupervisor)) {
-          return;
-        }
-        const fb = (r.feedback || '').trim();
-        if (fb && fb !== '-' && fb !== '') {
-          fbSet.add(fb);
-        }
-      });
-
-      Array.from(fbSet).sort((a, b) => a.localeCompare(b, 'ar')).forEach(fb => {
-        const opt = document.createElement('option');
-        opt.value = fb;
-        opt.innerText = fb;
-        fbSelect.appendChild(opt);
-      });
-
-      if (fbSet.has(currentSelected)) {
-        fbSelect.value = currentSelected;
-      }
-    }
-
-    function populateReportSupervisors() {
-      const feedbackSvSet = new Set();
-      ridersData.forEach(r => {
-        const fb = (r.feedback || '').trim();
-        if (fb && fb !== '-' && fb !== '') {
-          feedbackSvSet.add(fb);
-        }
-      });
-
-      const repSelect = document.getElementById('report-supervisor-select');
-      if (!repSelect) return;
-      const currentSelected = repSelect.value;
-      repSelect.innerHTML = '<option value="all">كل المشرفين</option>';
-
-      Array.from(feedbackSvSet).sort((a, b) => a.localeCompare(b, 'ar')).forEach(sv => {
-        const opt = document.createElement('option');
-        opt.value = sv;
-        opt.innerText = sv;
-        repSelect.appendChild(opt);
-      });
-
-      if (feedbackSvSet.has(currentSelected)) {
-        repSelect.value = currentSelected;
+        if (spinner && ridersData.length > 0) spinner.classList.add('hidden');
       }
     }
 
@@ -1166,52 +930,131 @@
       return sv.includes(target) || fb.includes(target);
     }
 
-    function updateStats(filteredData, selectedDayKey) {
-      const dayNames = {
-        today: "اليوم (Today)",
-        tomorrow: "الغد (Tomorrow)",
-        tomorrowLater: "الغد لاحقاً (Tomorrow Later)"
-      };
-      const dayTitle = dayNames[selectedDayKey] || "اليوم (Today)";
+    function getZoneColor(zoneName, index) {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const z = (zoneName || '').toLowerCase();
+      if (currentTheme === 'light') {
+        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#7f1d1d";
+        if (z.includes('hadayek') || z.includes('حدائق')) return "#dc2626";
+        if (z.includes('shobra') || z.includes('شبرا')) return "#4b5563";
+        return ["#7f1d1d", "#dc2626", "#4b5563", "#991b1b", "#1f2937"][index % 5];
+      } else {
+        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#9f1239";
+        if (z.includes('hadayek') || z.includes('حدائق')) return "#e11d48";
+        if (z.includes('shobra') || z.includes('شبرا')) return "#a1a1aa";
+        return ["#9f1239", "#e11d48", "#a1a1aa", "#38bdf8", "#22c55e"][index % 5];
+      }
+    }
 
-      const badgeEl = document.getElementById('selected-day-badge');
-      if (badgeEl) badgeEl.innerText = `${dayTitle}`;
+    function getRateColor(rate) {
+      if (rate > 80) return "#22c55e";
+      if (rate >= 70 && rate <= 80) return "#38bdf8";
+      return "#ef4444";
+    }
+
+    function getBadgeClass(val) {
+      const s = (val || '').toUpperCase().trim();
+      if (s.includes('NO_SHOW') || s.includes('NOSHOW') || s.includes('SUSPENDED')) return 'badge-dark-red-highlight';
+      if (s.includes('EVALUATED')) return 'badge-evaluated';
+      if (s.includes('PUBLISHED')) return 'badge-published';
+      if (s.includes('NOT CHOSEN')) return 'badge-not-chosen';
+      return 'badge-default';
+    }
+
+    function renderFeedbackCell(fb) {
+      const cleanFb = (fb || '').trim();
+      if (!cleanFb || cleanFb === '-') return '-';
+      const lower = cleanFb.toLowerCase();
+      if (lower.includes('holiday')) return `<span class="badge-fb-holiday">${cleanFb}</span>`;
+      if (lower.includes('remove') || lower.includes('s.p')) return `<span class="badge-fb-remove">${cleanFb}</span>`;
+      if (lower.includes('day by day') || lower === 'day') return `<span class="badge-fb-day">${cleanFb}</span>`;
+      return `<span style="color: #fb7185; font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
+    }
+
+    function renderSupervisorNameCell(name) {
+      const clean = (name || '').trim();
+      const lower = clean.toLowerCase();
+      if (lower.includes('holiday')) return `<span class="badge-fb-holiday">${clean}</span>`;
+      if (lower.includes('remove') || lower.includes('s.p')) return `<span class="badge-fb-remove">${clean}</span>`;
+      if (lower.includes('day by day') || lower === 'day') return `<span class="badge-fb-day">${clean}</span>`;
+      return clean;
+    }
+
+    function populateSupervisors() {
+      const svSelect = document.getElementById('supervisor-filter');
+      svSelect.innerHTML = '';
+      if (currentRole === "supervisor") {
+        const opt = document.createElement('option');
+        opt.value = loggedInSupervisor; opt.innerText = loggedInSupervisor; opt.selected = true;
+        svSelect.appendChild(opt); svSelect.disabled = true; return;
+      }
+      svSelect.disabled = false;
+      const svSet = new Set();
+      ridersData.forEach(r => { if (r.supervisor && r.supervisor.trim() !== '') svSet.add(r.supervisor.trim()); });
+      svSelect.innerHTML = '<option value="all">كل المشرفين (S.V)</option>';
+      Array.from(svSet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(sv => {
+        const opt = document.createElement('option'); opt.value = sv; opt.innerText = sv; svSelect.appendChild(opt);
+      });
+    }
+
+    function populateZonesDropdown() {
+      const zoneSelect = document.getElementById('zone-filter');
+      zoneSelect.innerHTML = '<option value="all">كل المناطق (Zones)</option>';
+      const zoneSet = new Set();
+      ridersData.forEach(r => {
+        if (currentRole === "supervisor" && !isRiderAssignedToSupervisor(r, loggedInSupervisor)) return;
+        const z = (r.area || '').trim(); if (z && z !== '-') zoneSet.add(z);
+      });
+      Array.from(zoneSet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(z => {
+        const opt = document.createElement('option'); opt.value = z; opt.innerText = z; zoneSelect.appendChild(opt);
+      });
+    }
+
+    function populateFeedbackDropdown() {
+      const fbSelect = document.getElementById('feedback-filter');
+      fbSelect.innerHTML = '<option value="all">كل الـ Feedback</option>';
+      const fbSet = new Set();
+      ridersData.forEach(r => {
+        if (currentRole === "supervisor" && !isRiderAssignedToSupervisor(r, loggedInSupervisor)) return;
+        const f = (r.feedback || '').trim(); if (f && f !== '-') fbSet.add(f);
+      });
+      Array.from(fbSet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(f => {
+        const opt = document.createElement('option'); opt.value = f; opt.innerText = f; fbSelect.appendChild(opt);
+      });
+    }
+
+    function populateReportSupervisors() {
+      const repSelect = document.getElementById('report-supervisor-select');
+      repSelect.innerHTML = '<option value="all">كل المشرفين</option>';
+      const set = new Set();
+      ridersData.forEach(r => { const f = (r.feedback || '').trim(); if (f && f !== '-') set.add(f); });
+      Array.from(set).sort((a,b)=>a.localeCompare(b,'ar')).forEach(sv => {
+        const opt = document.createElement('option'); opt.value = sv; opt.innerText = sv; repSelect.appendChild(opt);
+      });
+    }
+
+    function updateStats(filteredData, selectedDayKey) {
+      const dayNames = { today: "اليوم (Today)", tomorrow: "الغد (Tomorrow)", tomorrowLater: "الغد لاحقاً" };
+      const dayTitle = dayNames[selectedDayKey] || "اليوم (Today)";
+      document.getElementById('selected-day-badge').innerText = dayTitle;
 
       const total = filteredData.length;
-      let published = 0;
-      let notChosen = 0;
-
+      let published = 0, notChosen = 0;
       const zoneStats = {};
 
       filteredData.forEach(r => {
         const zone = (r.area || 'غير محدد').trim();
         const status = (r[selectedDayKey] || '').toUpperCase();
-
-        if (!zoneStats[zone]) {
-          zoneStats[zone] = { total: 0, published: 0, notChosen: 0 };
-        }
-
+        if (!zoneStats[zone]) zoneStats[zone] = { total: 0, published: 0, notChosen: 0 };
         zoneStats[zone].total++;
-
-        if (isStatusPublished(status)) {
-          published++;
-          zoneStats[zone].published++;
-        }
-        
-        if (isStatusNotChosen(status)) {
-          notChosen++;
-          zoneStats[zone].notChosen++;
-        }
+        if (isStatusPublished(status)) { published++; zoneStats[zone].published++; }
+        if (isStatusNotChosen(status)) { notChosen++; zoneStats[zone].notChosen++; }
       });
 
       const totalRate = total > 0 ? Math.round((published / total) * 100) : 0;
       const totalRateColor = getRateColor(totalRate);
 
       document.getElementById('card-label-total').innerText = currentRole === 'supervisor' ? `إجمالي طيارين (${loggedInSupervisor})` : 'إجمالي الطيارين';
-      document.getElementById('card-label-published').innerText = `المقبول (PUBLISHED & EVALUATED)`;
-      document.getElementById('card-label-not-chosen').innerText = `غير مختار (NOT CHOSEN & NO_SHOW)`;
-      document.getElementById('card-label-rate').innerText = `${dayTitle}: نسبة الإسناد (%)`;
-
       document.getElementById('total-riders').innerText = total;
       document.getElementById('today-published').innerText = published;
       document.getElementById('today-not-chosen').innerText = notChosen;
@@ -1222,11 +1065,9 @@
       document.getElementById('main-rate-card').style.borderRightColor = totalRateColor;
 
       const zonesContainer = document.getElementById('zones-breakdown-stats');
-      if (!zonesContainer) return;
       zonesContainer.innerHTML = '';
 
-      const zoneKeys = Object.keys(zoneStats);
-      zoneKeys.forEach((zoneName, index) => {
+      Object.keys(zoneStats).forEach((zoneName, index) => {
         const zData = zoneStats[zoneName];
         const zRate = zData.total > 0 ? Math.round((zData.published / zData.total) * 100) : 0;
         const themeColor = getZoneColor(zoneName, index);
@@ -1236,111 +1077,33 @@
         block.className = 'stats-section-block';
         block.innerHTML = `
           <div class="stats-block-header" style="border-right-color: ${themeColor};">
-            <div class="zone-title-tag" style="color: ${themeColor};">
-              <span>📍</span>
-              <span>منطقة: ${zoneName}</span>
-            </div>
-            <span style="font-size: 11px; color: ${themeColor}; font-weight: bold; border: 1px solid ${themeColor}40; padding: 2px 7px; border-radius: 5px;">
-              إحصائيات ${dayTitle}
-            </span>
+            <div class="zone-title-tag" style="color: ${themeColor};"><span>📍</span><span>منطقة: ${zoneName}</span></div>
+            <span style="font-size: 11px; color: ${themeColor}; font-weight: bold; border: 1px solid ${themeColor}40; padding: 2px 7px; border-radius: 5px;">إحصائيات ${dayTitle}</span>
           </div>
-
           <div class="stats-grid">
-            <div class="stat-card" style="border-right-color: ${themeColor};">
-              <div class="stat-label">إجمالي طيارين المنطقة</div>
-              <div class="stat-val" style="color: ${themeColor};">${zData.total}</div>
-            </div>
-            <div class="stat-card" style="border-right-color: #0284c7;">
-              <div class="stat-label">المقبول (PUBLISHED & EVALUATED)</div>
-              <div class="stat-val" style="color: #0284c7;">${zData.published}</div>
-            </div>
-            <div class="stat-card" style="border-right-color: #ef4444;">
-              <div class="stat-label">غير مختار (NOT CHOSEN & NO_SHOW)</div>
-              <div class="stat-val" style="color: #ef4444;">${zData.notChosen}</div>
-            </div>
-            <div class="stat-card" style="border-right-color: ${rateColor};">
-              <div class="stat-label">نسبة إسناد المنطقة (%)</div>
-              <div class="stat-val" style="color: ${rateColor};">${zRate}%</div>
-            </div>
+            <div class="stat-card" style="border-right-color: ${themeColor};"><div class="stat-label">إجمالي طيارين المنطقة</div><div class="stat-val" style="color: ${themeColor};">${zData.total}</div></div>
+            <div class="stat-card" style="border-right-color: #0284c7;"><div class="stat-label">المقبول (PUBLISHED & EVALUATED)</div><div class="stat-val" style="color: #0284c7;">${zData.published}</div></div>
+            <div class="stat-card" style="border-right-color: #ef4444;"><div class="stat-label">غير مختار (NOT CHOSEN & NO_SHOW)</div><div class="stat-val" style="color: #ef4444;">${zData.notChosen}</div></div>
+            <div class="stat-card" style="border-right-color: ${rateColor};"><div class="stat-label">نسبة إسناد المنطقة (%)</div><div class="stat-val" style="color: ${rateColor};">${zRate}%</div></div>
           </div>
         `;
         zonesContainer.appendChild(block);
       });
     }
 
-    // دالة تحديد شكل البادج بدقة تامة طبقاً للطلب
-    function getBadgeClass(val) {
-      const s = (val || '').toUpperCase().trim();
-      
-      // NO_SHOW أو Suspended -> أحمر داكن نبيتي بنص أبيض
-      if (s.includes('NO_SHOW') || s.includes('NOSHOW') || s.includes('SUSPENDED')) {
-        return 'badge-dark-red-highlight';
-      }
-      
-      // EVALUATED -> أخضر
-      if (s.includes('EVALUATED')) {
-        return 'badge-evaluated';
-      }
-
-      // PUBLISHED -> أزرق فاتح
-      if (s.includes('PUBLISHED')) {
-        return 'badge-published';
-      }
-
-      // NOT CHOSEN -> أحمر
-      if (s.includes('NOT CHOSEN')) {
-        return 'badge-not-chosen';
-      }
-
-      return 'badge-default';
-    }
-
-    function renderFeedbackCell(fb) {
-      const cleanFb = (fb || '').trim();
-      if (!cleanFb || cleanFb === '-') return '-';
-
-      const lowerFb = cleanFb.toLowerCase();
-      if (lowerFb.includes('holiday')) return `<span class="badge-fb-holiday">${cleanFb}</span>`;
-      if (lowerFb.includes('remove') || lowerFb.includes('s.p')) return `<span class="badge-fb-remove">${cleanFb}</span>`;
-      if (lowerFb.includes('day by day') || lowerFb === 'day') return `<span class="badge-fb-day">${cleanFb}</span>`;
-
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-      const customColor = currentTheme === 'light' ? 'var(--border-accent)' : '#fb7185';
-
-      return `<span style="color: ${customColor}; font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
-    }
-
-    function renderSupervisorNameCell(name) {
-      const cleanName = (name || '').trim();
-      const lowerName = cleanName.toLowerCase();
-      if (lowerName.includes('holiday')) return `<span class="badge-fb-holiday">${cleanName}</span>`;
-      if (lowerName.includes('remove') || lowerName.includes('s.p')) return `<span class="badge-fb-remove">${cleanName}</span>`;
-      if (lowerName.includes('day by day') || lowerName === 'day') return `<span class="badge-fb-day">${cleanName}</span>`;
-      return cleanName;
-    }
-
     function buildZoneGridForDay(dayKey, dayTitle, selectedSupervisor) {
       const zonesMap = {};
-
       ridersData.forEach(r => {
         const zone = (r.area || 'غير محدد').trim();
         const feedbackSv = (r.feedback || '').trim();
         const status = (r[dayKey] || '').toUpperCase();
-
-        if (!zonesMap[zone]) {
-          zonesMap[zone] = { supervisors: {}, totalRidersInZone: 0, totalPublishedInZone: 0 };
-        }
-
+        if (!zonesMap[zone]) zonesMap[zone] = { supervisors: {}, totalRidersInZone: 0, totalPublishedInZone: 0 };
         const isPublished = isStatusPublished(status);
-
-        if (feedbackSv && feedbackSv !== '-' && feedbackSv !== '') {
+        if (feedbackSv && feedbackSv !== '-') {
           if (selectedSupervisor === 'all' || feedbackSv === selectedSupervisor) {
             zonesMap[zone].totalRidersInZone += 1;
             if (isPublished) zonesMap[zone].totalPublishedInZone += 1;
-
-            if (!zonesMap[zone].supervisors[feedbackSv]) {
-              zonesMap[zone].supervisors[feedbackSv] = { name: feedbackSv, published: 0, total: 0 };
-            }
+            if (!zonesMap[zone].supervisors[feedbackSv]) zonesMap[zone].supervisors[feedbackSv] = { name: feedbackSv, published: 0, total: 0 };
             if (isPublished) zonesMap[zone].supervisors[feedbackSv].published += 1;
             zonesMap[zone].supervisors[feedbackSv].total += 1;
           }
@@ -1349,28 +1112,17 @@
 
       const zoneNames = Object.keys(zonesMap);
       if (zoneNames.length === 0) return '';
-
       const sectionWrapper = document.createElement('div');
       sectionWrapper.className = 'day-section-block';
-
-      const headerTitle = document.createElement('div');
-      headerTitle.className = 'day-section-title';
-      headerTitle.innerHTML = `<span>📅</span><span>${dayTitle}</span>`;
-      sectionWrapper.appendChild(headerTitle);
-
+      sectionWrapper.innerHTML = `<div class="day-section-title"><span>📅</span><span>${dayTitle}</span></div>`;
       const grid = document.createElement('div');
       grid.className = 'zones-grid';
 
       zoneNames.forEach((zoneName, index) => {
         const zoneData = zonesMap[zoneName];
         const zoneThemeColor = getZoneColor(zoneName, index);
-
-        const overallZoneRate = zoneData.totalRidersInZone > 0
-          ? Math.round((zoneData.totalPublishedInZone / zoneData.totalRidersInZone) * 100)
-          : 0;
-
+        const overallZoneRate = zoneData.totalRidersInZone > 0 ? Math.round((zoneData.totalPublishedInZone / zoneData.totalRidersInZone) * 100) : 0;
         const overallColor = getRateColor(overallZoneRate);
-
         const card = document.createElement('div');
         card.className = 'zone-column-card';
         card.style.borderTop = `3px solid ${zoneThemeColor}`;
@@ -1378,53 +1130,41 @@
         let rowsHtml = '';
         const svList = Object.values(zoneData.supervisors);
         svList.sort((a, b) => (b.published / (b.total || 1)) - (a.published / (a.total || 1)));
-
         svList.forEach(sv => {
           const rate = sv.total > 0 ? Math.round((sv.published / sv.total) * 100) : 0;
-          const rateColor = getRateColor(rate);
-
           rowsHtml += `
             <tr>
-              <td style="text-align: center !important; font-weight: bold; color: ${rateColor};">${rate}%</td>
+              <td style="text-align: center !important; font-weight: bold; color: ${getRateColor(rate)};">${rate}%</td>
               <td style="text-align: center !important; color: var(--text-muted);">${sv.total}</td>
               <td style="text-align: center !important; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
-              <td style="text-align: center !important; font-weight: 600; color: var(--text-main);" class="copyable" onclick="copyToClipboard('${sv.name}', event)" title="انقر للنسخ">${renderSupervisorNameCell(sv.name)}</td>
+              <td style="text-align: center !important; font-weight: 600;" class="copyable" onclick="copyToClipboard('${sv.name}', event)">${renderSupervisorNameCell(sv.name)}</td>
             </tr>
           `;
         });
-
-        if (svList.length === 0) {
-          rowsHtml = '<tr><td colspan="4" style="text-align: center !important; color: var(--text-muted); padding: 15px;">لا توجد بيانات لهذا المشرف في المنطقة.</td></tr>';
-        }
+        if (svList.length === 0) rowsHtml = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:15px;">لا توجد بيانات.</td></tr>';
 
         card.innerHTML = `
           <div class="zone-card-header">
-            <div class="title-box">
-              <span style="color: ${zoneThemeColor}; font-size: 10px;">▼</span>
-              <span style="color: ${zoneThemeColor}; font-weight: 800;">${zoneName}</span>
-            </div>
+            <div class="title-box"><span style="color:${zoneThemeColor}; font-weight:800;">${zoneName}</span></div>
             <div class="stats-badge">
               <span class="zone-total-counts">${zoneData.totalPublishedInZone} / ${zoneData.totalRidersInZone}</span>
-              <span class="zone-total-rate" style="color: ${overallColor}; border: 1px solid ${overallColor}40; background: var(--bg-inner);">${overallZoneRate}%</span>
+              <span class="zone-total-rate" style="color:${overallColor}; border:1px solid ${overallColor}40; background:var(--bg-inner);">${overallZoneRate}%</span>
             </div>
           </div>
           <div class="zone-table-container">
             <table>
               <thead>
-                <tr style="text-align: center;">
-                  <th style="text-align: center !important; width: 60px;">%</th>
-                  <th style="text-align: center !important; width: 70px;">Target</th>
-                  <th style="text-align: center !important; width: 70px; color: ${zoneThemeColor};">مجدول</th>
-                  <th style="text-align: center !important;">المكتب / المشرف</th>
+                <tr>
+                  <th style="width: 60px;">%</th>
+                  <th style="width: 70px;">Target</th>
+                  <th style="width: 70px; color: ${zoneThemeColor};">مجدول</th>
+                  <th>المكتب / المشرف</th>
                 </tr>
               </thead>
-              <tbody>
-                ${rowsHtml}
-              </tbody>
+              <tbody>${rowsHtml}</tbody>
             </table>
           </div>
         `;
-
         grid.appendChild(card);
       });
 
@@ -1434,31 +1174,21 @@
 
     function renderSupervisorReport() {
       const container = document.getElementById('zones-container');
-      if (!container) return;
       container.innerHTML = '';
-
       const daySelection = document.getElementById('report-day-select').value;
-      const selectedSupervisor = (document.getElementById('report-supervisor-select') ? document.getElementById('report-supervisor-select').value : 'all');
-      
-      const dayDefinitions = [
+      const selectedSupervisor = document.getElementById('report-supervisor-select').value;
+      const days = [
         { key: 'today', title: 'اليوم (Today)' },
         { key: 'tomorrow', title: 'الغد (Tomorrow)' },
-        { key: 'tomorrowLater', title: 'الغد لاحقاً (Tomorrow Later)' }
+        { key: 'tomorrowLater', title: 'الغد لاحقاً' }
       ];
 
       if (daySelection === 'all_days') {
-        dayDefinitions.forEach(dayDef => {
-          const sectionEl = buildZoneGridForDay(dayDef.key, dayDef.title, selectedSupervisor);
-          if (sectionEl) container.appendChild(sectionEl);
-        });
+        days.forEach(d => { const el = buildZoneGridForDay(d.key, d.title, selectedSupervisor); if (el) container.appendChild(el); });
       } else {
-        const currentDef = dayDefinitions.find(d => d.key === daySelection) || dayDefinitions[0];
-        const sectionEl = buildZoneGridForDay(currentDef.key, currentDef.title, selectedSupervisor);
-        if (sectionEl) container.appendChild(sectionEl);
-      }
-
-      if (container.children.length === 0) {
-        container.innerHTML = '<div style="color: var(--text-muted); padding: 25px; text-align: center !important;">لا توجد بيانات مسجلة لهذا الاختيار.</div>';
+        const cur = days.find(d => d.key === daySelection) || days[0];
+        const el = buildZoneGridForDay(cur.key, cur.title, selectedSupervisor);
+        if (el) container.appendChild(el);
       }
     }
 
@@ -1467,143 +1197,166 @@
     function getFilteredRiders() {
       const q = document.getElementById('search-box').value.trim().toLowerCase();
       const svFilter = document.getElementById('supervisor-filter').value;
-      const zoneFilter = (document.getElementById('zone-filter') ? document.getElementById('zone-filter').value : 'all');
-      const fbFilter = (document.getElementById('feedback-filter') ? document.getElementById('feedback-filter').value : 'all');
+      const zoneFilter = document.getElementById('zone-filter').value;
+      const fbFilter = document.getElementById('feedback-filter').value;
       const selectedDay = document.getElementById('main-day-filter').value;
       const statusFilter = document.getElementById('today-filter').value;
 
       return ridersData.filter(r => {
-        if (currentRole === "supervisor") {
-          if (!isRiderAssignedToSupervisor(r, loggedInSupervisor)) {
-            return false;
-          }
-        }
-
-        const matchQuery = (r.name && r.name.toLowerCase().includes(q)) ||
-                           (r.id && r.id.toLowerCase().includes(q)) ||
-                           (r.phone && r.phone.toLowerCase().includes(q));
-        
+        if (currentRole === "supervisor" && !isRiderAssignedToSupervisor(r, loggedInSupervisor)) return false;
+        const matchQ = (r.name && r.name.toLowerCase().includes(q)) || (r.id && r.id.toLowerCase().includes(q)) || (r.phone && r.phone.toLowerCase().includes(q));
         const matchSv = (currentRole === "supervisor") || (svFilter === 'all') || (r.supervisor && r.supervisor.trim() === svFilter);
-        const matchZone = (zoneFilter === 'all') || ((r.area || '').trim() === zoneFilter);
+        const matchZ = (zoneFilter === 'all') || ((r.area || '').trim() === zoneFilter);
         const matchFb = (fbFilter === 'all') || ((r.feedback || '').trim() === fbFilter);
 
-        let matchStatus = true;
+        let matchSt = true;
         if (statusFilter !== 'all') {
-          const dayVal = (r[selectedDay] || '').toUpperCase();
-          if (statusFilter === 'PUBLISHED_ONLY') matchStatus = dayVal.includes('PUBLISHED') && !dayVal.includes('EVALUATED');
-          else if (statusFilter === 'EVALUATED_ONLY') matchStatus = dayVal.includes('EVALUATED');
-          else if (statusFilter === 'PUBLISHED') matchStatus = isStatusPublished(dayVal);
-          else if (statusFilter === 'NOT_CHOSEN_ONLY') matchStatus = dayVal.includes('NOT CHOSEN');
-          else if (statusFilter === 'NOT CHOSEN') matchStatus = isStatusNotChosen(dayVal);
-          else if (statusFilter === 'NO_SHOW') matchStatus = dayVal.includes('NO_SHOW') || dayVal.includes('NOSHOW');
-          else if (statusFilter === 'Suspended') matchStatus = dayVal.includes('SUSPENDED');
+          const val = (r[selectedDay] || '').toUpperCase();
+          if (statusFilter === 'PUBLISHED_ONLY') matchSt = val.includes('PUBLISHED') && !val.includes('EVALUATED');
+          else if (statusFilter === 'EVALUATED_ONLY') matchSt = val.includes('EVALUATED');
+          else if (statusFilter === 'PUBLISHED') matchSt = isStatusPublished(val);
+          else if (statusFilter === 'NOT_CHOSEN_ONLY') matchSt = val.includes('NOT CHOSEN');
+          else if (statusFilter === 'NOT CHOSEN') matchSt = isStatusNotChosen(val);
+          else if (statusFilter === 'NO_SHOW') matchSt = val.includes('NO_SHOW') || val.includes('NOSHOW');
+          else if (statusFilter === 'Suspended') matchSt = val.includes('SUSPENDED');
         }
-
-        return matchQuery && matchSv && matchZone && matchFb && matchStatus;
+        return matchQ && matchSv && matchZ && matchFb && matchSt;
       });
     }
 
     function renderTable() {
       const tbody = document.getElementById('riders-tbody');
       tbody.innerHTML = '';
-
       const selectedDay = document.getElementById('main-day-filter').value;
       const filtered = getFilteredRiders();
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-      const idColor = currentTheme === 'light' ? 'var(--border-accent)' : '#fb7185';
 
       filtered.forEach((r, idx) => {
         const tr = document.createElement('tr');
-        
-        const rowNum = idx + 1;
-        const idVal = r.id || '';
-        const nameVal = r.name || '';
-        const areaVal = r.area || '';
-        const phoneVal = r.phone || '';
-        const yesterdayVal = r.yesterday || '0.00';
-        const todayVal = r.today || '';
-        const tomorrowVal = r.tomorrow || '';
-        const tomorrowLaterVal = r.tomorrowLater || '';
-        const feedbackVal = r.feedback || '';
-        const svVal = r.supervisor || '';
-
         tr.innerHTML = `
-          <td class="col-idx">${rowNum}</td>
-          <td class="copyable col-id" onclick="copyToClipboard('${idVal}', event)" title="انقر لنسخ الـ ID" style="font-weight: bold; color: ${idColor}; text-align: center !important;">${idVal}</td>
-          <td class="copyable col-name" onclick="copyToClipboard('${nameVal}', event)" title="انقر لنسخ الاسم" style="text-align: center !important;"><strong>${nameVal}</strong></td>
-          <td class="copyable col-area" onclick="copyToClipboard('${areaVal}', event)" title="انقر لنسخ المنطقة" style="text-align: center !important;">${areaVal}</td>
-          <td class="copyable col-phone" onclick="copyToClipboard('${phoneVal}', event)" title="انقر لنسخ الهاتف" style="text-align: center !important;">
-            <span style="direction: ltr; display: inline-block;">📞 ${phoneVal}</span>
-          </td>
-          <td class="copyable col-yesterday" onclick="copyToClipboard('${yesterdayVal}', event)" title="انقر للنسخ" style="text-align: center !important; font-weight: bold; color: var(--text-main);">
-            ${yesterdayVal}
-          </td>
-          <td class="copyable col-badge" onclick="copyToClipboard('${todayVal}', event)" title="انقر للنسخ" style="text-align: center !important;">
-            <span class="badge ${getBadgeClass(r.today)}">${todayVal || '-'}</span>
-          </td>
-          <td class="copyable col-badge" onclick="copyToClipboard('${tomorrowVal}', event)" title="انقر للنسخ" style="text-align: center !important;">
-            <span class="badge ${getBadgeClass(r.tomorrow)}">${tomorrowVal || '-'}</span>
-          </td>
-          <td class="copyable col-badge" onclick="copyToClipboard('${tomorrowLaterVal}', event)" title="انقر للنسخ" style="text-align: center !important;">
-            <span class="badge ${getBadgeClass(r.tomorrowLater)}">${tomorrowLaterVal || '-'}</span>
-          </td>
-          <td class="copyable col-fb" onclick="copyToClipboard('${feedbackVal}', event)" title="انقر لنسخ الـ Feedback" style="text-align: center !important;">
-            ${renderFeedbackCell(feedbackVal)}
-          </td>
-          <td class="copyable col-sv" onclick="copyToClipboard('${svVal}', event)" title="انقر لنسخ اسم المشرف" style="text-align: center !important;">
-            <strong>${svVal || '-'}</strong>
-          </td>
+          <td class="col-idx">${idx + 1}</td>
+          <td class="copyable col-id" onclick="copyToClipboard('${r.id}', event)" style="font-weight: bold; color: #fb7185;">${r.id || '-'}</td>
+          <td class="copyable col-name" onclick="copyToClipboard('${r.name}', event)"><strong>${r.name || '-'}</strong></td>
+          <td class="copyable col-area" onclick="copyToClipboard('${r.area}', event)">${r.area || '-'}</td>
+          <td class="copyable col-phone" onclick="copyToClipboard('${r.phone}', event)"><span style="direction: ltr; display: inline-block;">📞 ${r.phone || '-'}</span></td>
+          <td class="copyable col-yesterday" onclick="copyToClipboard('${r.yesterday}', event)" style="font-weight: bold;">${r.yesterday || '0.00'}</td>
+          <td class="copyable col-badge" onclick="copyToClipboard('${r.today}', event)"><span class="badge ${getBadgeClass(r.today)}">${r.today || '-'}</span></td>
+          <td class="copyable col-badge" onclick="copyToClipboard('${r.tomorrow}', event)"><span class="badge ${getBadgeClass(r.tomorrow)}">${r.tomorrow || '-'}</span></td>
+          <td class="copyable col-badge" onclick="copyToClipboard('${r.tomorrowLater}', event)"><span class="badge ${getBadgeClass(r.tomorrowLater)}">${r.tomorrowLater || '-'}</span></td>
+          <td class="copyable col-fb" onclick="copyToClipboard('${r.feedback}', event)">${renderFeedbackCell(r.feedback)}</td>
+          <td class="copyable col-sv" onclick="copyToClipboard('${r.supervisor}', event)"><strong>${r.supervisor || '-'}</strong></td>
         `;
         tbody.appendChild(tr);
       });
-
       updateStats(filtered, selectedDay);
     }
 
     function exportToExcel() {
       const dataToExport = getFilteredRiders();
-      if (!dataToExport || dataToExport.length === 0) {
-        alert("لا توجد بيانات متاحة للتصدير حالياً.");
+      if (!dataToExport || dataToExport.length === 0) return alert("لا توجد بيانات متاحة للتصدير حالياً.");
+      const headers = ["#", "ID", "الاسم", "المنطقة", "الهاتف", "تشغيلة الأمس", "اليوم (Today)", "الغد (Tomorrow)", "الغد لاحقاً", "Feedback", "المشرف (S.V)"];
+      let csv = headers.join(",") + "\r\n";
+      dataToExport.forEach((row, i) => {
+        csv += [i + 1, row.id, `"${row.name}"`, `"${row.area}"`, row.phone, row.yesterday, row.today, row.tomorrow, row.tomorrowLater, `"${row.feedback}"`, `"${row.supervisor}"`].join(",") + "\r\n";
+      });
+      const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `Manual_Assigned_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+    }
+
+    /* =================== معالجة الشيتات الـ 13 الأخرى (Generic Engine) =================== */
+    async function fetchGenericSheetData(sheetName) {
+      const spinner = document.getElementById('generic-loading-spinner');
+      const thead = document.getElementById('generic-table-head');
+      const tbody = document.getElementById('generic-table-body');
+      thead.innerHTML = '';
+      tbody.innerHTML = '';
+      spinner.classList.remove('hidden');
+      spinner.innerText = `⏳ جاري جلب بيانات: ${sheetName}...`;
+
+      try {
+        const res = await fetch(`${SCRIPT_URL}?sheet=${encodeURIComponent(sheetName)}`);
+        const json = await res.json();
+        genericSheetData = json.data || (Array.isArray(json) ? json : []);
+        displaySheetLastUpdate(json.lastUpdated);
+
+        if (genericSheetData.length === 0) {
+          spinner.innerText = "ℹ️ هذه الورقة فارغة أو لا توجد بها صفوف مسجلة حالياً في الشيت.";
+          document.getElementById('generic-tab-count').innerText = "إجمالي السجلات: 0";
+          return;
+        }
+
+        genericSheetHeaders = Object.keys(genericSheetData[0]);
+        renderGenericTable(genericSheetData);
+      } catch (err) {
+        console.error("Fetch Generic Error:", err);
+        spinner.innerText = "⚠️ تعذر جلب بيانات هذه الورقة. تأكد من تطابق اسم التبويب بالشيت ونشر السكريبت.";
+      } finally {
+        if (genericSheetData.length > 0) spinner.classList.add('hidden');
+      }
+    }
+
+    function renderGenericTable(rows) {
+      const thead = document.getElementById('generic-table-head');
+      const tbody = document.getElementById('generic-table-body');
+      thead.innerHTML = '';
+      tbody.innerHTML = '';
+
+      document.getElementById('generic-tab-count').innerText = `إجمالي السجلات: ${rows.length}`;
+
+      // رسم عناوين الأعمدة
+      const trHead = document.createElement('tr');
+      trHead.innerHTML = '<th style="width: 50px;">#</th>';
+      genericSheetHeaders.forEach(h => {
+        trHead.innerHTML += `<th>${h}</th>`;
+      });
+      thead.appendChild(trHead);
+
+      // رسم الصفوف
+      rows.forEach((row, idx) => {
+        const tr = document.createElement('tr');
+        let colsHtml = `<td>${idx + 1}</td>`;
+        genericSheetHeaders.forEach(h => {
+          const val = row[h] !== undefined && row[h] !== null ? String(row[h]).trim() : '-';
+          colsHtml += `<td class="copyable" onclick="copyToClipboard('${val}', event)">${val || '-'}</td>`;
+        });
+        tr.innerHTML = colsHtml;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterGenericTable() {
+      const q = document.getElementById('generic-search-box').value.trim().toLowerCase();
+      if (!q) {
+        renderGenericTable(genericSheetData);
         return;
       }
-
-      const headers = ["#", "ID", "الاسم", "المنطقة", "الهاتف", "تشغيلة الأمس", "اليوم (Today)", "الغد (Tomorrow)", "الغد لاحقاً", "Feedback", "المشرف (S.V)"];
-      let csvContent = headers.join(",") + "\r\n";
-
-      dataToExport.forEach((row, index) => {
-        const rowData = [
-          `"${index + 1}"`,
-          `"${(row.id || '').replace(/"/g, '""')}"`,
-          `"${(row.name || '').replace(/"/g, '""')}"`,
-          `"${(row.area || '').replace(/"/g, '""')}"`,
-          `"${(row.phone || '').replace(/"/g, '""')}"`,
-          `"${(row.yesterday || '0.00').replace(/"/g, '""')}"`,
-          `"${(row.today || '').replace(/"/g, '""')}"`,
-          `"${(row.tomorrow || '').replace(/"/g, '""')}"`,
-          `"${(row.tomorrowLater || '').replace(/"/g, '""')}"`,
-          `"${(row.feedback || '').replace(/"/g, '""')}"`,
-          `"${(row.supervisor || '').replace(/"/g, '""')}"`
-        ];
-        csvContent += rowData.join(",") + "\r\n";
+      const filtered = genericSheetData.filter(row => {
+        return genericSheetHeaders.some(h => {
+          const val = String(row[h] || '').toLowerCase();
+          return val.includes(q);
+        });
       });
+      renderGenericTable(filtered);
+    }
 
-      const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
+    function exportGenericExcel() {
+      if (!genericSheetData || genericSheetData.length === 0) return alert("لا توجد بيانات متاحة للتصدير.");
+      let csv = ["#", ...genericSheetHeaders.map(h => `"${h}"`)].join(",") + "\r\n";
+      genericSheetData.forEach((row, i) => {
+        const rowVals = [i + 1, ...genericSheetHeaders.map(h => `"${(row[h] || '').toString().replace(/"/g, '""')}"`)];
+        csv += rowVals.join(",") + "\r\n";
+      });
+      const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
       const a = document.createElement("a");
-      a.href = url;
-      
-      const todayDate = new Date().toISOString().slice(0, 10);
-      const prefix = currentRole === 'supervisor' ? `Riders_${loggedInSupervisor}_` : `All_Riders_`;
-      a.download = `${prefix}${todayDate}.csv`;
-      document.body.appendChild(a);
+      a.href = URL.createObjectURL(blob);
+      a.download = `${activeSheetTab}_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      const savedTheme = localStorage.getItem('dashboard_theme') || 'dark';
-      applyTheme(savedTheme);
+      applyTheme(localStorage.getItem('dashboard_theme') || 'dark');
       initSupervisorLoginDropdown();
     });
   </script>
