@@ -163,8 +163,6 @@
       margin-bottom: 4px;
       display: block;
     }
-    
-    /* تنسيق العنوان الرئيسي بنظام إنجليزي فوق وعربي تحته */
     .hub-main-title-en {
       font-size: 27px;
       font-weight: 900;
@@ -237,7 +235,6 @@
       flex: 1;
     }
 
-    /* أزرار الكروت: سطر إنجليزي وسطر عربي */
     .hub-sheet-btn {
       background: rgba(30, 30, 36, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -390,15 +387,18 @@
     .stat-val { font-size: 23px; font-weight: 900; color: var(--text-main); margin-top: 4px; }
     .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 700; }
 
-    .day-section-block { margin-bottom: 25px; }
-    .day-section-title {
-      font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 12px;
-      display: flex; align-items: center; gap: 8px; background: var(--bg-inner); padding: 8px 14px; border-radius: 8px; border-right: 4px solid var(--border-accent);
+    /* بلوك الزون للأيام الثلاثة */
+    .zone-section-block { margin-bottom: 30px; }
+    .zone-section-title {
+      font-size: 15px; font-weight: 800; color: var(--text-main); margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: space-between; background: var(--bg-inner);
+      padding: 10px 16px; border-radius: 8px; border-right: 5px solid var(--border-accent);
+      flex-wrap: wrap; gap: 10px;
     }
-    .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
-    .zone-column-card { background: var(--bg-card); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--border-subtle); box-shadow: var(--card-shadow); }
-    .zone-card-header { background: var(--bg-inner); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); }
-    .zone-total-rate { padding: 2px 7px; border-radius: 4px; font-weight: 800; font-size: 12px; }
+    .days-grid-for-zone { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
+    .day-column-card { background: var(--bg-card); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--border-subtle); box-shadow: var(--card-shadow); }
+    .day-card-header { background: var(--bg-inner); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); }
+    .zone-total-rate { padding: 3px 8px; border-radius: 4px; font-weight: 800; font-size: 12px; }
     .zone-table-container { width: 100%; overflow-x: auto; }
     .zone-table-container table td, .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; text-align: center !important; }
 
@@ -659,7 +659,6 @@
 
     <div class="hub-header">
       <span class="hub-crescent-icon">☪</span>
-      <!-- العنوان المحدث: إنجليزي فوق وعربي تحته -->
       <h1 class="hub-main-title-en">Unified Operations &amp; Control Dashboard</h1>
       <div class="hub-main-title-ar">لوحة التحكم والعمليات الموحدة</div>
       <div class="hub-sub-title">اختر القسم والجدول المطلوب لبدء المتابعة والإدارة اللوجستية</div>
@@ -885,26 +884,18 @@
         <div id="zones-breakdown-stats"></div>
       </div>
 
+      <!-- كارت التقرير المطور: الزونات كعناوين رئيسية وتحتها الأيام الثلاثة بجانب بعضها -->
       <div id="admin-report-card" class="card hidden">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
           <div>
-            <h3 style="margin: 0; font-size: 15px; color: var(--text-main);">📊 توزيع ونسب إسناد المشرفين حسب المناطق (خاص بالمسؤول)</h3>
-            <span style="font-size: 12px; color: var(--text-muted);">محسوب من واقع عمود الـ Feedback مقارنة بإجمالي مناديب المنطقة</span>
+            <h3 style="margin: 0; font-size: 15px; color: var(--text-main);">📊 توزيع وإسناد الزونات للأيام الثلاثة (خاص بالمسؤول)</h3>
+            <span style="font-size: 12px; color: var(--text-muted);">حساب الإسناد الصافي مستبعداً الاستثناءات (Day by day & Remove S.P & Holiday)</span>
           </div>
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 6px;">
-              <label style="margin: 0; font-size: 12px; font-weight: bold;">المشرف:</label>
+              <label style="margin: 0; font-size: 12px; font-weight: bold;">تصفية المشرف:</label>
               <select id="report-supervisor-select" style="width: auto; padding: 6px 12px; font-size: 12px;" class="filter-select" onchange="renderSupervisorReport()">
                 <option value="all">كل المشرفين</option>
-              </select>
-            </div>
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <label style="margin: 0; font-size: 12px; font-weight: bold;">اليوم المعروض:</label>
-              <select id="report-day-select" style="width: auto; padding: 6px 12px; font-size: 12px;" class="filter-select" onchange="renderSupervisorReport()">
-                <option value="all_days">كل الأيام (الـ 3 أيام معاً)</option>
-                <option value="today">اليوم (Today)</option>
-                <option value="tomorrow">الغد (Tomorrow)</option>
-                <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
               </select>
             </div>
           </div>
@@ -1117,7 +1108,6 @@
       }
     }
 
-    /* حفظ الجلسة في localStorage حتى لا يتم الخروج عند التحديث */
     function saveSession() {
       localStorage.setItem('auth_role', currentRole);
       localStorage.setItem('auth_supervisor', loggedInSupervisor);
@@ -1299,7 +1289,7 @@
 
     async function fetchManualAssignedData() {
       const spinner = document.getElementById('loading-spinner');
-      if (spinner) { spinner.classList.remove('hidden'); spinner.innerText = "⏳ جاري جلب بيانات Manual Assigned..."; }
+      if (spinner) { spinner.classList.remove('hidden'); spinner.innerText = "⏳ جاري جلب وتحديث البيانات..."; }
       
       try {
         const res = await fetch(`${SCRIPT_URL}?sheet=Manual Assigned`);
@@ -1330,6 +1320,14 @@
     function isStatusNotChosen(statusStr) {
       const s = (statusStr || '').toUpperCase();
       return s.includes('NOT CHOSEN') || s.includes('NO_SHOW') || s.includes('NOSHOW');
+    }
+
+    // فحص ما إذا كان الصف هو استثناء (Day by day / Remove S.P / Holiday)
+    function isExcludedFeedback(fbText) {
+      const s = (fbText || '').trim().toLowerCase();
+      return s.includes('day by day') || s === 'day' || 
+             s.includes('remove') || s.includes('s.p') || 
+             s.includes('holiday');
     }
 
     function isRiderAssignedToSupervisor(r, svName) {
@@ -1500,105 +1498,160 @@
       });
     }
 
-    function buildZoneGridForDay(dayKey, dayTitle, selectedSupervisor) {
-      const zonesMap = {};
+    /* بناء كارت يوم واحد داخل الزون مع حساب القيمة الإجمالية بدون استثناءات */
+    function buildSingleDayCard(dayKey, dayTitle, zoneName, zoneThemeColor, selectedSupervisor) {
+      let totalAssignedNet = 0;   // المجدول الصافي
+      let totalTargetNet = 0;     // التارجت الإجمالي الصافي بدون استثناءات
+      const svMap = {};
+
       ridersData.forEach(r => {
-        const zone = (r.area || 'غير محدد').trim();
-        const feedbackSv = (r.feedback || '').trim();
-        const status = (r[dayKey] || '').toUpperCase();
-        if (!zonesMap[zone]) zonesMap[zone] = { supervisors: {}, totalRidersInZone: 0, totalPublishedInZone: 0 };
-        const isPublished = isStatusPublished(status);
-        if (feedbackSv && feedbackSv !== '-') {
-          if (selectedSupervisor === 'all' || feedbackSv === selectedSupervisor) {
-            zonesMap[zone].totalRidersInZone += 1;
-            if (isPublished) zonesMap[zone].totalPublishedInZone += 1;
-            if (!zonesMap[zone].supervisors[feedbackSv]) zonesMap[zone].supervisors[feedbackSv] = { name: feedbackSv, published: 0, total: 0 };
-            if (isPublished) zonesMap[zone].supervisors[feedbackSv].published += 1;
-            zonesMap[zone].supervisors[feedbackSv].total += 1;
+        const rZone = (r.area || 'غير محدد').trim();
+        if (rZone !== zoneName) return;
+
+        const fb = (r.feedback || '').trim();
+        if (!fb || fb === '-') return;
+
+        const isPublished = isStatusPublished(r[dayKey]);
+        const isExcluded = isExcludedFeedback(fb);
+
+        if (selectedSupervisor === 'all' || fb === selectedSupervisor) {
+          if (!svMap[fb]) {
+            svMap[fb] = { name: fb, published: 0, total: 0, isExcluded: isExcluded };
+          }
+
+          if (isPublished) svMap[fb].published += 1;
+          svMap[fb].total += 1;
+
+          // احتساب القيمة الإجمالية فقط للمشرفين الفعليين واستبعاد (Day by day & Remove S.P & Holiday)
+          if (!isExcluded) {
+            totalTargetNet += 1;
+            if (isPublished) totalAssignedNet += 1;
           }
         }
       });
 
-      const zoneNames = Object.keys(zonesMap);
-      if (zoneNames.length === 0) return '';
-      const sectionWrapper = document.createElement('div');
-      sectionWrapper.className = 'day-section-block';
-      sectionWrapper.innerHTML = `<div class="day-section-title"><span>📅</span><span>${dayTitle}</span></div>`;
-      const grid = document.createElement('div');
-      grid.className = 'zones-grid';
+      // نسبة إسناد اليوم للزون (بدون الاستثناءات)
+      const overallRate = totalTargetNet > 0 ? Math.round((totalAssignedNet / totalTargetNet) * 100) : 0;
+      const overallColor = getRateColor(overallRate);
 
-      zoneNames.forEach((zoneName, index) => {
-        const zoneData = zonesMap[zoneName];
-        const zoneThemeColor = getZoneColor(zoneName, index);
-        const overallZoneRate = zoneData.totalRidersInZone > 0 ? Math.round((zoneData.totalPublishedInZone / zoneData.totalRidersInZone) * 100) : 0;
-        const overallColor = getRateColor(overallZoneRate);
-        const card = document.createElement('div');
-        card.className = 'zone-column-card';
-        card.style.borderTop = `3px solid ${zoneThemeColor}`;
-
-        let rowsHtml = '';
-        const svList = Object.values(zoneData.supervisors);
-        svList.sort((a, b) => (b.published / (b.total || 1)) - (a.published / (a.total || 1)));
-        svList.forEach(sv => {
-          const rate = sv.total > 0 ? Math.round((sv.published / sv.total) * 100) : 0;
-          rowsHtml += `
-            <tr>
-              <td style="text-align: center !important; font-weight: bold; color: ${getRateColor(rate)};">${rate}%</td>
-              <td style="text-align: center !important; color: var(--text-muted);">${sv.total}</td>
-              <td style="text-align: center !important; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
-              <td style="text-align: center !important; font-weight: 600;" class="copyable" onclick="copyToClipboard('${sv.name}', event)">${renderSupervisorNameCell(sv.name)}</td>
-            </tr>
-          `;
-        });
-        if (svList.length === 0) rowsHtml = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:15px;">لا توجد بيانات.</td></tr>';
-
-        card.innerHTML = `
-          <div class="zone-card-header">
-            <div class="title-box"><span style="color:${zoneThemeColor}; font-weight:800;">${zoneName}</span></div>
-            <div class="stats-badge">
-              <span class="zone-total-counts">${zoneData.totalPublishedInZone} / ${zoneData.totalRidersInZone}</span>
-              <span class="zone-total-rate" style="color:${overallColor}; border:1px solid ${overallColor}40; background:var(--bg-inner);">${overallZoneRate}%</span>
-            </div>
-          </div>
-          <div class="zone-table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 60px;">%</th>
-                  <th style="width: 70px;">Target</th>
-                  <th style="width: 70px; color: ${zoneThemeColor};">مجدول</th>
-                  <th>المكتب / المشرف</th>
-                </tr>
-              </thead>
-              <tbody>${rowsHtml}</tbody>
-            </table>
-          </div>
-        `;
-        grid.appendChild(card);
+      let rowsHtml = '';
+      const svList = Object.values(svMap);
+      
+      // الترتيب: المشرفين الفعليين بالنسبة الأعلى أولاً، ثم الاستثناءات بالأسفل
+      svList.sort((a, b) => {
+        if (a.isExcluded && !b.isExcluded) return 1;
+        if (!a.isExcluded && b.isExcluded) return -1;
+        return (b.published / (b.total || 1)) - (a.published / (a.total || 1));
       });
 
-      sectionWrapper.appendChild(grid);
-      return sectionWrapper;
+      svList.forEach(sv => {
+        const rate = sv.total > 0 ? Math.round((sv.published / sv.total) * 100) : 0;
+        rowsHtml += `
+          <tr>
+            <td style="text-align: center !important; font-weight: bold; color: ${getRateColor(rate)};">${rate}%</td>
+            <td style="text-align: center !important; color: var(--text-muted);">${sv.total}</td>
+            <td style="text-align: center !important; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
+            <td style="text-align: center !important; font-weight: 600;" class="copyable" onclick="copyToClipboard('${sv.name}', event)">${renderSupervisorNameCell(sv.name)}</td>
+          </tr>
+        `;
+      });
+
+      if (svList.length === 0) {
+        rowsHtml = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:15px;">لا توجد بيانات مسجلة.</td></tr>';
+      }
+
+      const card = document.createElement('div');
+      card.className = 'day-column-card';
+      card.style.borderTop = `3px solid ${zoneThemeColor}`;
+
+      card.innerHTML = `
+        <div class="day-card-header">
+          <div style="font-weight: 800; font-size: 13.5px; color: ${zoneThemeColor};">
+            📅 ${dayTitle}
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 12px; color: var(--text-muted); font-weight: 700;">${totalAssignedNet} / ${totalTargetNet}</span>
+            <span class="zone-total-rate" style="color: ${overallColor}; border: 1px solid ${overallColor}40; background: var(--bg-inner);">${overallRate}%</span>
+          </div>
+        </div>
+        <div class="zone-table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 55px;">%</th>
+                <th style="width: 65px;">Target</th>
+                <th style="width: 65px; color: ${zoneThemeColor};">مجدول</th>
+                <th>المكتب / المشرف</th>
+              </tr>
+            </thead>
+            <tbody>${rowsHtml}</tbody>
+          </table>
+        </div>
+      `;
+
+      return card;
     }
 
+    /* بناء تقرير الزونات: كل زون كهيدر رئيسي وتحته الـ 3 أيام بجانب بعضها */
     function renderSupervisorReport() {
       const container = document.getElementById('zones-container');
+      if (!container) return;
       container.innerHTML = '';
-      const daySelection = document.getElementById('report-day-select').value;
-      const selectedSupervisor = document.getElementById('report-supervisor-select').value;
-      const days = [
+
+      const selectedSupervisor = (document.getElementById('report-supervisor-select') ? document.getElementById('report-supervisor-select').value : 'all');
+
+      // استخراج كافة الزونات
+      const zoneSet = new Set();
+      ridersData.forEach(r => {
+        const z = (r.area || '').trim();
+        if (z && z !== '-' && z !== '') zoneSet.add(z);
+      });
+
+      const zoneList = Array.from(zoneSet);
+      if (zoneList.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); padding: 25px; text-align: center !important;">لا توجد مناطق مسجلة.</div>';
+        return;
+      }
+
+      const dayDefs = [
         { key: 'today', title: 'اليوم (Today)' },
         { key: 'tomorrow', title: 'الغد (Tomorrow)' },
-        { key: 'tomorrowLater', title: 'الغد لاحقاً' }
+        { key: 'tomorrowLater', title: 'الغد لاحقاً (Tomorrow Later)' }
       ];
 
-      if (daySelection === 'all_days') {
-        days.forEach(d => { const el = buildZoneGridForDay(d.key, d.title, selectedSupervisor); if (el) container.appendChild(el); });
-      } else {
-        const cur = days.find(d => d.key === daySelection) || days[0];
-        const el = buildZoneGridForDay(cur.key, cur.title, selectedSupervisor);
-        if (el) container.appendChild(el);
-      }
+      zoneList.forEach((zoneName, index) => {
+        const zoneThemeColor = getZoneColor(zoneName, index);
+
+        const zoneBlock = document.createElement('div');
+        zoneBlock.className = 'zone-section-block';
+
+        // هيدر الزون الرئيسي
+        const headerEl = document.createElement('div');
+        headerEl.className = 'zone-section-title';
+        headerEl.style.borderRightColor = zoneThemeColor;
+        headerEl.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: ${zoneThemeColor}; font-size: 16px;">📍</span>
+            <span style="font-size: 16px; font-weight: 900; color: ${zoneThemeColor};">منطقة: ${zoneName}</span>
+          </div>
+          <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700;">
+            إسناد الأيام الـ 3 مجتمعة (حساب صافي مستبعداً الاستثناءات)
+          </span>
+        `;
+        zoneBlock.appendChild(headerEl);
+
+        // شبكة الأيام الثلاثة بجانب بعضها
+        const daysGrid = document.createElement('div');
+        daysGrid.className = 'days-grid-for-zone';
+
+        dayDefs.forEach(d => {
+          const dayCard = buildSingleDayCard(d.key, d.title, zoneName, zoneThemeColor, selectedSupervisor);
+          daysGrid.appendChild(dayCard);
+        });
+
+        zoneBlock.appendChild(daysGrid);
+        container.appendChild(zoneBlock);
+      });
     }
 
     function onMainDayFilterChange() { renderTable(); }
@@ -1769,7 +1822,6 @@
       applyTheme(localStorage.getItem('dashboard_theme') || 'dark');
       initSupervisorLoginDropdown();
 
-      // استعادة الجلسة في حال كان المستخدم مسجلاً بالفعل
       const savedRole = localStorage.getItem('auth_role');
       const savedSupervisor = localStorage.getItem('auth_supervisor');
 
