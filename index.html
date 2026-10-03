@@ -6,7 +6,7 @@
   <title>Mohandiseen 3PLs-Dashboard | بوابة العمليات اللوجستية</title>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    /* 1. السمة الليلية: الأسود + الأبيض + الرمادي الغامق + النبيتي */
+    /* السمة الليلية: الأسود + الأبيض + الرمادي الغامق + النبيتي */
     html[data-theme="dark"] {
       --bg-main: #09090b;
       --bg-card: #141416;
@@ -23,7 +23,7 @@
       --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.75);
     }
 
-    /* 2. السمة النهارية */
+    /* السمة النهارية */
     html[data-theme="light"] {
       --bg-main: #fcfbf9;
       --bg-card: #f5f0eb;
@@ -107,15 +107,9 @@
       border: 1px solid var(--border-subtle); padding: 6px 12px; border-radius: 6px; white-space: nowrap;
     }
 
-    /* شاشة البوابة الرئيسية */
     #portal-hub-view {
-      position: relative;
-      min-height: calc(100vh - 70px);
-      padding: 30px 20px 50px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+      position: relative; min-height: calc(100vh - 70px); padding: 30px 20px 50px 20px;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
       background: 
         radial-gradient(circle at center, rgba(10, 2, 4, 0.78) 0%, rgba(5, 5, 5, 0.96) 100%),
         radial-gradient(circle at 50% 30%, rgba(200, 16, 46, 0.35) 0%, rgba(120, 10, 25, 0.15) 70%),
@@ -124,42 +118,21 @@
     }
 
     .quran-header-banner {
-      text-align: center;
-      margin-bottom: 22px;
-      position: relative;
-      z-index: 2;
-      background: rgba(20, 20, 24, 0.75);
-      padding: 16px 32px;
-      border-radius: 18px;
-      border: 1px solid rgba(136, 19, 55, 0.6);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      width: 100%;
-      max-width: 780px;
+      text-align: center; margin-bottom: 22px; position: relative; z-index: 2;
+      background: rgba(20, 20, 24, 0.75); padding: 16px 32px; border-radius: 18px;
+      border: 1px solid rgba(136, 19, 55, 0.6); box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px); width: 100%; max-width: 780px;
     }
     .quran-ayah {
-      font-family: 'Amiri', serif;
-      font-size: 30px;
-      font-weight: 700;
-      color: #ffffff;
-      margin: 0;
-      letter-spacing: 1px;
-      line-height: 1.6;
+      font-family: 'Amiri', serif; font-size: 30px; font-weight: 700; color: #ffffff;
+      margin: 0; letter-spacing: 1px; line-height: 1.6;
       text-shadow: 0 0 18px rgba(251, 191, 36, 0.5), 0 2px 10px rgba(0,0,0,0.8);
     }
 
     .hub-header { text-align: center; margin-bottom: 25px; position: relative; z-index: 2; }
     .hub-crescent-icon { font-size: 32px; color: #fbbf24; text-shadow: 0 0 25px rgba(251, 191, 36, 0.6); margin-bottom: 4px; display: block; }
-    
-    .hub-main-title-en {
-      font-size: 27px; font-weight: 900; color: #ffffff; margin: 0;
-      text-shadow: 0 2px 12px rgba(136, 19, 55, 0.8); letter-spacing: 0.8px; direction: ltr;
-    }
-    .hub-main-title-ar {
-      font-size: 22px; font-weight: 900; color: #fb7185; margin-top: 4px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); letter-spacing: 0.5px;
-    }
+    .hub-main-title-en { font-size: 27px; font-weight: 900; color: #ffffff; margin: 0; letter-spacing: 0.8px; direction: ltr; }
+    .hub-main-title-ar { font-size: 22px; font-weight: 900; color: #fb7185; margin-top: 4px; letter-spacing: 0.5px; }
     .hub-sub-title { font-size: 13.5px; color: #fecdd3; margin-top: 6px; font-weight: 700; }
 
     .hub-categories-grid {
@@ -168,11 +141,10 @@
     }
     .hub-category-card {
       background: rgba(20, 20, 24, 0.85); border: 1px solid rgba(136, 19, 55, 0.5); backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px); border-radius: 18px; padding: 20px 18px; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);
-      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; display: flex; flex-direction: column;
+      border-radius: 18px; padding: 20px 18px; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);
+      transition: transform 0.25s ease, border-color 0.25s ease; display: flex; flex-direction: column;
     }
-    .hub-category-card:hover { transform: translateY(-5px); border-color: #fb7185; box-shadow: 0 14px 45px rgba(136, 19, 55, 0.4); }
-
+    .hub-category-card:hover { transform: translateY(-5px); border-color: #fb7185; }
     .hub-cat-title {
       font-size: 16px; font-weight: 900; color: #ffffff; display: flex; align-items: center; gap: 10px;
       padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 14px;
@@ -184,17 +156,12 @@
       padding: 10px 14px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
       transition: all 0.2s ease; text-align: right;
     }
-    .hub-sheet-btn:hover {
-      background: linear-gradient(90deg, #881337 0%, #9f1239 100%); color: #ffffff; border-color: #fb7185;
-      padding-right: 18px; box-shadow: 0 4px 15px rgba(136, 19, 55, 0.5);
-    }
-    .btn-title-en { display: block; font-size: 13.5px; font-weight: 800; color: #ffffff; letter-spacing: 0.3px; }
+    .hub-sheet-btn:hover { background: linear-gradient(90deg, #881337 0%, #9f1239 100%); color: #ffffff; border-color: #fb7185; padding-right: 18px; }
+    .btn-title-en { display: block; font-size: 13.5px; font-weight: 800; color: #ffffff; }
     .btn-title-ar { display: block; font-size: 11.5px; font-weight: 600; color: #fb7185; margin-top: 2px; }
     .hub-sheet-btn:hover .btn-title-ar { color: #fecdd3; }
-    .hub-sheet-btn .arrow-icon { font-size: 12px; color: #fb7185; transition: transform 0.2s ease; margin-left: 4px; }
-    .hub-sheet-btn:hover .arrow-icon { color: #ffffff; transform: translateX(-4px); }
+    .hub-sheet-btn .arrow-icon { font-size: 12px; color: #fb7185; }
 
-    /* شريط القوائم المصنفة */
     .portal-categories-bar {
       background: var(--bg-card); border-bottom: 1px solid var(--border-subtle); padding: 8px 20px;
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap; position: sticky; top: 66px; z-index: 90;
@@ -296,15 +263,9 @@
     .zone-table-container table td, .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; text-align: center !important; }
 
     .table-total-row {
-      background: #e2e8f0 !important;
-      font-weight: 900 !important;
-      border-top: 2px solid var(--border-accent) !important;
+      background: #e2e8f0 !important; font-weight: 900 !important; border-top: 2px solid var(--border-accent) !important;
     }
-    .table-total-row td {
-      color: #000000 !important;
-      font-weight: 900 !important;
-      font-size: 13.5px !important;
-    }
+    .table-total-row td { color: #000000 !important; font-weight: 900 !important; font-size: 13.5px !important; }
 
     .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
     .search-input, .filter-select {
@@ -314,79 +275,26 @@
     .search-input { min-width: 180px; flex: 2; }
     .filter-select { flex: 1; min-width: 125px; }
 
-    /* مكون الاختيار المتعدد لفلتر الزون */
+    /* مكونات الاختيار المتعدد (Multi-Select) */
     .multiselect-container {
-      position: relative;
-      display: inline-block;
-      min-width: 160px;
-      flex: 1;
+      position: relative; display: inline-block; min-width: 160px; flex: 1;
     }
     .multiselect-btn {
-      width: 100%;
-      padding: 9px 12px;
-      background: var(--input-bg);
-      border: 1px solid var(--border-subtle);
-      border-radius: 7px;
-      color: var(--text-main);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: right;
+      width: 100%; padding: 9px 12px; background: var(--input-bg); border: 1px solid var(--border-subtle);
+      border-radius: 7px; color: var(--text-main); font-size: 13px; font-weight: 700; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; text-align: right;
     }
     .multiselect-dropdown {
-      display: none;
-      position: absolute;
-      top: calc(100% + 4px);
-      right: 0;
-      left: 0;
-      background: var(--bg-card);
-      border: 1px solid var(--border-accent);
-      border-radius: 8px;
-      max-height: 250px;
-      overflow-y: auto;
-      z-index: 1050;
-      padding: 6px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      display: none; position: absolute; top: calc(100% + 4px); right: 0; left: 0;
+      background: var(--bg-card); border: 1px solid var(--border-accent); border-radius: 8px;
+      max-height: 250px; overflow-y: auto; z-index: 1050; padding: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.6);
     }
-    .multiselect-container.open .multiselect-dropdown {
-      display: block;
-    }
-    .multiselect-actions {
-      display: flex;
-      justify-content: space-between;
-      padding: 4px 6px 8px 6px;
-      border-bottom: 1px solid var(--border-subtle);
-      margin-bottom: 6px;
-    }
-    .multiselect-actions button {
-      background: transparent;
-      border: none;
-      color: #fb7185;
-      font-size: 11px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-    .multiselect-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 8px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      border-radius: 4px;
-      color: var(--text-main);
-    }
-    .multiselect-item:hover {
-      background: rgba(136, 19, 55, 0.2);
-    }
-    .multiselect-item input[type="checkbox"] {
-      cursor: pointer;
-      accent-color: #881337;
-    }
+    .multiselect-container.open .multiselect-dropdown { display: block; }
+    .multiselect-actions { display: flex; justify-content: space-between; padding: 4px 6px 8px 6px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 6px; }
+    .multiselect-actions button { background: transparent; border: none; color: #fb7185; font-size: 11px; font-weight: 800; cursor: pointer; }
+    .multiselect-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; font-size: 12px; font-weight: 700; cursor: pointer; border-radius: 4px; color: var(--text-main); }
+    .multiselect-item:hover { background: rgba(136, 19, 55, 0.2); }
+    .multiselect-item input[type="checkbox"] { cursor: pointer; accent-color: #881337; }
     
     .table-container { 
       width: 100%; overflow-x: auto; border-radius: 10px; border: 2px solid var(--table-border); 
@@ -396,14 +304,9 @@
 
     th { 
       background: linear-gradient(180deg, #09090b 0%, #1c1c22 100%) !important;
-      padding: 13px 10px !important;
-      color: #ffffff !important;
-      font-weight: 900 !important;
-      font-size: 12.5px !important;
-      letter-spacing: 0.3px;
-      text-align: center !important;
-      border-bottom: 2px solid var(--border-accent) !important;
-      border-left: 2px solid #27272a !important;
+      padding: 13px 10px !important; color: #ffffff !important; font-weight: 900 !important;
+      font-size: 12.5px !important; letter-spacing: 0.3px; text-align: center !important;
+      border-bottom: 2px solid var(--border-accent) !important; border-left: 2px solid #27272a !important;
     }
     td { padding: 10px 12px; text-align: center !important; border-top: 2px solid var(--table-border); border-left: 2px solid var(--table-border); color: var(--text-main); }
     tbody tr:hover { background: rgba(136, 19, 55, 0.08); }
@@ -412,15 +315,9 @@
     .copyable:hover { background: rgba(136, 19, 55, 0.15); }
 
     .badge-yesterday-absence {
-      background: #000000 !important;
-      color: #ff3344 !important;
-      font-weight: 900 !important;
-      padding: 5px 12px;
-      border-radius: 6px;
-      border: 1px solid #7f1d1d !important;
-      display: inline-block;
-      letter-spacing: 0.5px;
-      text-shadow: 0 0 8px rgba(255, 51, 68, 0.8), 0 0 16px rgba(239, 68, 68, 0.5);
+      background: #000000 !important; color: #ff3344 !important; font-weight: 900 !important;
+      padding: 5px 12px; border-radius: 6px; border: 1px solid #7f1d1d !important; display: inline-block;
+      letter-spacing: 0.5px; text-shadow: 0 0 8px rgba(255, 51, 68, 0.8), 0 0 16px rgba(239, 68, 68, 0.5);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
     }
 
@@ -432,46 +329,21 @@
     .badge-default { background: var(--bg-inner); color: var(--text-muted); border: 1px solid var(--border-subtle); }
 
     .badge-fb-day-green {
-      background-color: #14532d !important;
-      color: #ffffff !important;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-weight: 800;
-      display: inline-block;
-      border: 1px solid #16a34a;
-      box-shadow: 0 2px 5px rgba(20, 83, 45, 0.4);
+      background-color: #14532d !important; color: #ffffff !important; padding: 5px 12px;
+      border-radius: 6px; font-weight: 800; display: inline-block; border: 1px solid #16a34a;
     }
     .badge-fb-danger-red {
-      background-color: #7f1d1d !important;
-      color: #ffffff !important;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-weight: 800;
-      display: inline-block;
-      border: 1px solid #991b1b;
-      box-shadow: 0 2px 5px rgba(127, 29, 29, 0.4);
+      background-color: #7f1d1d !important; color: #ffffff !important; padding: 5px 12px;
+      border-radius: 6px; font-weight: 800; display: inline-block; border: 1px solid #991b1b;
     }
 
-    /* 4. تنسيقات Vehicle المحدثة (Starbucks Bike مثل Bike) و (Walker مثل Bicycle) */
     .badge-veh-bicycle {
-      background-color: #581c87 !important; /* موف داكن */
-      color: #ffffff !important;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-weight: 800;
-      display: inline-block;
-      border: 1px solid #7e22ce;
-      box-shadow: 0 2px 6px rgba(88, 28, 135, 0.4);
+      background-color: #581c87 !important; color: #ffffff !important; padding: 5px 12px;
+      border-radius: 6px; font-weight: 800; display: inline-block; border: 1px solid #7e22ce;
     }
     .badge-veh-bike {
-      background-color: #1e3a8a !important; /* أزرق داكن كحلي */
-      color: #ffffff !important;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-weight: 800;
-      display: inline-block;
-      border: 1px solid #2563eb;
-      box-shadow: 0 2px 6px rgba(30, 58, 138, 0.4);
+      background-color: #1e3a8a !important; color: #ffffff !important; padding: 5px 12px;
+      border-radius: 6px; font-weight: 800; display: inline-block; border: 1px solid #2563eb;
     }
 
     #copy-toast {
@@ -508,7 +380,7 @@
       </div>
     </div>
 
-    <!-- توقيع المهندس يظهر في الشريط العلوي أثناء التواجد في القائمة الرئيسية فقط -->
+    <!-- توقيع المهندس في الشريط العلوي -->
     <div id="top-engineer-banner" class="top-engineer-signature hidden">
       <span>✍️ مع تحياتي : مهندس / عبدالرحمن مجدي</span>
     </div>
@@ -520,16 +392,18 @@
       </button>
 
       <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-        <span id="last-update-time" class="last-update-tag">🕒 جاري جلب وقت التحديث...</span>
+        <!-- 1. وقت التحديث الحقيقي القادم من الشيت حصراً -->
+        <span id="last-update-time" class="last-update-tag">🕒 جاري جلب وقت تحديث الشيت...</span>
         <button class="btn btn-outline" onclick="openPortalHub()">🏠 القائمة الرئيسية</button>
         <button class="btn btn-outline" onclick="refreshCurrentTab()">🔄 تحديث البيانات</button>
+        <!-- 2. اسم المسؤول العام أصبح المهندس / عبدالرحمن مجدي -->
         <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 700; color: #fb7185;"></span>
         <button class="btn btn-outline" onclick="logout()">خروج</button>
       </div>
     </div>
   </header>
 
-  <!-- شريط القوائم المصنفة (يظهر أثناء استعراض الجداول) -->
+  <!-- شريط القوائم المصنفة -->
   <nav id="portal-nav-bar" class="portal-categories-bar hidden">
     <button class="btn-return-hub" onclick="openPortalHub()">🏠 القائمة الرئيسية</button>
 
@@ -687,10 +561,8 @@
     </div>
   </nav>
 
-  <!-- ================== الواجهة الرئيسية بعد تسجيل الدخول (بوابة الأقسام) ================== -->
+  <!-- الواجهة الرئيسية بعد تسجيل الدخول -->
   <div id="portal-hub-view" class="hidden">
-
-    <!-- بنر الآية الكريمة فقط -->
     <div class="quran-header-banner">
       <h2 class="quran-ayah">🤍 وَقُلْ رَبِّ زِدْنِي عِلْمًا 🤍</h2>
     </div>
@@ -703,26 +575,16 @@
     </div>
 
     <div class="hub-categories-grid">
-
       <!-- 1. عمليات الإسناد والتوزيع -->
       <div class="hub-category-card">
-        <div class="hub-cat-title">
-          <span>🛵</span>
-          <span>عمليات الإسناد والتوزيع</span>
-        </div>
+        <div class="hub-cat-title"><span>🛵</span><span>عمليات الإسناد والتوزيع</span></div>
         <div class="hub-sheets-list">
           <button class="hub-sheet-btn" onclick="switchPortalTab('Manual Assigned')">
-            <div>
-              <span class="btn-title-en">Manual Assigned</span>
-              <span class="btn-title-ar">الاصين و الاسناد</span>
-            </div>
+            <div><span class="btn-title-en">Manual Assigned</span><span class="btn-title-ar">الاصين و الاسناد</span></div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Hedcount Mohandssein')">
-            <div>
-              <span class="btn-title-en">Hedcount Mohandssein</span>
-              <span class="btn-title-ar">الهيدكاونت بالكامل</span>
-            </div>
+            <div><span class="btn-title-en">Hedcount Mohandssein</span><span class="btn-title-ar">الهيدكاونت بالكامل</span></div>
             <span class="arrow-icon">◀</span>
           </button>
         </div>
@@ -730,37 +592,22 @@
 
       <!-- 2. الأداء والعمليات -->
       <div class="hub-category-card">
-        <div class="hub-cat-title">
-          <span>📈</span>
-          <span>الأداء والعمليات</span>
-        </div>
+        <div class="hub-cat-title"><span>📈</span><span>الأداء والعمليات</span></div>
         <div class="hub-sheets-list">
           <button class="hub-sheet-btn" onclick="switchPortalTab('Rider\'s daliy performance')">
-            <div>
-              <span class="btn-title-en">Rider's daliy performance</span>
-              <span class="btn-title-ar">الأداء اليومي للمناديب</span>
-            </div>
+            <div><span class="btn-title-en">Rider's daliy performance</span><span class="btn-title-ar">الأداء اليومي للمناديب</span></div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Rider\'s monthly performance')">
-            <div>
-              <span class="btn-title-en">Rider's monthly performance</span>
-              <span class="btn-title-ar">الأداء الشهري للمناديب</span>
-            </div>
+            <div><span class="btn-title-en">Rider's monthly performance</span><span class="btn-title-ar">الأداء الشهري للمناديب</span></div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Contract Follow up')">
-            <div>
-              <span class="btn-title-en">Contract Follow up</span>
-              <span class="btn-title-ar">متابعة تجديد العقود</span>
-            </div>
+            <div><span class="btn-title-en">Contract Follow up</span><span class="btn-title-ar">متابعة تجديد العقود</span></div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Report on cancelled orders')">
-            <div>
-              <span class="btn-title-en">Report on cancelled orders</span>
-              <span class="btn-title-ar">افادة الأوردرات الملغية</span>
-            </div>
+            <div><span class="btn-title-en">Report on cancelled orders</span><span class="btn-title-ar">افادة الأوردرات الملغية</span></div>
             <span class="arrow-icon">◀</span>
           </button>
         </div>
@@ -768,23 +615,14 @@
 
       <!-- 3. التعيينات والحسابات -->
       <div class="hub-category-card">
-        <div class="hub-cat-title">
-          <span>👥</span>
-          <span>التعيينات والحسابات</span>
-        </div>
+        <div class="hub-cat-title"><span>👥</span><span>التعيينات والحسابات</span></div>
         <div class="hub-sheets-list">
           <button class="hub-sheet-btn" onclick="switchPortalTab('New rider\'s accounts')">
-            <div>
-              <span class="btn-title-en">New rider's accounts</span>
-              <span class="btn-title-ar">حسابات المناديب الجدد</span>
-            </div>
+            <div><span class="btn-title-en">New rider's accounts</span><span class="btn-title-ar">حسابات المناديب الجدد</span></div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Reactivation rider\'s accounts')">
-            <div>
-              <span class="btn-title-en">Reactivation rider's accounts</span>
-              <span class="btn-title-ar">حسابات المناديب الــ( معاد تنشيطها )</span>
-            </div>
+            <div><span class="btn-title-en">Reactivation rider's accounts</span><span class="btn-title-ar">حسابات المناديب الــ( معاد تنشيطها )</span></div>
             <span class="arrow-icon">◀</span>
           </button>
         </div>
@@ -792,23 +630,14 @@
 
       <!-- 4. الشؤون الإدارية والمالية -->
       <div class="hub-category-card">
-        <div class="hub-cat-title">
-          <span>💼</span>
-          <span>الشؤون الإدارية والمالية</span>
-        </div>
+        <div class="hub-cat-title"><span>💼</span><span>الشؤون الإدارية والمالية</span></div>
         <div class="hub-sheets-list">
           <button class="hub-sheet-btn" onclick="switchPortalTab('Wallet details')">
-            <div>
-              <span class="btn-title-en">Wallet details</span>
-              <span class="btn-title-ar">متابعه محافظ المناديب</span>
-            </div>
+            <div><span class="btn-title-en">Wallet details</span><span class="btn-title-ar">متابعه محافظ المناديب</span></div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Equipment')">
-            <div>
-              <span class="btn-title-en">Equipment</span>
-              <span class="btn-title-ar">العهد والمعدات المسحوبه خلال الشهر</span>
-            </div>
+            <div><span class="btn-title-en">Equipment</span><span class="btn-title-ar">العهد والمعدات المسحوبه خلال الشهر</span></div>
             <span class="arrow-icon">◀</span>
           </button>
         </div>
@@ -816,42 +645,26 @@
 
       <!-- 5. الجودة والأمان -->
       <div class="hub-category-card">
-        <div class="hub-cat-title">
-          <span>⚖️</span>
-          <span>الجودة والأمان</span>
-        </div>
+        <div class="hub-cat-title"><span>⚖️</span><span>الجودة والأمان</span></div>
         <div class="hub-sheets-list">
           <button class="hub-sheet-btn" onclick="switchPortalTab('Security Inquiry')">
-            <div>
-              <span class="btn-title-en">Security Inquiry</span>
-              <span class="btn-title-ar">الاستعلام والفحص الأمني</span>
-            </div>
+            <div><span class="btn-title-en">Security Inquiry</span><span class="btn-title-ar">الاستعلام والفحص الأمني</span></div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Actions & Coaching')">
-            <div>
-              <span class="btn-title-en">Actions & Coaching</span>
-              <span class="btn-title-ar">الايقافات و الكوتشنج</span>
-            </div>
+            <div><span class="btn-title-en">Actions & Coaching</span><span class="btn-title-ar">الايقافات و الكوتشنج</span></div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Legal Settlements')">
-            <div>
-              <span class="btn-title-en">Legal Settlements</span>
-              <span class="btn-title-ar">التصالحات القانونية</span>
-            </div>
+            <div><span class="btn-title-en">Legal Settlements</span><span class="btn-title-ar">التصالحات القانونية</span></div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Invalid hiring')">
-            <div>
-              <span class="btn-title-en">Invalid hiring</span>
-              <span class="btn-title-ar">الاستعلامات المرفوضة</span>
-            </div>
+            <div><span class="btn-title-en">Invalid hiring</span><span class="btn-title-ar">الاستعلامات المرفوضة</span></div>
             <span class="arrow-icon">◀</span>
           </button>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -874,25 +687,25 @@
       </div>
 
       <button class="btn-login-action" onclick="loginSupervisor()">تسجيل الدخول</button>
-      <div class="switch-link"><a onclick="showAdminLogin()">⚙ دخول المسؤول العام (Admin)</a></div>
+      <div class="switch-link"><a onclick="showAdminLogin()">⚙ دخول المهندس / عبدالرحمن مجدي</a></div>
     </div>
 
-    <!-- تسجيل دخول المسؤول العام -->
+    <!-- تسجيل دخول المهندس / عبدالرحمن مجدي -->
     <div id="admin-login-box" class="auth-wrapper hidden">
       <img class="login-brand-logo" src="logo.png" alt="Logo">
       <h2 class="auth-title" style="direction: ltr; font-size: 20px;">Engineer Abdulrahman Magdy's Login Panel</h2>
-      <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 22px;">للاطلاع على كافة الأقسام والشيتات مجتمعة</p>
+      <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 22px;">لوحة الإدارة والتحكم الشامل لكافة المناطق والمشرفين</p>
 
       <div class="form-group">
         <label>باسورد المسؤول</label>
         <input type="password" id="admin-pass" class="custom-pass-input" placeholder="أدخل باسورد الإدارة...">
       </div>
 
-      <button class="btn-login-action" onclick="loginAdmin()">دخول المسؤول</button>
+      <button class="btn-login-action" onclick="loginAdmin()">دخول</button>
       <div class="switch-link"><a onclick="showOfficeLogin()">← رجوع لتسجيل دخول المشرفين</a></div>
     </div>
 
-    <!-- ================== 1. تبويب Manual Assigned ================== -->
+    <!-- ================== 1. تبويب Manual Assigned (المعدل بالكامل) ================== -->
     <div id="view-manual-assigned" class="dashboard-portal-view hidden">
       <div id="top-stats-container">
         <div class="stats-section-block">
@@ -925,7 +738,7 @@
       <div id="admin-report-card" class="card hidden">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
           <div>
-            <h3 style="margin: 0; font-size: 15px; color: var(--text-main);">📊 توزيع وإسناد الزونات للأيام الـ 3 مجتمعة (خاص بالمسؤول)</h3>
+            <h3 style="margin: 0; font-size: 15px; color: var(--text-main);">📊 توزيع وإسناد الزونات للأيام الـ 3 مجتمعة</h3>
             <span style="font-size: 12px; color: var(--text-muted);">الهيدر يحسب الإسناد الصافي (بدون الاستثناءات)، ونهاية كل جدول تعرض الإجمالي العام</span>
           </div>
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
@@ -941,16 +754,53 @@
       </div>
 
       <div class="card">
-        <div class="table-header-tools">
+        <!-- شريط الفلاتر المحدث لصفحة Manual Assigned[cite: 15] -->
+        <div class="table-header-tools" style="background: var(--bg-inner); padding: 12px; border-radius: 10px; border: 1px solid var(--border-subtle); display: flex; gap: 8px; flex-wrap: wrap;">
+          
           <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث بالاسم، الـ ID، أو الهاتف..." onkeyup="renderTable()">
-          <select id="supervisor-filter" class="filter-select" onchange="renderTable()"><option value="all">كل المشرفين (S.V)</option></select>
+          
+          <!-- 3. فلتر المشرفين اختيار متعدد (Multi-Select)[cite: 15] -->
+          <div class="multiselect-container" id="sv-multiselect-box">
+            <button type="button" class="multiselect-btn" onclick="toggleSvDropdown()">
+              <span id="sv-multiselect-label">كل المشرفين (S.V)</span>
+              <span style="font-size: 10px;">▼</span>
+            </button>
+            <div class="multiselect-dropdown" id="sv-dropdown-list">
+              <div class="multiselect-actions">
+                <button type="button" onclick="selectAllSupervisors(true)">تحديد الكل</button>
+                <button type="button" onclick="selectAllSupervisors(false)">إلغاء الكل</button>
+              </div>
+              <div id="sv-checkboxes-container"></div>
+            </div>
+          </div>
+
+          <!-- فلتر المناطق (Zones)[cite: 15] -->
           <select id="zone-filter" class="filter-select" onchange="renderTable()"><option value="all">كل المناطق (Zones)</option></select>
+
+          <!-- 4. فلتر الـ Feedback مرتبط بالمشرفين المحددين[cite: 15] -->
           <select id="feedback-filter" class="filter-select" onchange="renderTable()"><option value="all">كل الـ Feedback</option></select>
+
+          <!-- 5. فلتر تشغيلة الأمس اختيار متعدد (Multi-Select)[cite: 15] -->
+          <div class="multiselect-container" id="yesterday-multiselect-box">
+            <button type="button" class="multiselect-btn" onclick="toggleYesterdayDropdown()">
+              <span id="yesterday-multiselect-label">فلتر تشغيلة الأمس</span>
+              <span style="font-size: 10px;">▼</span>
+            </button>
+            <div class="multiselect-dropdown" id="yesterday-dropdown-list">
+              <div class="multiselect-actions">
+                <button type="button" onclick="selectAllYesterday(true)">تحديد الكل</button>
+                <button type="button" onclick="selectAllYesterday(false)">إلغاء الكل</button>
+              </div>
+              <div id="yesterday-checkboxes-container"></div>
+            </div>
+          </div>
+
           <select id="main-day-filter" class="filter-select" onchange="onMainDayFilterChange()">
             <option value="today">اليوم (Today)</option>
             <option value="tomorrow">الغد (Tomorrow)</option>
             <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
           </select>
+
           <select id="today-filter" class="filter-select" onchange="renderTable()">
             <option value="all">كل الحالات</option>
             <option value="PUBLISHED_ONLY">PUBLISHED (أزرق فاتح)</option>
@@ -961,6 +811,7 @@
             <option value="NO_SHOW">NO_SHOW (أحمر داكن)</option>
             <option value="Suspended">Suspended (أحمر داكن)</option>
           </select>
+
           <button class="btn btn-excel" onclick="exportToExcel()">📥 تصدير Excel</button>
         </div>
 
@@ -988,7 +839,7 @@
       </div>
     </div>
 
-    <!-- ================== 2. الحاوية الديناميكية لباقي الـ 13 صفحة (مزودة بالفلاتر الذكية) ================== -->
+    <!-- ================== 2. الحاوية لباقي الـ 13 صفحة ================== -->
     <div id="view-generic-portal" class="dashboard-portal-view hidden">
       <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 14px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
@@ -999,13 +850,9 @@
           <button class="btn btn-excel" onclick="exportGenericExcel()">📥 تصدير Excel</button>
         </div>
 
-        <!-- شريط البحث والفلاتر الذكية المطورة -->
         <div class="table-header-tools" style="background: var(--bg-inner); padding: 12px; border-radius: 10px; border: 1px solid var(--border-subtle); display: flex; gap: 8px; flex-wrap: wrap;">
-          
-          <!-- البحث الشامل -->
           <input type="text" id="generic-search-box" class="search-input" placeholder="🔍 بحث شامل في هذا الجدول..." onkeyup="filterGenericTable()">
           
-          <!-- 1. فلتر الزون اختيار متعدد (Multi-Select) -->
           <div class="multiselect-container" id="zone-multiselect-box">
             <button type="button" class="multiselect-btn" onclick="toggleZoneDropdown()">
               <span id="zone-multiselect-label">كل الـ Zone</span>
@@ -1020,18 +867,10 @@
             </div>
           </div>
 
-          <!-- 2. فلتر رقم الهاتف كحقل بحث (Input Search) -->
           <input type="text" id="gen-filter-phone" class="search-input" placeholder="📞 بحث برقم الهاتف..." onkeyup="filterGenericTable()" style="min-width: 150px; flex: 1;">
-
-          <!-- 3. المشرف المسؤول (تغييره يفلتر قائمة الإفادة الحالية) -->
           <select id="gen-filter-sv" class="filter-select" onchange="onSupervisorFilterChange()"><option value="all">كل المشرفين</option></select>
-
-          <!-- 4. الإفادة الحالية (مرتبطة بالمشرف) -->
           <select id="gen-filter-fb" class="filter-select" onchange="filterGenericTable()"><option value="all">كل الإفادة الحالية</option></select>
-
-          <!-- 5. Vehicle -->
           <select id="gen-filter-vehicle" class="filter-select" onchange="filterGenericTable()"><option value="all">كل الـ Vehicle</option></select>
-
         </div>
 
         <div class="table-container">
@@ -1088,6 +927,10 @@
     let genericSheetData = [];
     let genericSheetHeaders = [];
     let selectedZonesSet = new Set();
+
+    // فلاتر الاختيار المتعدد لصفحة Manual Assigned
+    let selectedManualSupervisorsSet = new Set();
+    let selectedYesterdaySet = new Set();
 
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
@@ -1172,7 +1015,8 @@
         currentRole = "admin";
         loggedInSupervisor = "";
         saveSession();
-        enterDashboard("المسؤول العام");
+        // 2. تحديث الاسم رسمياً
+        enterDashboard("المهندس / عبدالرحمن مجدي");
       } else {
         alert("كلمة مرور المسؤول غير صحيحة!");
       }
@@ -1290,14 +1134,14 @@
       }
     }
 
+    // 1. وقت التحديث يأتي حصراً من الشيت (json.lastUpdated) دون الاعتماد على ساعة المتصفح
     function displaySheetLastUpdate(timestampStr) {
       const el = document.getElementById('last-update-time');
       if (!el) return;
       if (timestampStr) {
         el.innerText = `🕒 تحديث الشيت: ${timestampStr}`;
       } else {
-        const now = new Date();
-        el.innerText = `🕒 آخر تحديث: ${now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}`;
+        el.innerText = `🕒 تحديث الشيت: مسجل من واقع البيانات`;
       }
     }
 
@@ -1365,12 +1209,15 @@
         const res = await fetch(`${SCRIPT_URL}?sheet=Manual Assigned`);
         const json = await res.json();
         let rawRows = json.data || (Array.isArray(json) ? json : []);
+        
+        // جلب وقت الشيت الحقيقي فقط
         displaySheetLastUpdate(json.lastUpdated);
 
         ridersData = rawRows.map(r => normalizeRider(r));
-        populateSupervisors();
+        populateSupervisorsMultiSelect();
         populateZonesDropdown();
-        populateFeedbackDropdown();
+        populateYesterdayMultiSelect();
+        updateManualFeedbackDropdownOptions();
         populateReportSupervisors();
         renderTable();
         if (currentRole === "admin") renderSupervisorReport();
@@ -1468,21 +1315,178 @@
       return clean;
     }
 
-    function populateSupervisors() {
-      const svSelect = document.getElementById('supervisor-filter');
-      svSelect.innerHTML = '';
-      if (currentRole === "supervisor") {
-        const opt = document.createElement('option');
-        opt.value = loggedInSupervisor; opt.innerText = loggedInSupervisor; opt.selected = true;
-        svSelect.appendChild(opt); svSelect.disabled = true; return;
+    /* 3. فلتر المشرفين اختيار متعدد (Multi-Select) */
+    function toggleSvDropdown() {
+      const box = document.getElementById('sv-multiselect-box');
+      if (box) box.classList.toggle('open');
+    }
+
+    function updateSvMultiselectLabel() {
+      const label = document.getElementById('sv-multiselect-label');
+      if (!label) return;
+      if (selectedManualSupervisorsSet.size === 0) {
+        label.innerText = 'كل المشرفين (S.V)';
+      } else if (selectedManualSupervisorsSet.size === 1) {
+        label.innerText = Array.from(selectedManualSupervisorsSet)[0];
+      } else {
+        label.innerText = `تم اختيار (${selectedManualSupervisorsSet.size}) مشرفين`;
       }
-      svSelect.disabled = false;
-      const svSet = new Set();
-      ridersData.forEach(r => { if (r.supervisor && r.supervisor.trim() !== '') svSet.add(r.supervisor.trim()); });
-      svSelect.innerHTML = '<option value="all">كل المشرفين (S.V)</option>';
-      Array.from(svSet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(sv => {
-        const opt = document.createElement('option'); opt.value = sv; opt.innerText = sv; svSelect.appendChild(opt);
+    }
+
+    function selectAllSupervisors(select) {
+      const checkboxes = document.querySelectorAll('#sv-checkboxes-container input[type="checkbox"]');
+      selectedManualSupervisorsSet.clear();
+      checkboxes.forEach(cb => {
+        cb.checked = select;
+        if (select) selectedManualSupervisorsSet.add(cb.value);
       });
+      updateSvMultiselectLabel();
+      updateManualFeedbackDropdownOptions();
+      renderTable();
+    }
+
+    function onSupervisorCheckboxChange(cb) {
+      if (cb.checked) {
+        selectedManualSupervisorsSet.add(cb.value);
+      } else {
+        selectedManualSupervisorsSet.delete(cb.value);
+      }
+      updateSvMultiselectLabel();
+      updateManualFeedbackDropdownOptions();
+      renderTable();
+    }
+
+    function populateSupervisorsMultiSelect() {
+      const container = document.getElementById('sv-checkboxes-container');
+      if (!container) return;
+      container.innerHTML = '';
+      selectedManualSupervisorsSet.clear();
+
+      if (currentRole === "supervisor") {
+        selectedManualSupervisorsSet.add(loggedInSupervisor);
+        const label = document.createElement('label');
+        label.className = 'multiselect-item';
+        label.innerHTML = `
+          <input type="checkbox" value="${loggedInSupervisor}" checked disabled>
+          <span>${loggedInSupervisor}</span>
+        `;
+        container.appendChild(label);
+        updateSvMultiselectLabel();
+        return;
+      }
+
+      const svSet = new Set();
+      ridersData.forEach(r => {
+        if (r.supervisor && r.supervisor.trim() !== '') svSet.add(r.supervisor.trim());
+      });
+
+      Array.from(svSet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(sv => {
+        const label = document.createElement('label');
+        label.className = 'multiselect-item';
+        label.innerHTML = `
+          <input type="checkbox" value="${sv}" onchange="onSupervisorCheckboxChange(this)">
+          <span>${sv}</span>
+        `;
+        container.appendChild(label);
+      });
+
+      updateSvMultiselectLabel();
+    }
+
+    /* 4. تحديث قائمة الـ Feedback بناءً على المشرفين المحددين في الفلتر */
+    function updateManualFeedbackDropdownOptions() {
+      const fbSelect = document.getElementById('feedback-filter');
+      if (!fbSelect) return;
+      const currentSelected = fbSelect.value;
+      fbSelect.innerHTML = '<option value="all">كل الـ Feedback</option>';
+
+      const fbSet = new Set();
+      ridersData.forEach(r => {
+        const rSv = (r.supervisor || '').trim();
+        // إذا كان هناك مشرفين محددين، نأخذ فقط الفيدباك الخاص بهؤلاء المشرفين
+        const matchSv = (selectedManualSupervisorsSet.size === 0) || selectedManualSupervisorsSet.has(rSv);
+        if (matchSv) {
+          const f = (r.feedback || '').trim();
+          if (f && f !== '-') fbSet.add(f);
+        }
+      });
+
+      Array.from(fbSet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(f => {
+        const opt = document.createElement('option');
+        opt.value = f;
+        opt.innerText = f;
+        fbSelect.appendChild(opt);
+      });
+
+      if (fbSet.has(currentSelected)) {
+        fbSelect.value = currentSelected;
+      } else {
+        fbSelect.value = 'all';
+      }
+    }
+
+    /* 5. فلتر تشغيلة الأمس اختيار متعدد (Multi-Select) */
+    function toggleYesterdayDropdown() {
+      const box = document.getElementById('yesterday-multiselect-box');
+      if (box) box.classList.toggle('open');
+    }
+
+    function updateYesterdayMultiselectLabel() {
+      const label = document.getElementById('yesterday-multiselect-label');
+      if (!label) return;
+      if (selectedYesterdaySet.size === 0) {
+        label.innerText = 'تشغيلة الأمس (الكل)';
+      } else if (selectedYesterdaySet.size === 1) {
+        label.innerText = Array.from(selectedYesterdaySet)[0];
+      } else {
+        label.innerText = `تم اختيار (${selectedYesterdaySet.size}) حالات`;
+      }
+    }
+
+    function selectAllYesterday(select) {
+      const checkboxes = document.querySelectorAll('#yesterday-checkboxes-container input[type="checkbox"]');
+      selectedYesterdaySet.clear();
+      checkboxes.forEach(cb => {
+        cb.checked = select;
+        if (select) selectedYesterdaySet.add(cb.value);
+      });
+      updateYesterdayMultiselectLabel();
+      renderTable();
+    }
+
+    function onYesterdayCheckboxChange(cb) {
+      if (cb.checked) {
+        selectedYesterdaySet.add(cb.value);
+      } else {
+        selectedYesterdaySet.delete(cb.value);
+      }
+      updateYesterdayMultiselectLabel();
+      renderTable();
+    }
+
+    function populateYesterdayMultiSelect() {
+      const container = document.getElementById('yesterday-checkboxes-container');
+      if (!container) return;
+      container.innerHTML = '';
+      selectedYesterdaySet.clear();
+
+      const ySet = new Set();
+      ridersData.forEach(r => {
+        const yVal = (r.yesterday || '').toString().trim();
+        if (yVal && yVal !== '') ySet.add(yVal);
+      });
+
+      Array.from(ySet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(yVal => {
+        const label = document.createElement('label');
+        label.className = 'multiselect-item';
+        label.innerHTML = `
+          <input type="checkbox" value="${yVal}" onchange="onYesterdayCheckboxChange(this)">
+          <span>${yVal}</span>
+        `;
+        container.appendChild(label);
+      });
+
+      updateYesterdayMultiselectLabel();
     }
 
     function populateZonesDropdown() {
@@ -1495,19 +1499,6 @@
       });
       Array.from(zoneSet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(z => {
         const opt = document.createElement('option'); opt.value = z; opt.innerText = z; zoneSelect.appendChild(opt);
-      });
-    }
-
-    function populateFeedbackDropdown() {
-      const fbSelect = document.getElementById('feedback-filter');
-      fbSelect.innerHTML = '<option value="all">كل الـ Feedback</option>';
-      const fbSet = new Set();
-      ridersData.forEach(r => {
-        if (currentRole === "supervisor" && !isRiderAssignedToSupervisor(r, loggedInSupervisor)) return;
-        const f = (r.feedback || '').trim(); if (f && f !== '-') fbSet.add(f);
-      });
-      Array.from(fbSet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(f => {
-        const opt = document.createElement('option'); opt.value = f; opt.innerText = f; fbSelect.appendChild(opt);
       });
     }
 
@@ -1667,9 +1658,7 @@
                 <th>المكتب / المشرف</th>
               </tr>
             </thead>
-            <tbody>
-              ${rowsHtml}
-            </tbody>
+            <tbody>${rowsHtml}</tbody>
             <tfoot>
               <tr class="table-total-row">
                 <td style="text-align: center !important; color: #000000 !important; font-weight: 900 !important; font-size: 13px;">${grandRate}%</td>
@@ -1745,9 +1734,9 @@
 
     function onMainDayFilterChange() { renderTable(); }
 
+    /* فلترة جدول Manual Assigned بناءً على الفلاتر الجديدة المحدثة */
     function getFilteredRiders() {
       const q = document.getElementById('search-box').value.trim().toLowerCase();
-      const svFilter = document.getElementById('supervisor-filter').value;
       const zoneFilter = document.getElementById('zone-filter').value;
       const fbFilter = document.getElementById('feedback-filter').value;
       const selectedDay = document.getElementById('main-day-filter').value;
@@ -1755,11 +1744,26 @@
 
       return ridersData.filter(r => {
         if (currentRole === "supervisor" && !isRiderAssignedToSupervisor(r, loggedInSupervisor)) return false;
-        const matchQ = (r.name && r.name.toLowerCase().includes(q)) || (r.id && r.id.toLowerCase().includes(q)) || (r.phone && r.phone.toLowerCase().includes(q));
-        const matchSv = (currentRole === "supervisor") || (svFilter === 'all') || (r.supervisor && r.supervisor.trim() === svFilter);
+
+        const matchQ = (r.name && r.name.toLowerCase().includes(q)) || 
+                       (r.id && r.id.toLowerCase().includes(q)) || 
+                       (r.phone && r.phone.toLowerCase().includes(q));
+
+        // 3. فلتر المشرفين المتعدد
+        const rSv = (r.supervisor || '').trim();
+        const matchSv = (selectedManualSupervisorsSet.size === 0) || selectedManualSupervisorsSet.has(rSv);
+
+        // فلتر الزون
         const matchZ = (zoneFilter === 'all') || ((r.area || '').trim() === zoneFilter);
+
+        // 4. فلتر الفيدباك
         const matchFb = (fbFilter === 'all') || ((r.feedback || '').trim() === fbFilter);
 
+        // 5. فلتر تشغيلة الأمس المتعدد
+        const rYesterday = (r.yesterday || '').toString().trim();
+        const matchYesterday = (selectedYesterdaySet.size === 0) || selectedYesterdaySet.has(rYesterday);
+
+        // فلتر الحالات
         let matchSt = true;
         if (statusFilter !== 'all') {
           const val = (r[selectedDay] || '').toUpperCase();
@@ -1771,7 +1775,8 @@
           else if (statusFilter === 'NO_SHOW') matchSt = val.includes('NO_SHOW') || val.includes('NOSHOW');
           else if (statusFilter === 'Suspended') matchSt = val.includes('SUSPENDED');
         }
-        return matchQ && matchSv && matchZ && matchFb && matchSt;
+
+        return matchQ && matchSv && matchZ && matchFb && matchYesterday && matchSt;
       });
     }
 
@@ -1866,7 +1871,6 @@
 
         genericSheetHeaders = Object.keys(genericSheetData[0]);
         
-        // إعادة تهيئة الفلاتر
         selectedZonesSet.clear();
         document.getElementById('generic-search-box').value = '';
         document.getElementById('gen-filter-phone').value = '';
@@ -1893,18 +1897,21 @@
       return null;
     }
 
-    /* 1. إدارة قائمة الاختيار المتعدد للزون */
     function toggleZoneDropdown() {
       const container = document.getElementById('zone-multiselect-box');
       if (container) container.classList.toggle('open');
     }
 
-    // إغلاق قائمة الزون عند النقر خارجها
+    // إغلاق أي قائمة منسدلة متعددة عند النقر خارجها
     document.addEventListener('click', (e) => {
-      const container = document.getElementById('zone-multiselect-box');
-      if (container && !container.contains(e.target)) {
-        container.classList.remove('open');
-      }
+      const zoneBox = document.getElementById('zone-multiselect-box');
+      if (zoneBox && !zoneBox.contains(e.target)) zoneBox.classList.remove('open');
+
+      const svBox = document.getElementById('sv-multiselect-box');
+      if (svBox && !svBox.contains(e.target)) svBox.classList.remove('open');
+
+      const yBox = document.getElementById('yesterday-multiselect-box');
+      if (yBox && !yBox.contains(e.target)) yBox.classList.remove('open');
     });
 
     function updateZoneMultiselectLabel() {
@@ -1940,9 +1947,7 @@
       filterGenericTable();
     }
 
-    /* تعبئة الفلاتر المحدثة */
     function populateGenericFilterDropdowns() {
-      // 1. ملء قائمة الزون للاختيار المتعدد
       const zoneKey = findHeaderKey(['zone', 'المنطقة', 'الزون']);
       const zoneBox = document.getElementById('zone-multiselect-box');
       const zoneContainer = document.getElementById('zone-checkboxes-container');
@@ -1971,12 +1976,10 @@
         }
       }
 
-      // 2. إظهار/إخفاء حقل بحث الهاتف
       const phoneKey = findHeaderKey(['رقم التلفون', 'phone', 'الهاتف', 'الموبايل']);
       const phoneInput = document.getElementById('gen-filter-phone');
       if (phoneInput) phoneInput.style.display = phoneKey ? 'inline-block' : 'none';
 
-      // 3. ملء المشرفين
       const svKey = findHeaderKey(['المشرف المسئول', 'المشرف', 'sv', 's.v', 'المشرف (s.v)']);
       const svSelect = document.getElementById('gen-filter-sv');
       if (svSelect) {
@@ -1999,10 +2002,8 @@
         }
       }
 
-      // 4. ملء الإفادة الحالية لأول مرة
       updateFeedbackDropdownOptions('all');
 
-      // 5. ملء قائمة الـ Vehicle
       const vehKey = findHeaderKey(['vehicle', 'المركبة', 'نوع المركبة']);
       const vehSelect = document.getElementById('gen-filter-vehicle');
       if (vehSelect) {
@@ -2026,7 +2027,6 @@
       }
     }
 
-    /* 3. تحديث خيارات الإفادة الحالية حسب المشرف المختار (Dependent Filter) */
     function updateFeedbackDropdownOptions(selectedSv) {
       const fbKey = findHeaderKey(['الافادة الحالية', 'الإفادة الحالية', 'feedback', 'fedback', 'الافادة', 'الإفادة']);
       const svKey = findHeaderKey(['المشرف المسئول', 'المشرف', 'sv', 's.v', 'المشرف (s.v)']);
@@ -2076,7 +2076,6 @@
       const col = colName.toLowerCase().replace(/[\s_\-]/g, '');
       const lowerVal = cleanVal.toLowerCase();
 
-      // 4. Vehicle: تلوين (Starbucks Bike مثل Bike) و (Walker مثل Bicycle)
       if (col === 'vehicle' || col === 'المركبة') {
         if (lowerVal.includes('bicycle') || lowerVal.includes('walker')) {
           return `<span class="badge-veh-bicycle">${cleanVal}</span>`;
@@ -2086,7 +2085,6 @@
         }
       }
 
-      // الإفادة الحالية
       if (col.includes('افادة') || col.includes('إفادة') || col.includes('feedback')) {
         if (lowerVal.includes('day by day') || lowerVal === 'day') {
           return `<span class="badge-fb-day-green">${cleanVal}</span>`;
@@ -2096,7 +2094,6 @@
         }
       }
 
-      // المشرف المسئول
       if (col.includes('مشرف') || col === 'sv') {
         if (cleanVal && cleanVal !== '-') {
           return `<span style="${getSupervisorDistinctStyle(cleanVal)}">${cleanVal}</span>`;
@@ -2134,7 +2131,6 @@
       });
     }
 
-    /* فلترة الجدول الشاملة مع تفعيل الخيارات الجديدة */
     function filterGenericTable() {
       const q = document.getElementById('generic-search-box').value.trim().toLowerCase();
       const phoneSearch = document.getElementById('gen-filter-phone').value.trim().toLowerCase();
@@ -2149,31 +2145,23 @@
       const vehKey = findHeaderKey(['vehicle', 'المركبة', 'نوع المركبة']);
 
       const filtered = genericSheetData.filter(row => {
-        // 1. بحث شامل
         const matchSearch = !q || genericSheetHeaders.some(h => {
           return String(row[h] || '').toLowerCase().includes(q);
         });
 
-        // 2. فلتر الزون اختيار متعدد
         let matchZone = true;
         if (selectedZonesSet.size > 0 && zoneKey) {
           const rowZone = String(row[zoneKey] || '').trim();
           matchZone = selectedZonesSet.has(rowZone);
         }
 
-        // 3. فلتر رقم الهاتف كحقل بحث
         let matchPhone = true;
         if (phoneSearch && phoneKey) {
           matchPhone = String(row[phoneKey] || '').toLowerCase().includes(phoneSearch);
         }
 
-        // 4. المشرف المسئول
         const matchSv = (svVal === 'all') || (svKey && String(row[svKey] || '').trim() === svVal);
-
-        // 5. الإفادة الحالية
         const matchFb = (fbVal === 'all') || (fbKey && String(row[fbKey] || '').trim() === fbVal);
-
-        // 6. Vehicle
         const matchVeh = (vehVal === 'all') || (vehKey && String(row[vehKey] || '').trim() === vehVal);
 
         return matchSearch && matchZone && matchPhone && matchSv && matchFb && matchVeh;
@@ -2197,7 +2185,6 @@
       a.click();
     }
 
-    /* فحص الجلسة عند فتح/تحديث الصفحة */
     window.addEventListener('DOMContentLoaded', () => {
       applyTheme(localStorage.getItem('dashboard_theme') || 'dark');
       initSupervisorLoginDropdown();
@@ -2208,7 +2195,7 @@
       if (savedRole) {
         currentRole = savedRole;
         loggedInSupervisor = savedSupervisor || "";
-        const title = currentRole === "admin" ? "المسؤول العام" : `المشرف: ${loggedInSupervisor}`;
+        const title = currentRole === "admin" ? "المهندس / عبدالرحمن مجدي" : `المشرف: ${loggedInSupervisor}`;
         enterDashboard(title);
       }
     });
