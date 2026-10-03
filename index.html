@@ -163,16 +163,28 @@
       margin-bottom: 4px;
       display: block;
     }
-    .hub-main-title {
-      font-size: 26px;
+    
+    /* تنسيق العنوان الرئيسي بنظام إنجليزي فوق وعربي تحته */
+    .hub-main-title-en {
+      font-size: 27px;
       font-weight: 900;
       color: #ffffff;
       margin: 0;
       text-shadow: 0 2px 12px rgba(136, 19, 55, 0.8);
+      letter-spacing: 0.8px;
+      direction: ltr;
+    }
+    .hub-main-title-ar {
+      font-size: 22px;
+      font-weight: 900;
+      color: #fb7185;
+      margin-top: 4px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
       letter-spacing: 0.5px;
     }
+
     .hub-sub-title {
-      font-size: 14px;
+      font-size: 13.5px;
       color: #fecdd3;
       margin-top: 6px;
       font-weight: 700;
@@ -225,7 +237,7 @@
       flex: 1;
     }
 
-    /* تنسيق زر الكارت بنظام سطرين: إنجليزي فوق وعربي تحته */
+    /* أزرار الكروت: سطر إنجليزي وسطر عربي */
     .hub-sheet-btn {
       background: rgba(30, 30, 36, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -647,7 +659,9 @@
 
     <div class="hub-header">
       <span class="hub-crescent-icon">☪</span>
-      <h1 class="hub-main-title">لوحة التحكم والعمليات الموحدة</h1>
+      <!-- العنوان المحدث: إنجليزي فوق وعربي تحته -->
+      <h1 class="hub-main-title-en">Unified Operations &amp; Control Dashboard</h1>
+      <div class="hub-main-title-ar">لوحة التحكم والعمليات الموحدة</div>
       <div class="hub-sub-title">اختر القسم والجدول المطلوب لبدء المتابعة والإدارة اللوجستية</div>
     </div>
 
@@ -975,7 +989,6 @@
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRcAB39S8h26BgnCg3nvho8IIzqDWHzVJj0bJD_w3lDGeZgSwgRjFR2Ba0drZ1CIze/exec";
 
-    // خريطة المسميات الإنجليزية والعربية المطابقة لاختياراتك المعتمدة
     const SHEET_BILINGUAL_META = {
       "Manual Assigned": { en: "Manual Assigned", ar: "الاصين و الاسناد" },
       "Hedcount Mohandssein": { en: "Hedcount Mohandssein", ar: "الهيدكاونت بالكامل" },
@@ -1085,6 +1098,7 @@
       if (userObj && userObj.pass === pass) {
         currentRole = "supervisor";
         loggedInSupervisor = selectedSv;
+        saveSession();
         enterDashboard(`المشرف: ${selectedSv}`);
       } else {
         alert("كلمة المرور غير صحيحة الخاصة بهذا المشرف!");
@@ -1096,9 +1110,19 @@
       if (pass === "boda2002") {
         currentRole = "admin";
         loggedInSupervisor = "";
+        saveSession();
         enterDashboard("المسؤول العام");
       } else {
         alert("كلمة مرور المسؤول غير صحيحة!");
+      }
+    }
+
+    /* حفظ الجلسة في localStorage حتى لا يتم الخروج عند التحديث */
+    function saveSession() {
+      localStorage.setItem('auth_role', currentRole);
+      localStorage.setItem('auth_supervisor', loggedInSupervisor);
+      if (activeSheetTab) {
+        localStorage.setItem('auth_active_tab', activeSheetTab);
       }
     }
 
@@ -1118,12 +1142,22 @@
         if (scopeHeader) scopeHeader.innerText = `إحصائيات مناديب المشرف (${loggedInSupervisor})`;
       }
 
-      openPortalHub();
+      const savedTab = localStorage.getItem('auth_active_tab');
+      if (savedTab && savedTab !== "") {
+        switchPortalTab(savedTab);
+      } else {
+        openPortalHub();
+      }
     }
 
     function logout() {
       currentRole = "";
       loggedInSupervisor = "";
+      activeSheetTab = "";
+      localStorage.removeItem('auth_role');
+      localStorage.removeItem('auth_supervisor');
+      localStorage.removeItem('auth_active_tab');
+
       document.getElementById('portal-nav-bar').classList.add('hidden');
       document.getElementById('portal-hub-view').classList.add('hidden');
       document.getElementById('view-manual-assigned').classList.add('hidden');
@@ -1138,6 +1172,7 @@
 
     function openPortalHub() {
       activeSheetTab = "";
+      localStorage.setItem('auth_active_tab', "");
       document.getElementById('portal-nav-bar').classList.add('hidden');
       document.getElementById('view-manual-assigned').classList.add('hidden');
       document.getElementById('view-generic-portal').classList.add('hidden');
@@ -1159,6 +1194,7 @@
 
     function switchPortalTab(sheetName) {
       activeSheetTab = sheetName;
+      localStorage.setItem('auth_active_tab', sheetName);
 
       const sigBanner = document.getElementById('top-engineer-banner');
       if (sigBanner) sigBanner.classList.add('hidden');
@@ -1723,13 +1759,26 @@
       const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `${activeSheetTab}_${new Date().toISOString().slice(0, 10)}.csv`;
+      const meta = SHEET_BILINGUAL_META[activeSheetTab] || { en: activeSheetTab, ar: "" };
+      a.download = `${meta.en}_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click();
     }
 
+    /* فحص الجلسة عند فتح/تحديث الصفحة */
     window.addEventListener('DOMContentLoaded', () => {
       applyTheme(localStorage.getItem('dashboard_theme') || 'dark');
       initSupervisorLoginDropdown();
+
+      // استعادة الجلسة في حال كان المستخدم مسجلاً بالفعل
+      const savedRole = localStorage.getItem('auth_role');
+      const savedSupervisor = localStorage.getItem('auth_supervisor');
+
+      if (savedRole) {
+        currentRole = savedRole;
+        loggedInSupervisor = savedSupervisor || "";
+        const title = currentRole === "admin" ? "المسؤول العام" : `المشرف: ${loggedInSupervisor}`;
+        enterDashboard(title);
+      }
     });
   </script>
 </body>
