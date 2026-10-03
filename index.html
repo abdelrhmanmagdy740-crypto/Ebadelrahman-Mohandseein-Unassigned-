@@ -313,6 +313,80 @@
     }
     .search-input { min-width: 180px; flex: 2; }
     .filter-select { flex: 1; min-width: 125px; }
+
+    /* مكون الاختيار المتعدد لفلتر الزون */
+    .multiselect-container {
+      position: relative;
+      display: inline-block;
+      min-width: 160px;
+      flex: 1;
+    }
+    .multiselect-btn {
+      width: 100%;
+      padding: 9px 12px;
+      background: var(--input-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 7px;
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: right;
+    }
+    .multiselect-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      left: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 8px;
+      max-height: 250px;
+      overflow-y: auto;
+      z-index: 1050;
+      padding: 6px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+    .multiselect-container.open .multiselect-dropdown {
+      display: block;
+    }
+    .multiselect-actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 6px 8px 6px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 6px;
+    }
+    .multiselect-actions button {
+      background: transparent;
+      border: none;
+      color: #fb7185;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .multiselect-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      color: var(--text-main);
+    }
+    .multiselect-item:hover {
+      background: rgba(136, 19, 55, 0.2);
+    }
+    .multiselect-item input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: #881337;
+    }
     
     .table-container { 
       width: 100%; overflow-x: auto; border-radius: 10px; border: 2px solid var(--table-border); 
@@ -320,7 +394,6 @@
     }
     table { width: 100%; border-collapse: collapse; font-size: 12px; white-space: nowrap; }
 
-    /* 2. الصف الأول الرئيسي لونه أسود ورمادي غامق وخط الكتابة أبيض */
     th { 
       background: linear-gradient(180deg, #09090b 0%, #1c1c22 100%) !important;
       padding: 13px 10px !important;
@@ -351,7 +424,6 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
     }
 
-    /* البادجات المعتمدة */
     .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
     .badge-published { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
     .badge-evaluated { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.4); }
@@ -359,7 +431,6 @@
     .badge-dark-red-highlight { background: #7f1d1d !important; color: #ffffff !important; border: 1px solid #991b1b !important; font-weight: 900; }
     .badge-default { background: var(--bg-inner); color: var(--text-muted); border: 1px solid var(--border-subtle); }
 
-    /* 4. تنسيقات عمود الإفادة الحالية المحددة بدقة */
     .badge-fb-day-green {
       background-color: #14532d !important;
       color: #ffffff !important;
@@ -381,7 +452,7 @@
       box-shadow: 0 2px 5px rgba(127, 29, 29, 0.4);
     }
 
-    /* 5. تنسيقات عمود Vehicle المحددة بدقة */
+    /* 4. تنسيقات Vehicle المحدثة (Starbucks Bike مثل Bike) و (Walker مثل Bicycle) */
     .badge-veh-bicycle {
       background-color: #581c87 !important; /* موف داكن */
       color: #ffffff !important;
@@ -917,7 +988,7 @@
       </div>
     </div>
 
-    <!-- ================== 2. الحاوية الديناميكية لباقي الـ 13 صفحة (مزودة بالفلاتر المتعددة) ================== -->
+    <!-- ================== 2. الحاوية الديناميكية لباقي الـ 13 صفحة (مزودة بالفلاتر الذكية) ================== -->
     <div id="view-generic-portal" class="dashboard-portal-view hidden">
       <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 14px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
@@ -928,14 +999,39 @@
           <button class="btn btn-excel" onclick="exportGenericExcel()">📥 تصدير Excel</button>
         </div>
 
-        <!-- 1. شريط البحث والفلاتر الخمسة للأعمدة المحددة -->
-        <div class="table-header-tools" style="background: var(--bg-inner); padding: 12px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+        <!-- شريط البحث والفلاتر الذكية المطورة -->
+        <div class="table-header-tools" style="background: var(--bg-inner); padding: 12px; border-radius: 10px; border: 1px solid var(--border-subtle); display: flex; gap: 8px; flex-wrap: wrap;">
+          
+          <!-- البحث الشامل -->
           <input type="text" id="generic-search-box" class="search-input" placeholder="🔍 بحث شامل في هذا الجدول..." onkeyup="filterGenericTable()">
-          <select id="gen-filter-zone" class="filter-select" onchange="filterGenericTable()"><option value="all">كل الـ Zone</option></select>
-          <select id="gen-filter-phone" class="filter-select" onchange="filterGenericTable()"><option value="all">كل أرقام الهاتف</option></select>
-          <select id="gen-filter-sv" class="filter-select" onchange="filterGenericTable()"><option value="all">كل المشرفين</option></select>
+          
+          <!-- 1. فلتر الزون اختيار متعدد (Multi-Select) -->
+          <div class="multiselect-container" id="zone-multiselect-box">
+            <button type="button" class="multiselect-btn" onclick="toggleZoneDropdown()">
+              <span id="zone-multiselect-label">كل الـ Zone</span>
+              <span style="font-size: 10px;">▼</span>
+            </button>
+            <div class="multiselect-dropdown" id="zone-dropdown-list">
+              <div class="multiselect-actions">
+                <button type="button" onclick="selectAllZones(true)">تحديد الكل</button>
+                <button type="button" onclick="selectAllZones(false)">إلغاء الكل</button>
+              </div>
+              <div id="zone-checkboxes-container"></div>
+            </div>
+          </div>
+
+          <!-- 2. فلتر رقم الهاتف كحقل بحث (Input Search) -->
+          <input type="text" id="gen-filter-phone" class="search-input" placeholder="📞 بحث برقم الهاتف..." onkeyup="filterGenericTable()" style="min-width: 150px; flex: 1;">
+
+          <!-- 3. المشرف المسؤول (تغييره يفلتر قائمة الإفادة الحالية) -->
+          <select id="gen-filter-sv" class="filter-select" onchange="onSupervisorFilterChange()"><option value="all">كل المشرفين</option></select>
+
+          <!-- 4. الإفادة الحالية (مرتبطة بالمشرف) -->
           <select id="gen-filter-fb" class="filter-select" onchange="filterGenericTable()"><option value="all">كل الإفادة الحالية</option></select>
+
+          <!-- 5. Vehicle -->
           <select id="gen-filter-vehicle" class="filter-select" onchange="filterGenericTable()"><option value="all">كل الـ Vehicle</option></select>
+
         </div>
 
         <div class="table-container">
@@ -991,6 +1087,7 @@
     let activeSheetTab = "";
     let genericSheetData = [];
     let genericSheetHeaders = [];
+    let selectedZonesSet = new Set();
 
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
@@ -1721,20 +1818,19 @@
       a.click();
     }
 
-    /* =================== 3. مولد ألوان المشرفين لتميز كل مشرف عن زميله =================== */
     function getSupervisorDistinctStyle(svName) {
       if (!svName || svName === '-' || svName === '') return '';
       const colors = [
-        { bg: "#1e3a8a", border: "#3b82f6" }, // أزرق كحلي
-        { bg: "#701a75", border: "#d946ef" }, // فوشيا غامق
-        { bg: "#14532d", border: "#22c55e" }, // أخضر غامق
-        { bg: "#7c2d12", border: "#f97316" }, // نحاسي / طوبي
-        { bg: "#0f766e", border: "#14b8a6" }, // تيل / زمردي
-        { bg: "#831843", border: "#f43f5e" }, // وردي داكن
-        { bg: "#312e81", border: "#6366f1" }, // نيلي
-        { bg: "#365314", border: "#84cc16" }, // زيتي
-        { bg: "#581c87", border: "#a855f7" }, // بنفسجي
-        { bg: "#1e293b", border: "#94a3b8" }  // رمادي معدني
+        { bg: "#1e3a8a", border: "#3b82f6" },
+        { bg: "#701a75", border: "#d946ef" },
+        { bg: "#14532d", border: "#22c55e" },
+        { bg: "#7c2d12", border: "#f97316" },
+        { bg: "#0f766e", border: "#14b8a6" },
+        { bg: "#831843", border: "#f43f5e" },
+        { bg: "#312e81", border: "#6366f1" },
+        { bg: "#365314", border: "#84cc16" },
+        { bg: "#581c87", border: "#a855f7" },
+        { bg: "#1e293b", border: "#94a3b8" }
       ];
       
       let hash = 0;
@@ -1769,6 +1865,14 @@
         }
 
         genericSheetHeaders = Object.keys(genericSheetData[0]);
+        
+        // إعادة تهيئة الفلاتر
+        selectedZonesSet.clear();
+        document.getElementById('generic-search-box').value = '';
+        document.getElementById('gen-filter-phone').value = '';
+        document.getElementById('gen-filter-sv').value = 'all';
+        document.getElementById('gen-filter-vehicle').value = 'all';
+
         populateGenericFilterDropdowns();
         renderGenericTable(genericSheetData);
       } catch (err) {
@@ -1779,7 +1883,6 @@
       }
     }
 
-    // دالة مساعدة للبحث عن العمود مهما كان اسمه في الشيت
     function findHeaderKey(candidates) {
       for (let c of candidates) {
         const target = c.toLowerCase().replace(/[\s_\-]/g, '');
@@ -1790,36 +1893,182 @@
       return null;
     }
 
-    /* تعبئة الفلاتر الخمسة لصفحة الهيدكاونت وباقي الشيتات */
-    function populateGenericFilterDropdowns() {
-      const populateSelect = (selectId, candidates, defaultLabel) => {
-        const select = document.getElementById(selectId);
-        if (!select) return;
-        select.innerHTML = `<option value="all">${defaultLabel}</option>`;
-        const hKey = findHeaderKey(candidates);
-        if (!hKey) {
-          select.style.display = 'none';
-          return;
-        }
-        select.style.display = 'inline-block';
-        const vals = new Set();
-        genericSheetData.forEach(r => {
-          const v = (r[hKey] || '').toString().trim();
-          if (v && v !== '-' && v !== '') vals.add(v);
-        });
-        Array.from(vals).sort((a,b)=>a.localeCompare(b, 'ar')).forEach(v => {
-          const opt = document.createElement('option');
-          opt.value = v;
-          opt.innerText = v;
-          select.appendChild(opt);
-        });
-      };
+    /* 1. إدارة قائمة الاختيار المتعدد للزون */
+    function toggleZoneDropdown() {
+      const container = document.getElementById('zone-multiselect-box');
+      if (container) container.classList.toggle('open');
+    }
 
-      populateSelect('gen-filter-zone', ['zone', 'المنطقة', 'الزون'], 'كل الـ Zone');
-      populateSelect('gen-filter-phone', ['رقم التلفون', 'phone', 'الهاتف', 'الموبايل'], 'كل أرقام الهاتف');
-      populateSelect('gen-filter-sv', ['المشرف المسئول', 'المشرف', 'sv', 's.v', 'المشرف (s.v)'], 'كل المشرفين');
-      populateSelect('gen-filter-fb', ['الافادة الحالية', 'الإفادة الحالية', 'feedback', 'fedback', 'الافادة', 'الإفادة'], 'كل الإفادة الحالية');
-      populateSelect('gen-filter-vehicle', ['vehicle', 'المركبة', 'نوع المركبة'], 'كل الـ Vehicle');
+    // إغلاق قائمة الزون عند النقر خارجها
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('zone-multiselect-box');
+      if (container && !container.contains(e.target)) {
+        container.classList.remove('open');
+      }
+    });
+
+    function updateZoneMultiselectLabel() {
+      const label = document.getElementById('zone-multiselect-label');
+      if (!label) return;
+      if (selectedZonesSet.size === 0) {
+        label.innerText = 'كل الـ Zone';
+      } else if (selectedZonesSet.size === 1) {
+        label.innerText = Array.from(selectedZonesSet)[0];
+      } else {
+        label.innerText = `تم اختيار (${selectedZonesSet.size}) زون`;
+      }
+    }
+
+    function selectAllZones(select) {
+      const checkboxes = document.querySelectorAll('#zone-checkboxes-container input[type="checkbox"]');
+      selectedZonesSet.clear();
+      checkboxes.forEach(cb => {
+        cb.checked = select;
+        if (select) selectedZonesSet.add(cb.value);
+      });
+      updateZoneMultiselectLabel();
+      filterGenericTable();
+    }
+
+    function onZoneCheckboxChange(cb) {
+      if (cb.checked) {
+        selectedZonesSet.add(cb.value);
+      } else {
+        selectedZonesSet.delete(cb.value);
+      }
+      updateZoneMultiselectLabel();
+      filterGenericTable();
+    }
+
+    /* تعبئة الفلاتر المحدثة */
+    function populateGenericFilterDropdowns() {
+      // 1. ملء قائمة الزون للاختيار المتعدد
+      const zoneKey = findHeaderKey(['zone', 'المنطقة', 'الزون']);
+      const zoneBox = document.getElementById('zone-multiselect-box');
+      const zoneContainer = document.getElementById('zone-checkboxes-container');
+      
+      if (!zoneKey) {
+        if (zoneBox) zoneBox.style.display = 'none';
+      } else {
+        if (zoneBox) zoneBox.style.display = 'inline-block';
+        if (zoneContainer) {
+          zoneContainer.innerHTML = '';
+          const zones = new Set();
+          genericSheetData.forEach(r => {
+            const v = (r[zoneKey] || '').toString().trim();
+            if (v && v !== '-' && v !== '') zones.add(v);
+          });
+          Array.from(zones).sort((a,b)=>a.localeCompare(b, 'ar')).forEach(z => {
+            const label = document.createElement('label');
+            label.className = 'multiselect-item';
+            label.innerHTML = `
+              <input type="checkbox" value="${z}" onchange="onZoneCheckboxChange(this)">
+              <span>${z}</span>
+            `;
+            zoneContainer.appendChild(label);
+          });
+          updateZoneMultiselectLabel();
+        }
+      }
+
+      // 2. إظهار/إخفاء حقل بحث الهاتف
+      const phoneKey = findHeaderKey(['رقم التلفون', 'phone', 'الهاتف', 'الموبايل']);
+      const phoneInput = document.getElementById('gen-filter-phone');
+      if (phoneInput) phoneInput.style.display = phoneKey ? 'inline-block' : 'none';
+
+      // 3. ملء المشرفين
+      const svKey = findHeaderKey(['المشرف المسئول', 'المشرف', 'sv', 's.v', 'المشرف (s.v)']);
+      const svSelect = document.getElementById('gen-filter-sv');
+      if (svSelect) {
+        if (!svKey) {
+          svSelect.style.display = 'none';
+        } else {
+          svSelect.style.display = 'inline-block';
+          svSelect.innerHTML = '<option value="all">كل المشرفين</option>';
+          const svs = new Set();
+          genericSheetData.forEach(r => {
+            const v = (r[svKey] || '').toString().trim();
+            if (v && v !== '-' && v !== '') svs.add(v);
+          });
+          Array.from(svs).sort((a,b)=>a.localeCompare(b, 'ar')).forEach(sv => {
+            const opt = document.createElement('option');
+            opt.value = sv;
+            opt.innerText = sv;
+            svSelect.appendChild(opt);
+          });
+        }
+      }
+
+      // 4. ملء الإفادة الحالية لأول مرة
+      updateFeedbackDropdownOptions('all');
+
+      // 5. ملء قائمة الـ Vehicle
+      const vehKey = findHeaderKey(['vehicle', 'المركبة', 'نوع المركبة']);
+      const vehSelect = document.getElementById('gen-filter-vehicle');
+      if (vehSelect) {
+        if (!vehKey) {
+          vehSelect.style.display = 'none';
+        } else {
+          vehSelect.style.display = 'inline-block';
+          vehSelect.innerHTML = '<option value="all">كل الـ Vehicle</option>';
+          const vehs = new Set();
+          genericSheetData.forEach(r => {
+            const v = (r[vehKey] || '').toString().trim();
+            if (v && v !== '-' && v !== '') vehs.add(v);
+          });
+          Array.from(vehs).sort((a,b)=>a.localeCompare(b, 'ar')).forEach(veh => {
+            const opt = document.createElement('option');
+            opt.value = veh;
+            opt.innerText = veh;
+            vehSelect.appendChild(opt);
+          });
+        }
+      }
+    }
+
+    /* 3. تحديث خيارات الإفادة الحالية حسب المشرف المختار (Dependent Filter) */
+    function updateFeedbackDropdownOptions(selectedSv) {
+      const fbKey = findHeaderKey(['الافادة الحالية', 'الإفادة الحالية', 'feedback', 'fedback', 'الافادة', 'الإفادة']);
+      const svKey = findHeaderKey(['المشرف المسئول', 'المشرف', 'sv', 's.v', 'المشرف (s.v)']);
+      const fbSelect = document.getElementById('gen-filter-fb');
+      if (!fbSelect) return;
+
+      if (!fbKey) {
+        fbSelect.style.display = 'none';
+        return;
+      }
+
+      fbSelect.style.display = 'inline-block';
+      const curVal = fbSelect.value;
+      fbSelect.innerHTML = '<option value="all">كل الإفادة الحالية</option>';
+
+      const fbs = new Set();
+      genericSheetData.forEach(r => {
+        const rowSv = svKey ? (r[svKey] || '').toString().trim() : '';
+        if (selectedSv === 'all' || rowSv === selectedSv) {
+          const v = (r[fbKey] || '').toString().trim();
+          if (v && v !== '-' && v !== '') fbs.add(v);
+        }
+      });
+
+      Array.from(fbs).sort((a,b)=>a.localeCompare(b, 'ar')).forEach(fb => {
+        const opt = document.createElement('option');
+        opt.value = fb;
+        opt.innerText = fb;
+        fbSelect.appendChild(opt);
+      });
+
+      if (fbs.has(curVal)) {
+        fbSelect.value = curVal;
+      } else {
+        fbSelect.value = 'all';
+      }
+    }
+
+    function onSupervisorFilterChange() {
+      const selectedSv = document.getElementById('gen-filter-sv').value;
+      updateFeedbackDropdownOptions(selectedSv);
+      filterGenericTable();
     }
 
     function renderGenericCellContent(colName, val) {
@@ -1827,17 +2076,17 @@
       const col = colName.toLowerCase().replace(/[\s_\-]/g, '');
       const lowerVal = cleanVal.toLowerCase();
 
-      // 5. تلوين عمود Vehicle
+      // 4. Vehicle: تلوين (Starbucks Bike مثل Bike) و (Walker مثل Bicycle)
       if (col === 'vehicle' || col === 'المركبة') {
-        if (lowerVal.includes('bicycle')) {
+        if (lowerVal.includes('bicycle') || lowerVal.includes('walker')) {
           return `<span class="badge-veh-bicycle">${cleanVal}</span>`;
         }
-        if (lowerVal.includes('bike')) {
+        if (lowerVal.includes('starbucks bike') || lowerVal.includes('starbucks') || lowerVal.includes('bike')) {
           return `<span class="badge-veh-bike">${cleanVal}</span>`;
         }
       }
 
-      // 4. تلوين عمود الإفادة الحالية
+      // الإفادة الحالية
       if (col.includes('افادة') || col.includes('إفادة') || col.includes('feedback')) {
         if (lowerVal.includes('day by day') || lowerVal === 'day') {
           return `<span class="badge-fb-day-green">${cleanVal}</span>`;
@@ -1847,7 +2096,7 @@
         }
       }
 
-      // 3. تلوين عمود المشرف المسئول بتمييز خلفية كل مشرف بلون مختلف
+      // المشرف المسئول
       if (col.includes('مشرف') || col === 'sv') {
         if (cleanVal && cleanVal !== '-') {
           return `<span style="${getSupervisorDistinctStyle(cleanVal)}">${cleanVal}</span>`;
@@ -1865,7 +2114,6 @@
 
       document.getElementById('generic-tab-count').innerText = `إجمالي السجلات: ${rows.length}`;
 
-      // رسم الهيدر: أسود ورمادي غامق وخط أبيض
       const trHead = document.createElement('tr');
       trHead.innerHTML = '<th style="width: 50px;">#</th>';
       genericSheetHeaders.forEach(h => {
@@ -1886,12 +2134,10 @@
       });
     }
 
-    /* فلترة الجدول الشاملة مع ربط الفلاتر الخمسة ومربع البحث */
+    /* فلترة الجدول الشاملة مع تفعيل الخيارات الجديدة */
     function filterGenericTable() {
       const q = document.getElementById('generic-search-box').value.trim().toLowerCase();
-      
-      const zoneVal = document.getElementById('gen-filter-zone').value;
-      const phoneVal = document.getElementById('gen-filter-phone').value;
+      const phoneSearch = document.getElementById('gen-filter-phone').value.trim().toLowerCase();
       const svVal = document.getElementById('gen-filter-sv').value;
       const fbVal = document.getElementById('gen-filter-fb').value;
       const vehVal = document.getElementById('gen-filter-vehicle').value;
@@ -1903,16 +2149,31 @@
       const vehKey = findHeaderKey(['vehicle', 'المركبة', 'نوع المركبة']);
 
       const filtered = genericSheetData.filter(row => {
-        // فحص البحث العام
+        // 1. بحث شامل
         const matchSearch = !q || genericSheetHeaders.some(h => {
           return String(row[h] || '').toLowerCase().includes(q);
         });
 
-        // فحص الفلاتر الخمسة
-        const matchZone = (zoneVal === 'all') || (zoneKey && String(row[zoneKey] || '').trim() === zoneVal);
-        const matchPhone = (phoneVal === 'all') || (phoneKey && String(row[phoneKey] || '').trim() === phoneVal);
+        // 2. فلتر الزون اختيار متعدد
+        let matchZone = true;
+        if (selectedZonesSet.size > 0 && zoneKey) {
+          const rowZone = String(row[zoneKey] || '').trim();
+          matchZone = selectedZonesSet.has(rowZone);
+        }
+
+        // 3. فلتر رقم الهاتف كحقل بحث
+        let matchPhone = true;
+        if (phoneSearch && phoneKey) {
+          matchPhone = String(row[phoneKey] || '').toLowerCase().includes(phoneSearch);
+        }
+
+        // 4. المشرف المسئول
         const matchSv = (svVal === 'all') || (svKey && String(row[svKey] || '').trim() === svVal);
+
+        // 5. الإفادة الحالية
         const matchFb = (fbVal === 'all') || (fbKey && String(row[fbKey] || '').trim() === fbVal);
+
+        // 6. Vehicle
         const matchVeh = (vehVal === 'all') || (vehKey && String(row[vehKey] || '').trim() === vehVal);
 
         return matchSearch && matchZone && matchPhone && matchSv && matchFb && matchVeh;
