@@ -92,14 +92,137 @@
       border: 1px solid var(--border-subtle); padding: 6px 12px; border-radius: 6px; white-space: nowrap;
     }
 
-    /* شريط القوائم المصنفة (Dropdown Categories Navbar) */
+    /* ================= شاشة البوابة الرئيسية (خلفية علم السلطنة التركية) ================= */
+    #portal-hub-view {
+      position: relative;
+      min-height: calc(100vh - 70px);
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      /* خلفية علم السلطنة التركية الإمبراطوري المتدرج مع طبقة تعتيم لحفظ وضوح المحتوى */
+      background: 
+        radial-gradient(circle at center, rgba(10, 2, 4, 0.78) 0%, rgba(5, 5, 5, 0.96) 100%),
+        radial-gradient(circle at 50% 30%, rgba(200, 16, 46, 0.35) 0%, rgba(120, 10, 25, 0.15) 70%),
+        url("https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_the_Ottoman_Empire_%281844%E2%80%931922%29.svg") center/cover no-repeat;
+      background-attachment: fixed;
+    }
+
+    .hub-header {
+      text-align: center;
+      margin-bottom: 35px;
+      position: relative;
+      z-index: 2;
+    }
+    .hub-crescent-icon {
+      font-size: 40px;
+      color: #fbbf24;
+      text-shadow: 0 0 25px rgba(251, 191, 36, 0.6);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .hub-main-title {
+      font-size: 32px;
+      font-weight: 900;
+      color: #ffffff;
+      margin: 0;
+      text-shadow: 0 2px 12px rgba(136, 19, 55, 0.8);
+      letter-spacing: 0.5px;
+    }
+    .hub-sub-title {
+      font-size: 15px;
+      color: #fecdd3;
+      margin-top: 8px;
+      font-weight: 700;
+    }
+
+    .hub-categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1500px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hub-category-card {
+      background: rgba(20, 20, 24, 0.85);
+      border: 1px solid rgba(136, 19, 55, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 18px;
+      padding: 22px 20px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .hub-category-card:hover {
+      transform: translateY(-5px);
+      border-color: #fb7185;
+      box-shadow: 0 14px 45px rgba(136, 19, 55, 0.4);
+    }
+
+    .hub-cat-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 15px;
+    }
+
+    .hub-sheets-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .hub-sheet-btn {
+      background: rgba(30, 30, 36, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e4e4e7;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+    .hub-sheet-btn:hover {
+      background: linear-gradient(90deg, #881337 0%, #9f1239 100%);
+      color: #ffffff;
+      border-color: #fb7185;
+      padding-right: 18px;
+      box-shadow: 0 4px 15px rgba(136, 19, 55, 0.5);
+    }
+    .hub-sheet-btn .arrow-icon {
+      font-size: 12px;
+      color: #fb7185;
+      transition: transform 0.2s ease;
+    }
+    .hub-sheet-btn:hover .arrow-icon {
+      color: #ffffff;
+      transform: translateX(-4px);
+    }
+
+    /* شريط القوائم المصنفة (داخل صفحات الجداول فقط) */
     .portal-categories-bar {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-subtle);
       padding: 8px 20px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
       position: sticky;
       top: 66px;
@@ -107,105 +230,57 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
-    .cat-dropdown {
-      position: relative;
-      display: inline-block;
-    }
-
-    .cat-btn {
-      background: var(--bg-inner);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-      padding: 8px 14px;
+    .btn-return-hub {
+      background: linear-gradient(135deg, #881337, #9f1239);
+      color: #ffffff;
+      border: 1px solid #fb7185;
+      padding: 7px 14px;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 800;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .cat-btn:hover, .cat-dropdown:hover .cat-btn {
-      background: rgba(136, 19, 55, 0.2);
-      border-color: var(--border-accent);
-      color: #ffffff;
-    }
-
-    .cat-btn.has-active {
-      border-color: var(--orange-accent);
-      background: linear-gradient(135deg, rgba(136, 19, 55, 0.4), rgba(159, 18, 57, 0.2));
-      color: #fb7185;
-    }
-
-    .cat-menu {
-      display: none;
-      position: absolute;
-      top: calc(100% + 4px);
-      right: 0;
-      background: var(--bg-card);
-      min-width: 260px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      border: 1px solid var(--border-accent);
-      border-radius: 10px;
-      z-index: 1000;
-      overflow: hidden;
-      padding: 6px 0;
-    }
-
-    .cat-dropdown:hover .cat-menu {
-      display: block;
-    }
-
-    .cat-item-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      padding: 10px 16px;
-      text-align: right;
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .cat-item-btn:hover {
-      background: rgba(136, 19, 55, 0.25);
-      color: #ffffff;
-      padding-right: 20px;
-    }
-
-    .cat-item-btn.active-item {
-      background: linear-gradient(90deg, rgba(136, 19, 55, 0.5) 0%, rgba(159, 18, 57, 0.3) 100%);
-      color: #ffffff;
-      font-weight: 900;
-      border-right: 4px solid #fb7185;
-    }
-
-    .current-active-badge {
-      margin-right: auto;
-      background: var(--bg-inner);
-      border: 1px solid var(--border-accent);
-      color: #fb7185;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 800;
       display: inline-flex;
       align-items: center;
       gap: 6px;
     }
+    .btn-return-hub:hover {
+      background: #e11d48;
+    }
+
+    .cat-dropdown { position: relative; display: inline-block; }
+    .cat-btn {
+      background: var(--bg-inner); border: 1px solid var(--border-subtle); color: var(--text-main);
+      padding: 7px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 800; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .cat-btn:hover, .cat-dropdown:hover .cat-btn { background: rgba(136, 19, 55, 0.2); border-color: var(--border-accent); color: #fff; }
+    .cat-btn.has-active { border-color: var(--orange-accent); background: rgba(136, 19, 55, 0.3); color: #fb7185; }
+
+    .cat-menu {
+      display: none; position: absolute; top: calc(100% + 4px); right: 0; background: var(--bg-card);
+      min-width: 250px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 1px solid var(--border-accent);
+      border-radius: 10px; z-index: 1000; overflow: hidden; padding: 6px 0;
+    }
+    .cat-dropdown:hover .cat-menu { display: block; }
+    .cat-item-btn {
+      display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 16px;
+      text-align: right; background: transparent; border: none; color: var(--text-muted); font-size: 13px;
+      font-weight: 700; cursor: pointer;
+    }
+    .cat-item-btn:hover { background: rgba(136, 19, 55, 0.25); color: #fff; padding-right: 20px; }
+    .cat-item-btn.active-item {
+      background: linear-gradient(90deg, rgba(136, 19, 55, 0.5) 0%, rgba(159, 18, 57, 0.3) 100%);
+      color: #fff; font-weight: 900; border-right: 4px solid #fb7185;
+    }
+
+    .current-active-badge {
+      margin-right: auto; background: var(--bg-inner); border: 1px solid var(--border-accent);
+      color: #fb7185; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
 
     .container { width: 98%; max-width: 1800px; margin: 15px auto; padding: 0 10px; }
-    .card {
-      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px;
-      padding: 20px; margin-bottom: 20px; box-shadow: var(--card-shadow);
-    }
+    .card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 20px; margin-bottom: 20px; box-shadow: var(--card-shadow); }
 
     /* تسجيل الدخول */
     .auth-wrapper {
@@ -214,10 +289,7 @@
     }
     .login-brand-logo { width: 115px; height: 115px; border-radius: 50%; border: 3px solid var(--border-accent); object-fit: cover; margin-bottom: 12px; }
     .auth-title { margin: 0 0 8px 0; font-size: 24px; font-weight: 900; color: var(--text-main); }
-    .signature-text {
-      text-align: center; color: #fb7185; font-family: 'Caveat', cursive, sans-serif;
-      font-size: 21px; margin-bottom: 22px; direction: ltr; font-weight: 700;
-    }
+    .signature-text { text-align: center; color: #fb7185; font-family: 'Caveat', cursive, sans-serif; font-size: 21px; margin-bottom: 22px; direction: ltr; font-weight: 700; }
     .form-group { margin-bottom: 18px; text-align: right; }
     .form-group label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 700; }
     select.custom-login-field, input.custom-pass-input {
@@ -225,9 +297,8 @@
       border-radius: 8px; color: var(--text-main); font-size: 14px; font-weight: 600; outline: none;
     }
     .btn-login-action {
-      background: linear-gradient(135deg, var(--border-accent), #e11d48);
-      color: #ffffff; width: 100%; padding: 13px; font-size: 16px; font-weight: 900;
-      border-radius: 8px; border: none; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 15px rgba(136, 19, 55, 0.4);
+      background: linear-gradient(135deg, var(--border-accent), #e11d48); color: #fff; width: 100%; padding: 13px;
+      font-size: 16px; font-weight: 900; border-radius: 8px; border: none; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 15px rgba(136, 19, 55, 0.4);
     }
     .switch-link { text-align: center; margin-top: 18px; }
     .switch-link a { color: #fb7185; text-decoration: none; font-size: 13px; font-weight: 700; cursor: pointer; }
@@ -244,10 +315,7 @@
       padding: 8px 14px; background: var(--bg-inner); border-radius: 8px; border-right: 4px solid var(--border-accent); flex-wrap: wrap; gap: 8px;
     }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-    .stat-card {
-      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px;
-      padding: 14px 16px; border-right: 4px solid var(--border-accent); box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
+    .stat-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 14px 16px; border-right: 4px solid var(--border-accent); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     .stat-val { font-size: 23px; font-weight: 900; color: var(--text-main); margin-top: 4px; }
     .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 700; }
 
@@ -257,10 +325,7 @@
       display: flex; align-items: center; gap: 8px; background: var(--bg-inner); padding: 8px 14px; border-radius: 8px; border-right: 4px solid var(--border-accent);
     }
     .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
-    .zone-column-card {
-      background: var(--bg-card); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column;
-      border: 1px solid var(--border-subtle); box-shadow: var(--card-shadow);
-    }
+    .zone-column-card { background: var(--bg-card); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--border-subtle); box-shadow: var(--card-shadow); }
     .zone-card-header { background: var(--bg-inner); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); }
     .zone-total-rate { padding: 2px 7px; border-radius: 4px; font-weight: 800; font-size: 12px; }
     .zone-table-container { width: 100%; overflow-x: auto; }
@@ -342,6 +407,7 @@
 
       <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
         <span id="last-update-time" class="last-update-tag">🕒 جاري جلب وقت التحديث...</span>
+        <button class="btn btn-outline" onclick="openPortalHub()">🏠 القائمة الرئيسية</button>
         <button class="btn btn-outline" onclick="refreshCurrentTab()">🔄 تحديث البيانات</button>
         <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 700; color: #fb7185;"></span>
         <button class="btn btn-outline" onclick="logout()">خروج</button>
@@ -349,23 +415,22 @@
     </div>
   </header>
 
-  <!-- شريط القوائم المصنفة الـ 5 المعتمد -->
+  <!-- شريط القوائم المصنفة (يظهر فقط أثناء استعراض الجداول) -->
   <nav id="portal-nav-bar" class="portal-categories-bar hidden">
+    <button class="btn-return-hub" onclick="openPortalHub()">🏠 القائمة الرئيسية</button>
 
     <!-- 1. عمليات الإسناد والتوزيع -->
     <div class="cat-dropdown">
-      <button class="cat-btn has-active" id="btn-cat-assign">
+      <button class="cat-btn" id="btn-cat-assign">
         <span>🛵 عمليات الإسناد والتوزيع</span>
         <span>▼</span>
       </button>
       <div class="cat-menu">
-        <button class="cat-item-btn active-item" onclick="switchPortalTab('Manual Assigned')">
-          <span>📋 Manual Assigned</span>
-          <span style="font-size:10px;">●</span>
+        <button class="cat-item-btn" onclick="switchPortalTab('Manual Assigned')">
+          <span>📋 Manual Assigned</span><span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Hedcount Mohandssein')">
-          <span>👥 Hedcount Mohandssein</span>
-          <span style="font-size:10px;">●</span>
+          <span>👥 Hedcount Mohandssein</span><span style="font-size:10px;">●</span>
         </button>
       </div>
     </div>
@@ -378,20 +443,16 @@
       </button>
       <div class="cat-menu">
         <button class="cat-item-btn" onclick="switchPortalTab('Rider\'s daliy performance')">
-          <span>⏱️ Daily performance</span>
-          <span style="font-size:10px;">●</span>
+          <span>⏱️ Daily performance</span><span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Rider\'s monthly performance')">
-          <span>📅 Monthly performance</span>
-          <span style="font-size:10px;">●</span>
+          <span>📅 Monthly performance</span><span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Contract Follow up')">
-          <span>📝 Contract Follow up</span>
-          <span style="font-size:10px;">●</span>
+          <span>📝 Contract Follow up</span><span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Report on cancelled orders')">
-          <span>❌ Cancelled orders</span>
-          <span style="font-size:10px;">●</span>
+          <span>❌ Cancelled orders</span><span style="font-size:10px;">●</span>
         </button>
       </div>
     </div>
@@ -404,12 +465,10 @@
       </button>
       <div class="cat-menu">
         <button class="cat-item-btn" onclick="switchPortalTab('New rider\'s accounts')">
-          <span>✨ New rider accounts</span>
-          <span style="font-size:10px;">●</span>
+          <span>✨ New rider accounts</span><span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Reactivation rider\'s accounts')">
-          <span>🔄 Reactivation accounts</span>
-          <span style="font-size:10px;">●</span>
+          <span>🔄 Reactivation accounts</span><span style="font-size:10px;">●</span>
         </button>
       </div>
     </div>
@@ -422,12 +481,10 @@
       </button>
       <div class="cat-menu">
         <button class="cat-item-btn" onclick="switchPortalTab('Wallet details')">
-          <span>💰 Wallet details</span>
-          <span style="font-size:10px;">●</span>
+          <span>💰 Wallet details</span><span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Equipment')">
-          <span>🪖 Equipment</span>
-          <span style="font-size:10px;">●</span>
+          <span>🪖 Equipment</span><span style="font-size:10px;">●</span>
         </button>
       </div>
     </div>
@@ -440,31 +497,144 @@
       </button>
       <div class="cat-menu">
         <button class="cat-item-btn" onclick="switchPortalTab('Security Inquiry')">
-          <span>🛡️ Security Inquiry</span>
-          <span style="font-size:10px;">●</span>
+          <span>🛡️ Security Inquiry</span><span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Actions & Coaching')">
-          <span>🎯 Actions & Coaching</span>
-          <span style="font-size:10px;">●</span>
+          <span>🎯 Actions & Coaching</span><span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Legal Settlements')">
-          <span>⚖️ Legal Settlements</span>
-          <span style="font-size:10px;">●</span>
+          <span>⚖️ Legal Settlements</span><span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Invalid hiring')">
-          <span>⚠️ Invalid hiring</span>
-          <span style="font-size:10px;">●</span>
+          <span>⚠️ Invalid hiring</span><span style="font-size:10px;">●</span>
         </button>
       </div>
     </div>
 
-    <!-- بادج الشيت المفتوح حالياً -->
     <div class="current-active-badge">
       <span>الصفحة الحالية:</span>
       <span id="active-sheet-indicator">Manual Assigned</span>
     </div>
-
   </nav>
+
+  <!-- ================== الواجهة الرئيسية بعد تسجيل الدخول (بوابة الأقسام) ================== -->
+  <div id="portal-hub-view" class="hidden">
+    <div class="hub-header">
+      <span class="hub-crescent-icon">☪</span>
+      <h1 class="hub-main-title">لوحة التحكم والعمليات الموحدة</h1>
+      <div class="hub-sub-title">اختر القسم والجدول المطلوب لبدء المتابعة والإدارة اللوجستية</div>
+    </div>
+
+    <div class="hub-categories-grid">
+
+      <!-- 1. عمليات الإسناد والتوزيع[cite: 19] -->
+      <div class="hub-category-card">
+        <div class="hub-cat-title">
+          <span>🛵</span>
+          <span>عمليات الإسناد والتوزيع</span>
+        </div>
+        <div class="hub-sheets-list">
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Manual Assigned')">
+            <span>📋 Manual Assigned</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Hedcount Mohandssein')">
+            <span>👥 Hedcount Mohandssein</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. الأداء والعمليات[cite: 19] -->
+      <div class="hub-category-card">
+        <div class="hub-cat-title">
+          <span>📈</span>
+          <span>الأداء والعمليات</span>
+        </div>
+        <div class="hub-sheets-list">
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Rider\'s daliy performance')">
+            <span>⏱️ Rider's daliy performance</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Rider\'s monthly performance')">
+            <span>📅 Rider's monthly performance</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Contract Follow up')">
+            <span>📝 Contract Follow up</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Report on cancelled orders')">
+            <span>❌ Report on cancelled orders</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. التعيينات والحسابات[cite: 19] -->
+      <div class="hub-category-card">
+        <div class="hub-cat-title">
+          <span>👥</span>
+          <span>التعيينات والحسابات</span>
+        </div>
+        <div class="hub-sheets-list">
+          <button class="hub-sheet-btn" onclick="switchPortalTab('New rider\'s accounts')">
+            <span>✨ New rider's accounts</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Reactivation rider\'s accounts')">
+            <span>🔄 Reactivation rider's accounts</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. الشؤون الإدارية والمالية[cite: 19] -->
+      <div class="hub-category-card">
+        <div class="hub-cat-title">
+          <span>💼</span>
+          <span>الشؤون الإدارية والمالية</span>
+        </div>
+        <div class="hub-sheets-list">
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Wallet details')">
+            <span>💰 Wallet details</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Equipment')">
+            <span>🪖 Equipment</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 5. الجودة والأمان[cite: 19] -->
+      <div class="hub-category-card">
+        <div class="hub-cat-title">
+          <span>⚖️</span>
+          <span>الجودة والأمان</span>
+        </div>
+        <div class="hub-sheets-list">
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Security Inquiry')">
+            <span>🛡️️ Security Inquiry</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Actions & Coaching')">
+            <span>🎯 Actions & Coaching</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Legal Settlements')">
+            <span>⚖️ Legal Settlements</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Invalid hiring')">
+            <span>⚠️ Invalid hiring</span>
+            <span class="arrow-icon">◀</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <div class="container">
 
@@ -655,7 +825,7 @@
     let ridersData = [];
     let currentRole = "";
     let loggedInSupervisor = "";
-    let activeSheetTab = "Manual Assigned";
+    let activeSheetTab = "";
     let genericSheetData = [];
     let genericSheetHeaders = [];
 
@@ -749,7 +919,6 @@
     function enterDashboard(title) {
       document.getElementById('office-login-box').classList.add('hidden');
       document.getElementById('admin-login-box').classList.add('hidden');
-      document.getElementById('portal-nav-bar').classList.remove('hidden');
       document.getElementById('user-pill').classList.remove('hidden');
       document.getElementById('current-user-name').innerText = "👤 " + title;
 
@@ -763,13 +932,15 @@
         if (scopeHeader) scopeHeader.innerText = `إحصائيات مناديب المشرف (${loggedInSupervisor})`;
       }
 
-      switchPortalTab('Manual Assigned');
+      // بعد تسجيل الدخول مباشرة يتم فتح البوابة الرئيسية (Portal Hub)
+      openPortalHub();
     }
 
     function logout() {
       currentRole = "";
       loggedInSupervisor = "";
       document.getElementById('portal-nav-bar').classList.add('hidden');
+      document.getElementById('portal-hub-view').classList.add('hidden');
       document.getElementById('view-manual-assigned').classList.add('hidden');
       document.getElementById('view-generic-portal').classList.add('hidden');
       document.getElementById('user-pill').classList.add('hidden');
@@ -778,34 +949,44 @@
       showOfficeLogin();
     }
 
+    /* دالة فتح الواجهة الترحيبية للأقسام الخمسة */
+    function openPortalHub() {
+      activeSheetTab = "";
+      document.getElementById('portal-nav-bar').classList.add('hidden');
+      document.getElementById('view-manual-assigned').classList.add('hidden');
+      document.getElementById('view-generic-portal').classList.add('hidden');
+      document.getElementById('portal-hub-view').classList.remove('hidden');
+    }
+
     function refreshCurrentTab() {
-      if (activeSheetTab === 'Manual Assigned') {
+      if (!activeSheetTab || activeSheetTab === "") {
+        openPortalHub();
+      } else if (activeSheetTab === 'Manual Assigned') {
         fetchManualAssignedData();
       } else {
         fetchGenericSheetData(activeSheetTab);
       }
     }
 
-    /* =================== التنقل بين التبويبات المنسدلة =================== */
+    /* التنقل إلى أي شيت مختار من البوابة أو من القوائم */
     function switchPortalTab(sheetName) {
       activeSheetTab = sheetName;
 
-      // تحديث البادج العلوي
+      // إخفاء الواجهة الترحيبية وإظهار بار التنقل العلوي
+      document.getElementById('portal-hub-view').classList.add('hidden');
+      document.getElementById('portal-nav-bar').classList.remove('hidden');
+
       const indicator = document.getElementById('active-sheet-indicator');
       if (indicator) indicator.innerText = sheetName;
 
-      // تحديث تمييز الأزرار داخل القوائم
       document.querySelectorAll('.cat-item-btn').forEach(btn => {
         btn.classList.toggle('active-item', btn.innerText.includes(sheetName));
       });
 
-      // تحديد الزر الرئيسي المفتوح منه الشيت الحالي
       document.querySelectorAll('.cat-dropdown').forEach(dropdown => {
         const catBtn = dropdown.querySelector('.cat-btn');
         const hasActiveItem = dropdown.querySelector('.cat-item-btn.active-item');
-        if (catBtn) {
-          catBtn.classList.toggle('has-active', !!hasActiveItem);
-        }
+        if (catBtn) catBtn.classList.toggle('has-active', !!hasActiveItem);
       });
 
       if (sheetName === 'Manual Assigned') {
@@ -1305,7 +1486,6 @@
 
       document.getElementById('generic-tab-count').innerText = `إجمالي السجلات: ${rows.length}`;
 
-      // رسم عناوين الأعمدة
       const trHead = document.createElement('tr');
       trHead.innerHTML = '<th style="width: 50px;">#</th>';
       genericSheetHeaders.forEach(h => {
@@ -1313,7 +1493,6 @@
       });
       thead.appendChild(trHead);
 
-      // رسم الصفوف
       rows.forEach((row, idx) => {
         const tr = document.createElement('tr');
         let colsHtml = `<td>${idx + 1}</td>`;
