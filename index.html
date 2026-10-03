@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mohandiseen 3PLs-Dashboard | بوابة العمليات اللوجستية بمناطق المهندسين</title>
+  <title>Mohandiseen 3PLs-Dashboard | بوابة العمليات اللوجستية</title>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
     /* 1. السمة الليلية: الأسود + الأبيض + الرمادي الغامق + النبيتي */
@@ -124,7 +124,6 @@
       background-attachment: fixed;
     }
 
-    /* بنر الآية الكريمة فقط */
     .quran-header-banner {
       text-align: center;
       margin-bottom: 22px;
@@ -181,10 +180,10 @@
 
     .hub-categories-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
       gap: 18px;
       width: 100%;
-      max-width: 1500px;
+      max-width: 1550px;
       position: relative;
       z-index: 2;
     }
@@ -222,23 +221,23 @@
     .hub-sheets-list {
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 10px;
       flex: 1;
     }
 
+    /* تنسيق زر الكارت بنظام سطرين: إنجليزي فوق وعربي تحته */
     .hub-sheet-btn {
       background: rgba(30, 30, 36, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #e4e4e7;
+      color: #ffffff;
       padding: 10px 14px;
       border-radius: 10px;
-      font-size: 13px;
-      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
       transition: all 0.2s ease;
+      text-align: right;
     }
     .hub-sheet-btn:hover {
       background: linear-gradient(90deg, #881337 0%, #9f1239 100%);
@@ -247,10 +246,29 @@
       padding-right: 18px;
       box-shadow: 0 4px 15px rgba(136, 19, 55, 0.5);
     }
+    .btn-title-en {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+    }
+    .btn-title-ar {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #fb7185;
+      margin-top: 2px;
+    }
+    .hub-sheet-btn:hover .btn-title-ar {
+      color: #fecdd3;
+    }
+
     .hub-sheet-btn .arrow-icon {
       font-size: 12px;
       color: #fb7185;
       transition: transform 0.2s ease;
+      margin-left: 4px;
     }
     .hub-sheet-btn:hover .arrow-icon {
       color: #ffffff;
@@ -285,9 +303,7 @@
       align-items: center;
       gap: 6px;
     }
-    .btn-return-hub:hover {
-      background: #e11d48;
-    }
+    .btn-return-hub:hover { background: #e11d48; }
 
     .cat-dropdown { position: relative; display: inline-block; }
     .cat-btn {
@@ -300,20 +316,21 @@
 
     .cat-menu {
       display: none; position: absolute; top: calc(100% + 4px); right: 0; background: var(--bg-card);
-      min-width: 250px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 1px solid var(--border-accent);
+      min-width: 290px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 1px solid var(--border-accent);
       border-radius: 10px; z-index: 1000; overflow: hidden; padding: 6px 0;
     }
     .cat-dropdown:hover .cat-menu { display: block; }
     .cat-item-btn {
-      display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 16px;
-      text-align: right; background: transparent; border: none; color: var(--text-muted); font-size: 13px;
-      font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 8px 16px;
+      text-align: right; background: transparent; border: none; color: var(--text-muted); cursor: pointer;
     }
     .cat-item-btn:hover { background: rgba(136, 19, 55, 0.25); color: #fff; padding-right: 20px; }
     .cat-item-btn.active-item {
       background: linear-gradient(90deg, rgba(136, 19, 55, 0.5) 0%, rgba(159, 18, 57, 0.3) 100%);
       color: #fff; font-weight: 900; border-right: 4px solid #fb7185;
     }
+    .cat-item-btn .menu-title-en { display: block; font-size: 12.5px; font-weight: 800; color: #ffffff; }
+    .cat-item-btn .menu-title-ar { display: block; font-size: 11px; font-weight: 600; color: #fb7185; margin-top: 1px; }
 
     .current-active-badge {
       margin-right: auto; background: var(--bg-inner); border: 1px solid var(--border-accent);
@@ -441,7 +458,7 @@
       </div>
     </div>
 
-    <!-- توقيع المهندس يظهر هنا فقط في شاشة البوابة الرئيسية -->
+    <!-- توقيع المهندس يظهر في الشريط العلوي أثناء التواجد في القائمة الرئيسية فقط -->
     <div id="top-engineer-banner" class="top-engineer-signature hidden">
       <span>✍️ مع تحياتي : مهندس / عبدالرحمن مجدي</span>
     </div>
@@ -462,7 +479,7 @@
     </div>
   </header>
 
-  <!-- شريط القوائم المصنفة (يظهر فقط أثناء استعراض الجداول) -->
+  <!-- شريط القوائم المصنفة (يظهر أثناء استعراض الجداول) -->
   <nav id="portal-nav-bar" class="portal-categories-bar hidden">
     <button class="btn-return-hub" onclick="openPortalHub()">🏠 القائمة الرئيسية</button>
 
@@ -474,10 +491,18 @@
       </button>
       <div class="cat-menu">
         <button class="cat-item-btn" onclick="switchPortalTab('Manual Assigned')">
-          <span>📋 Manual Assigned</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Manual Assigned</span>
+            <span class="menu-title-ar">الاصين و الاسناد</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Hedcount Mohandssein')">
-          <span>👥 Hedcount Mohandssein</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Hedcount Mohandssein</span>
+            <span class="menu-title-ar">الهيدكاونت بالكامل</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
       </div>
     </div>
@@ -490,16 +515,32 @@
       </button>
       <div class="cat-menu">
         <button class="cat-item-btn" onclick="switchPortalTab('Rider\'s daliy performance')">
-          <span>⏱️ Daily performance</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Rider's daliy performance</span>
+            <span class="menu-title-ar">الأداء اليومي للمناديب</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Rider\'s monthly performance')">
-          <span>📅 Monthly performance</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Rider's monthly performance</span>
+            <span class="menu-title-ar">الأداء الشهري للمناديب</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Contract Follow up')">
-          <span>📝 Contract Follow up</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Contract Follow up</span>
+            <span class="menu-title-ar">متابعة تجديد العقود</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Report on cancelled orders')">
-          <span>❌ Cancelled orders</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Report on cancelled orders</span>
+            <span class="menu-title-ar">افادة الأوردرات الملغية</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
       </div>
     </div>
@@ -512,10 +553,18 @@
       </button>
       <div class="cat-menu">
         <button class="cat-item-btn" onclick="switchPortalTab('New rider\'s accounts')">
-          <span>✨ New rider accounts</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">New rider's accounts</span>
+            <span class="menu-title-ar">حسابات المناديب الجدد</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Reactivation rider\'s accounts')">
-          <span>🔄 Reactivation accounts</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Reactivation rider's accounts</span>
+            <span class="menu-title-ar">حسابات المناديب الــ( معاد تنشيطها )</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
       </div>
     </div>
@@ -528,10 +577,18 @@
       </button>
       <div class="cat-menu">
         <button class="cat-item-btn" onclick="switchPortalTab('Wallet details')">
-          <span>💰 Wallet details</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Wallet details</span>
+            <span class="menu-title-ar">متابعه محافظ المناديب</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Equipment')">
-          <span>🪖 Equipment</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Equipment</span>
+            <span class="menu-title-ar">العهد والمعدات المسحوبه خلال الشهر</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
       </div>
     </div>
@@ -544,16 +601,32 @@
       </button>
       <div class="cat-menu">
         <button class="cat-item-btn" onclick="switchPortalTab('Security Inquiry')">
-          <span>🛡️ Security Inquiry</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Security Inquiry</span>
+            <span class="menu-title-ar">الاستعلام والفحص الأمني</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Actions & Coaching')">
-          <span>🎯 Actions & Coaching</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Actions & Coaching</span>
+            <span class="menu-title-ar">الايقافات و الكوتشنج</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Legal Settlements')">
-          <span>⚖️ Legal Settlements</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Legal Settlements</span>
+            <span class="menu-title-ar">التصالحات القانونية</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Invalid hiring')">
-          <span>⚠️ Invalid hiring</span><span style="font-size:10px;">●</span>
+          <div>
+            <span class="menu-title-en">Invalid hiring</span>
+            <span class="menu-title-ar">الاستعلامات المرفوضة</span>
+          </div>
+          <span style="font-size:10px;">●</span>
         </button>
       </div>
     </div>
@@ -588,11 +661,17 @@
         </div>
         <div class="hub-sheets-list">
           <button class="hub-sheet-btn" onclick="switchPortalTab('Manual Assigned')">
-            <span>📋 Manual Assigned</span>
+            <div>
+              <span class="btn-title-en">Manual Assigned</span>
+              <span class="btn-title-ar">الاصين و الاسناد</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Hedcount Mohandssein')">
-            <span>👥 Hedcount Mohandssein</span>
+            <div>
+              <span class="btn-title-en">Hedcount Mohandssein</span>
+              <span class="btn-title-ar">الهيدكاونت بالكامل</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
         </div>
@@ -606,19 +685,31 @@
         </div>
         <div class="hub-sheets-list">
           <button class="hub-sheet-btn" onclick="switchPortalTab('Rider\'s daliy performance')">
-            <span>⏱️ Rider's daliy performance</span>
+            <div>
+              <span class="btn-title-en">Rider's daliy performance</span>
+              <span class="btn-title-ar">الأداء اليومي للمناديب</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Rider\'s monthly performance')">
-            <span>📅 Rider's monthly performance</span>
+            <div>
+              <span class="btn-title-en">Rider's monthly performance</span>
+              <span class="btn-title-ar">الأداء الشهري للمناديب</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Contract Follow up')">
-            <span>📝 Contract Follow up</span>
+            <div>
+              <span class="btn-title-en">Contract Follow up</span>
+              <span class="btn-title-ar">متابعة تجديد العقود</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Report on cancelled orders')">
-            <span>❌ Report on cancelled orders</span>
+            <div>
+              <span class="btn-title-en">Report on cancelled orders</span>
+              <span class="btn-title-ar">افادة الأوردرات الملغية</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
         </div>
@@ -632,11 +723,17 @@
         </div>
         <div class="hub-sheets-list">
           <button class="hub-sheet-btn" onclick="switchPortalTab('New rider\'s accounts')">
-            <span>✨ New rider's accounts</span>
+            <div>
+              <span class="btn-title-en">New rider's accounts</span>
+              <span class="btn-title-ar">حسابات المناديب الجدد</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Reactivation rider\'s accounts')">
-            <span>🔄 Reactivation rider's accounts</span>
+            <div>
+              <span class="btn-title-en">Reactivation rider's accounts</span>
+              <span class="btn-title-ar">حسابات المناديب الــ( معاد تنشيطها )</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
         </div>
@@ -650,11 +747,17 @@
         </div>
         <div class="hub-sheets-list">
           <button class="hub-sheet-btn" onclick="switchPortalTab('Wallet details')">
-            <span>💰 Wallet details</span>
+            <div>
+              <span class="btn-title-en">Wallet details</span>
+              <span class="btn-title-ar">متابعه محافظ المناديب</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Equipment')">
-            <span>🪖 Equipment</span>
+            <div>
+              <span class="btn-title-en">Equipment</span>
+              <span class="btn-title-ar">العهد والمعدات المسحوبه خلال الشهر</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
         </div>
@@ -668,19 +771,31 @@
         </div>
         <div class="hub-sheets-list">
           <button class="hub-sheet-btn" onclick="switchPortalTab('Security Inquiry')">
-            <span>🛡️ Security Inquiry</span>
+            <div>
+              <span class="btn-title-en">Security Inquiry</span>
+              <span class="btn-title-ar">الاستعلام والفحص الأمني</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Actions & Coaching')">
-            <span>🎯 Actions & Coaching</span>
+            <div>
+              <span class="btn-title-en">Actions & Coaching</span>
+              <span class="btn-title-ar">الايقافات و الكوتشنج</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Legal Settlements')">
-            <span>⚖️ Legal Settlements</span>
+            <div>
+              <span class="btn-title-en">Legal Settlements</span>
+              <span class="btn-title-ar">التصالحات القانونية</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
           <button class="hub-sheet-btn" onclick="switchPortalTab('Invalid hiring')">
-            <span>⚠️ Invalid hiring</span>
+            <div>
+              <span class="btn-title-en">Invalid hiring</span>
+              <span class="btn-title-ar">الاستعلامات المرفوضة</span>
+            </div>
             <span class="arrow-icon">◀</span>
           </button>
         </div>
@@ -860,6 +975,24 @@
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRcAB39S8h26BgnCg3nvho8IIzqDWHzVJj0bJD_w3lDGeZgSwgRjFR2Ba0drZ1CIze/exec";
 
+    // خريطة المسميات الإنجليزية والعربية المطابقة لاختياراتك المعتمدة
+    const SHEET_BILINGUAL_META = {
+      "Manual Assigned": { en: "Manual Assigned", ar: "الاصين و الاسناد" },
+      "Hedcount Mohandssein": { en: "Hedcount Mohandssein", ar: "الهيدكاونت بالكامل" },
+      "Rider's daliy performance": { en: "Rider's daliy performance", ar: "الأداء اليومي للمناديب" },
+      "Rider's monthly performance": { en: "Rider's monthly performance", ar: "الأداء الشهري للمناديب" },
+      "Contract Follow up": { en: "Contract Follow up", ar: "متابعة تجديد العقود" },
+      "Report on cancelled orders": { en: "Report on cancelled orders", ar: "افادة الأوردرات الملغية" },
+      "New rider's accounts": { en: "New rider's accounts", ar: "حسابات المناديب الجدد" },
+      "Reactivation rider's accounts": { en: "Reactivation rider's accounts", ar: "حسابات المناديب الــ( معاد تنشيطها )" },
+      "Wallet details": { en: "Wallet details", ar: "متابعه محافظ المناديب" },
+      "Equipment": { en: "Equipment", ar: "العهد والمعدات المسحوبه خلال الشهر" },
+      "Security Inquiry": { en: "Security Inquiry", ar: "الاستعلام والفحص الأمني" },
+      "Actions & Coaching": { en: "Actions & Coaching", ar: "الايقافات و الكوتشنج" },
+      "Legal Settlements": { en: "Legal Settlements", ar: "التصالحات القانونية" },
+      "Invalid hiring": { en: "Invalid hiring", ar: "الاستعلامات المرفوضة" }
+    };
+
     const SUPERVISORS_DB = [
       { name: "محمد طارق", pass: "1001" },
       { name: "العادل ( دليفري أكس )", pass: "1002" },
@@ -1003,7 +1136,6 @@
       showOfficeLogin();
     }
 
-    /* دالة فتح الواجهة الترحيبية للأقسام الخمسة وإظهار التوقيع في الشريط العلوي */
     function openPortalHub() {
       activeSheetTab = "";
       document.getElementById('portal-nav-bar').classList.add('hidden');
@@ -1011,7 +1143,6 @@
       document.getElementById('view-generic-portal').classList.add('hidden');
       document.getElementById('portal-hub-view').classList.remove('hidden');
 
-      // إظهار التوقيع في الشريط العلوي أثناء التواجد في القائمة الرئيسية فقط
       const sigBanner = document.getElementById('top-engineer-banner');
       if (sigBanner) sigBanner.classList.remove('hidden');
     }
@@ -1026,22 +1157,22 @@
       }
     }
 
-    /* التنقل إلى أي شيت مختار - إخفاء التوقيع العلوي وإظهار شريط الجداول */
     function switchPortalTab(sheetName) {
       activeSheetTab = sheetName;
 
-      // إخفاء التوقيع العلوي وشاشة البوابة
       const sigBanner = document.getElementById('top-engineer-banner');
       if (sigBanner) sigBanner.classList.add('hidden');
 
       document.getElementById('portal-hub-view').classList.add('hidden');
       document.getElementById('portal-nav-bar').classList.remove('hidden');
 
+      const meta = SHEET_BILINGUAL_META[sheetName] || { en: sheetName, ar: "" };
       const indicator = document.getElementById('active-sheet-indicator');
-      if (indicator) indicator.innerText = sheetName;
+      if (indicator) indicator.innerText = `${meta.en} (${meta.ar})`;
 
       document.querySelectorAll('.cat-item-btn').forEach(btn => {
-        btn.classList.toggle('active-item', btn.innerText.includes(sheetName));
+        const onclickAttr = btn.getAttribute('onclick') || '';
+        btn.classList.toggle('active-item', onclickAttr.includes(`'${sheetName}'`));
       });
 
       document.querySelectorAll('.cat-dropdown').forEach(dropdown => {
@@ -1057,7 +1188,7 @@
       } else {
         document.getElementById('view-manual-assigned').classList.add('hidden');
         document.getElementById('view-generic-portal').classList.remove('hidden');
-        document.getElementById('generic-tab-title').innerText = `📄 جدول: ${sheetName}`;
+        document.getElementById('generic-tab-title').innerHTML = `<span>${meta.en}</span> <span style="font-size: 13px; color: #fb7185; font-weight: 700;">— ${meta.ar}</span>`;
         document.getElementById('generic-search-box').value = '';
         fetchGenericSheetData(sheetName);
       }
@@ -1515,7 +1646,8 @@
       thead.innerHTML = '';
       tbody.innerHTML = '';
       spinner.classList.remove('hidden');
-      spinner.innerText = `⏳ جاري جلب بيانات: ${sheetName}...`;
+      const meta = SHEET_BILINGUAL_META[sheetName] || { en: sheetName, ar: "" };
+      spinner.innerText = `⏳ جاري جلب بيانات: ${meta.en}...`;
 
       try {
         const res = await fetch(`${SCRIPT_URL}?sheet=${encodeURIComponent(sheetName)}`);
