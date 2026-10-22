@@ -272,6 +272,7 @@
     .search-input { min-width: 180px; flex: 2; }
     .filter-select { flex: 1; min-width: 125px; }
 
+    /* مكونات الاختيار المتعدد */
     .multiselect-container {
       position: relative; display: inline-block; min-width: 160px; flex: 1;
     }
@@ -376,7 +377,6 @@
       </div>
     </div>
 
-    <!-- توقيع المهندس في الشريط العلوي -->
     <div id="top-engineer-banner" class="top-engineer-signature hidden">
       <span>✍️ مع تحياتي : مهندس / عبدالرحمن مجدي</span>
     </div>
@@ -397,7 +397,6 @@
     </div>
   </header>
 
-  <!-- شريط القوائم المصنفة -->
   <nav id="portal-nav-bar" class="portal-categories-bar hidden">
     <button class="btn-return-hub" onclick="openPortalHub()">🏠 القائمة الرئيسية</button>
 
@@ -471,7 +470,7 @@
           <span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Equipment')">
-          <div><span class="btn-title-en">Equipment</span><span class="btn-title-ar">العهد والمعدات المسحوبه خلال الشهر</span></div>
+          <div><span class="menu-title-en">Equipment</span><span class="menu-title-ar">العهد والمعدات المسحوبه خلال الشهر</span></div>
           <span style="font-size:10px;">●</span>
         </button>
       </div>
@@ -508,7 +507,6 @@
     </div>
   </nav>
 
-  <!-- الواجهة الرئيسية بعد تسجيل الدخول -->
   <div id="portal-hub-view" class="hidden">
     <div class="quran-header-banner">
       <h2 class="quran-ayah">🤍 وَقُلْ رَبِّ زِدْنِي عِلْمًا 🤍</h2>
@@ -681,7 +679,6 @@
             <span style="font-size: 12px; color: var(--text-muted);">الهيدر يحسب الإسناد الصافي (بدون الاستثناءات)، ونهاية كل جدول تعرض الإجمالي العام</span>
           </div>
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <!-- زر التبديل بين الترتيب المعتمد والأبجدي للمشرفين -->
             <button id="sort-mode-btn" class="btn-sort-toggle" onclick="toggleSupervisorSort()">
               🔤 الترتيب: معتمد
             </button>
@@ -1616,7 +1613,7 @@
             📅 ${dayTitle}
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 12px; color: var(--text-muted); font-weight: 700;">${totalAssignedNet} /${totalTargetNet}</span>
+            <span style="font-size: 12px; color: var(--text-muted); font-weight: 700;">${totalAssignedNet} / ${totalTargetNet}</span>
             <span class="zone-total-rate" style="color: ${overallNetColor}; border: 1px solid ${overallNetColor}40; background: var(--bg-inner);">${overallNetRate}%</span>
           </div>
         </div>
@@ -2155,4 +2152,24 @@
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       const meta = SHEET_BILINGUAL_META[activeSheetTab] || { en: activeSheetTab, ar: "" };
-      a.download = `${meta.en}_${new Date().toISOString().slice(0
+      a.download = `${meta.en}_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      applyTheme(localStorage.getItem('dashboard_theme') || 'dark');
+      initSupervisorLoginDropdown();
+
+      const savedRole = localStorage.getItem('auth_role');
+      const savedSupervisor = localStorage.getItem('auth_supervisor');
+
+      if (savedRole) {
+        currentRole = savedRole;
+        loggedInSupervisor = savedSupervisor || "";
+        const title = currentRole === "admin" ? "المهندس / عبدالرحمن مجدي" : `المشرف: ${loggedInSupervisor}`;
+        enterDashboard(title);
+      }
+    });
+  </script>
+</body>
+</html>
