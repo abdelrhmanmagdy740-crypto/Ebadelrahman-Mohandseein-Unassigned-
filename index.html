@@ -46,6 +46,41 @@
     * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
     body { background: var(--bg-main); color: var(--text-main); margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden; }
 
+    /* أنيميشن آمن ومضمون لإخفاء الشاشة الافتتاحية ذاتياً بعد 2.5 ثانية */
+    @keyframes autoDismissIntro {
+      0%, 75% { opacity: 1; visibility: visible; pointer-events: all; }
+      100% { opacity: 0; visibility: hidden; pointer-events: none; }
+    }
+
+    #intro-screen {
+      position: fixed; inset: 0;
+      background: radial-gradient(circle at center, #260508 0%, #050505 100%);
+      z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      animation: autoDismissIntro 2.5s forwards ease-in-out;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #intro-screen.fade-out { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(0.97); box-shadow: 0 0 35px rgba(136, 19, 55, 0.4); }
+      50% { transform: scale(1.03); box-shadow: 0 0 55px rgba(136, 19, 55, 0.7); }
+      100% { transform: scale(0.97); box-shadow: 0 0 35px rgba(136, 19, 55, 0.4); }
+    }
+
+    .intro-logo-container {
+      width: 240px; height: 240px; border-radius: 50%; padding: 5px;
+      background: linear-gradient(135deg, var(--border-accent), var(--orange-accent));
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+    .intro-logo-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .intro-title { margin-top: 25px; font-size: 26px; font-weight: 900; color: #ffffff; letter-spacing: 1px; }
+    .skip-intro-btn {
+      margin-top: 15px; background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border-accent);
+      color: #ffffff; padding: 6px 18px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer;
+    }
+    .skip-intro-btn:hover { background: var(--border-accent); }
+
     .navbar {
       background: var(--nav-bg); border-bottom: 2px solid var(--border-accent);
       padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
@@ -272,7 +307,6 @@
     .search-input { min-width: 180px; flex: 2; }
     .filter-select { flex: 1; min-width: 125px; }
 
-    /* مكونات الاختيار المتعدد */
     .multiselect-container {
       position: relative; display: inline-block; min-width: 160px; flex: 1;
     }
@@ -365,6 +399,15 @@
   </style>
 </head>
 <body>
+
+  <!-- شاشة اللوجو الافتتاحية مع حماية الإخفاء التلقائي -->
+  <div id="intro-screen">
+    <div class="intro-logo-container">
+      <img src="logo.png" alt="Logo">
+    </div>
+    <div class="intro-title">Mohandiseen 3PLs-Dashboard</div>
+    <button class="skip-intro-btn" onclick="forceHideIntro()">تخطي الشعار الافتتاحي ✕</button>
+  </div>
 
   <div id="copy-toast">📋 تم النسخ: <span id="toast-text" style="color: var(--border-accent);"></span></div>
 
@@ -470,7 +513,7 @@
           <span style="font-size:10px;">●</span>
         </button>
         <button class="cat-item-btn" onclick="switchPortalTab('Equipment')">
-          <div><span class="menu-title-en">Equipment</span><span class="menu-title-ar">العهد والمعدات المسحوبه خلال الشهر</span></div>
+          <div><span class="btn-title-en">Equipment</span><span class="btn-title-ar">العهد والمعدات المسحوبه خلال الشهر</span></div>
           <span style="font-size:10px;">●</span>
         </button>
       </div>
@@ -864,6 +907,11 @@
     let selectedYesterdaySet = new Set();
 
     let supervisorSortMode = 'fixed';
+
+    function forceHideIntro() {
+      const intro = document.getElementById('intro-screen');
+      if (intro) intro.classList.add('fade-out');
+    }
 
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
@@ -2159,6 +2207,9 @@
     window.addEventListener('DOMContentLoaded', () => {
       applyTheme(localStorage.getItem('dashboard_theme') || 'dark');
       initSupervisorLoginDropdown();
+
+      // ضمان إخفاء الشاشة بعد ثانيتين ونصف كحد أقصى حتى لو تأخر المتصفح
+      setTimeout(forceHideIntro, 2500);
 
       const savedRole = localStorage.getItem('auth_role');
       const savedSupervisor = localStorage.getItem('auth_supervisor');
