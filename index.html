@@ -168,4 +168,1494 @@
     .btn-title-en { display: block; font-size: 13.5px; font-weight: 800; color: #ffffff; }
     .btn-title-ar { display: block; font-size: 11.5px; font-weight: 600; color: #fef3c7; margin-top: 2px; }
     .hub-sheet-btn:hover .btn-title-ar { color: #ffffff; }
-    .hub-sheet-btn .arrow-icon { font-size: 12px; color: #fef3
+    .hub-sheet-btn .arrow-icon { font-size: 12px; color: #fef3c7; }
+
+    .portal-categories-bar {
+      background: var(--bg-card); border-bottom: 1px solid var(--border-subtle); padding: 8px 20px;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap; position: sticky; top: 66px; z-index: 90;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .btn-return-hub {
+      background: var(--border-accent); color: #ffffff; border: 1px solid var(--border-accent);
+      padding: 7px 14px; border-radius: 8px; font-size: 12.5px; font-weight: 800; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-return-hub:hover { opacity: 0.9; }
+
+    .cat-dropdown { position: relative; display: inline-block; }
+    .cat-btn {
+      background: var(--bg-inner); border: 1px solid var(--border-subtle); color: var(--text-main);
+      padding: 7px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 800; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .cat-btn:hover, .cat-dropdown:hover .cat-btn { background: var(--bg-card); border-color: var(--border-accent); color: var(--border-accent); }
+    .cat-btn.has-active { border-color: var(--border-accent); background: var(--bg-inner); color: var(--border-accent); }
+
+    .cat-menu {
+      display: none; position: absolute; top: calc(100% + 4px); right: 0; background: var(--bg-card);
+      min-width: 290px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 1px solid var(--border-accent);
+      border-radius: 10px; z-index: 1000; overflow: hidden; padding: 6px 0;
+    }
+    .cat-dropdown:hover .cat-menu { display: block; }
+    .cat-item-btn {
+      display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 8px 16px;
+      text-align: right; background: transparent; border: none; color: var(--text-muted); cursor: pointer;
+    }
+    .cat-item-btn:hover { background: var(--bg-inner); color: var(--text-main); padding-right: 20px; }
+    .cat-item-btn.active-item {
+      background: var(--bg-inner); color: var(--border-accent); font-weight: 900; border-right: 4px solid var(--border-accent);
+    }
+    .cat-item-btn .menu-title-en { display: block; font-size: 12.5px; font-weight: 800; color: var(--text-main); }
+    .cat-item-btn .menu-title-ar { display: block; font-size: 11px; font-weight: 600; color: var(--border-accent); margin-top: 1px; }
+
+    .current-active-badge {
+      margin-right: auto; background: var(--bg-inner); border: 1px solid var(--border-accent);
+      color: var(--border-accent); padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    .container { width: 98%; max-width: 1800px; margin: 15px auto; padding: 0 10px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 20px; margin-bottom: 20px; box-shadow: var(--card-shadow); }
+
+    .auth-wrapper {
+      max-width: 450px; margin: 40px auto; background: var(--bg-card); border: 2px solid var(--border-accent);
+      border-radius: 20px; padding: 30px 24px; box-shadow: var(--card-shadow); text-align: center;
+    }
+    .login-brand-logo { width: 115px; height: 115px; border-radius: 50%; border: 3px solid var(--border-accent); object-fit: cover; margin-bottom: 12px; }
+    .auth-title { margin: 0 0 8px 0; font-size: 24px; font-weight: 900; color: var(--text-main); }
+    .signature-text { text-align: center; color: var(--orange-accent); font-family: 'Caveat', cursive, sans-serif; font-size: 21px; margin-bottom: 22px; direction: ltr; font-weight: 700; }
+    html[data-theme="light"] .signature-text { color: #1d4ed8; }
+    .form-group { margin-bottom: 18px; text-align: right; }
+    .form-group label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 700; color: var(--text-main); }
+    select.custom-login-field, input.custom-pass-input {
+      width: 100%; padding: 12px 14px; background: var(--input-bg); border: 1px solid var(--border-subtle);
+      border-radius: 8px; color: var(--text-main); font-size: 14px; font-weight: 600; outline: none;
+    }
+    .btn-login-action {
+      background: var(--border-accent); color: #fff; width: 100%; padding: 13px;
+      font-size: 16px; font-weight: 900; border-radius: 8px; border: none; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .switch-link { text-align: center; margin-top: 18px; }
+    .switch-link a { color: var(--border-accent); text-decoration: none; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+    .btn { padding: 8px 14px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; }
+    .btn-outline { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-main); }
+    .btn-outline:hover { border-color: var(--border-accent); }
+    .btn-excel { background: #059669; color: #fff; border: 1px solid #047857; }
+    
+    .btn-sort-toggle {
+      background: var(--bg-inner);
+      border: 1px solid var(--border-accent);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-sort-toggle:hover {
+      background: var(--border-accent);
+      color: #ffffff;
+    }
+
+    .stats-section-block { margin-bottom: 20px; }
+    .stats-block-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+      padding: 8px 14px; background: var(--bg-inner); border-radius: 8px; border-right: 4px solid var(--border-accent); flex-wrap: wrap; gap: 8px;
+    }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    .stat-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 14px 16px; border-right: 4px solid var(--border-accent); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .stat-val { font-size: 23px; font-weight: 900; color: var(--text-main); margin-top: 4px; }
+    .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 700; }
+
+    .zone-section-block { margin-bottom: 30px; }
+    .zone-section-title {
+      font-size: 15px; font-weight: 800; color: var(--text-main); margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: space-between; background: var(--bg-inner);
+      padding: 10px 16px; border-radius: 8px; border-right: 5px solid var(--border-accent);
+      flex-wrap: wrap; gap: 10px;
+    }
+    .days-grid-for-zone { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
+    .day-column-card { background: var(--bg-card); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--border-subtle); box-shadow: var(--card-shadow); }
+    .day-card-header { background: var(--bg-inner); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); }
+    .zone-total-rate { padding: 3px 8px; border-radius: 4px; font-weight: 800; font-size: 12px; }
+    .zone-table-container { width: 100%; overflow-x: auto; }
+    .zone-table-container table td, .zone-table-container table th { padding: 9px 12px; font-size: 12.5px; text-align: center !important; }
+
+    .table-total-row {
+      background: var(--bg-inner) !important; font-weight: 900 !important; border-top: 2px solid var(--border-accent) !important;
+    }
+    .table-total-row td { color: var(--text-main) !important; font-weight: 900 !important; font-size: 13.5px !important; }
+
+    .table-header-tools { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+    .search-input, .filter-select {
+      padding: 9px 12px; background: var(--input-bg); border: 1px solid var(--border-subtle);
+      border-radius: 7px; color: var(--text-main); outline: none; font-size: 13px;
+    }
+    .search-input { min-width: 180px; flex: 2; }
+    .filter-select { flex: 1; min-width: 125px; }
+
+    .multiselect-container {
+      position: relative; display: inline-block; min-width: 160px; flex: 1;
+    }
+    .multiselect-btn {
+      width: 100%; padding: 9px 12px; background: var(--input-bg); border: 1px solid var(--border-subtle);
+      border-radius: 7px; color: var(--text-main); font-size: 13px; font-weight: 700; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; text-align: right;
+    }
+    .multiselect-dropdown {
+      display: none; position: absolute; top: calc(100% + 4px); right: 0; left: 0;
+      background: var(--bg-card); border: 1px solid var(--border-accent); border-radius: 8px;
+      max-height: 250px; overflow-y: auto; z-index: 1050; padding: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .multiselect-container.open .multiselect-dropdown { display: block; }
+    .multiselect-actions { display: flex; justify-content: space-between; padding: 4px 6px 8px 6px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 6px; }
+    .multiselect-actions button { background: transparent; border: none; color: var(--border-accent); font-size: 11px; font-weight: 800; cursor: pointer; }
+    .multiselect-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; font-size: 12px; font-weight: 700; cursor: pointer; border-radius: 4px; color: var(--text-main); }
+    .multiselect-item:hover { background: var(--bg-inner); }
+    .multiselect-item input[type="checkbox"] { cursor: pointer; accent-color: var(--border-accent); }
+    
+    .table-container { 
+      width: 100%; overflow-x: auto; border-radius: 10px; border: 2px solid var(--table-border); 
+      background: var(--bg-card); -webkit-overflow-scrolling: touch;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; white-space: nowrap; }
+
+    th { 
+      background: var(--bg-inner) !important;
+      padding: 13px 10px !important; color: var(--text-main) !important; font-weight: 900 !important;
+      font-size: 12.5px !important; letter-spacing: 0.3px; text-align: center !important;
+      border-bottom: 2px solid var(--border-accent) !important; border-left: 2px solid var(--border-subtle) !important;
+    }
+    html[data-theme="dark"] th {
+      background: linear-gradient(180deg, #09090b 0%, #1c141d 100%) !important;
+      color: #ffffff !important;
+    }
+    html[data-theme="light"] th {
+      background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+      color: #0f172a !important;
+    }
+
+    td { padding: 10px 12px; text-align: center !important; border-top: 1px solid var(--table-border); border-left: 1px solid var(--table-border); color: var(--text-main); }
+    tbody tr:hover { background: rgba(0, 0, 0, 0.04); }
+    html[data-theme="dark"] tbody tr:hover { background: rgba(136, 19, 55, 0.15); }
+
+    .copyable { cursor: pointer; user-select: none; }
+    .copyable:hover { background: rgba(0, 0, 0, 0.08); }
+
+    .badge-yesterday-absence {
+      background: #000000 !important; color: #ff3344 !important; font-weight: 900 !important;
+      padding: 5px 12px; border-radius: 6px; border: 1px solid #7f1d1d !important; display: inline-block;
+      letter-spacing: 0.5px; text-shadow: 0 0 8px rgba(255, 51, 68, 0.8);
+    }
+
+    .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
+    .badge-published { background: rgba(29, 78, 216, 0.15); color: #2563eb; border: 1px solid #3b82f6; }
+    .badge-evaluated { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid #16a34a; }
+    .badge-not-chosen { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #dc2626; }
+    .badge-dark-red-highlight { background: #7f1d1d !important; color: #ffffff !important; border: 1px solid #991b1b !important; font-weight: 900; }
+    .badge-default { background: var(--bg-inner); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+
+    .badge-fb-day-green {
+      background-color: #14532d !important; color: #ffffff !important; padding: 5px 12px;
+      border-radius: 6px; font-weight: 800; display: inline-block; border: 1px solid #16a34a;
+    }
+    .badge-fb-danger-red {
+      background-color: #7f1d1d !important; color: #ffffff !important; padding: 5px 12px;
+      border-radius: 6px; font-weight: 800; display: inline-block; border: 1px solid #991b1b;
+    }
+
+    .badge-veh-bicycle {
+      background-color: #581c87 !important; color: #ffffff !important; padding: 5px 12px;
+      border-radius: 6px; font-weight: 800; display: inline-block; border: 1px solid #7e22ce;
+    }
+    .badge-veh-bike {
+      background-color: #1e3a8a !important; color: #ffffff !important; padding: 5px 12px;
+      border-radius: 6px; font-weight: 800; display: inline-block; border: 1px solid #2563eb;
+    }
+
+    #copy-toast {
+      position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-accent);
+      padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; z-index: 9999;
+      opacity: 0; transition: transform 0.25s ease, opacity 0.25s ease; pointer-events: none;
+    }
+    #copy-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    .loading-state { text-align: center; padding: 35px; color: var(--border-accent); font-size: 15px; font-weight: bold; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- شاشة اللوجو الافتتاحية -->
+  <div id="intro-screen">
+    <div class="intro-logo-container">
+      <img src="logo.png" alt="Logo">
+    </div>
+    <div class="intro-title">Mohandiseen 3PLs-Dashboard</div>
+    <button class="skip-intro-btn" onclick="hideIntro()">تخطي الشعار الافتتاحي ✕</button>
+  </div>
+
+  <div id="copy-toast">📋 تم النسخ: <span id="toast-text" style="color: var(--border-accent);"></span></div>
+
+  <header class="navbar">
+    <div class="brand-box">
+      <img class="brand-logo-mini" src="logo.png" alt="Logo">
+      <div>
+        <div class="brand-title">Mohandiseen 3PLs-Dashboard</div>
+        <div class="brand-sub">بوابة العمليات اللوجستية (Operations Portal)</div>
+      </div>
+    </div>
+
+    <!-- توقيع المهندس في الشريط العلوي -->
+    <div id="top-engineer-banner" class="top-engineer-signature hidden">
+      <span>✍️ مع تحياتي : مهندس / عبدالرحمن مجدي</span>
+    </div>
+    
+    <div class="nav-actions">
+      <button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()">
+        <span id="theme-icon">☀️</span>
+        <span id="theme-label">نهاري</span>
+      </button>
+
+      <div id="user-pill" class="hidden" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <span id="last-update-time" class="last-update-tag">🕒 جاري جلب وقت تحديث الشيت...</span>
+        <button class="btn btn-outline" onclick="openPortalHub()">🏠 القائمة الرئيسية</button>
+        <button class="btn btn-outline" onclick="refreshCurrentTab()">🔄 تحديث البيانات</button>
+        <span id="current-user-name" style="margin: 0 4px; font-size: 13px; font-weight: 700; color: var(--border-accent);"></span>
+        <button class="btn btn-outline" onclick="logout()">خروج</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- شريط القوائم المصنفة -->
+  <nav id="portal-nav-bar" class="portal-categories-bar hidden">
+    <button class="btn-return-hub" onclick="openPortalHub()">🏠 القائمة الرئيسية</button>
+
+    <div class="cat-dropdown">
+      <button class="cat-btn" id="btn-cat-assign">
+        <span>🛵 عمليات الإسناد والتوزيع</span>
+        <span>▼</span>
+      </button>
+      <div class="cat-menu">
+        <button class="cat-item-btn" onclick="switchPortalTab('Manual Assigned')">
+          <div><span class="menu-title-en">Manual Assigned</span><span class="menu-title-ar">الاصين و الاسناد</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Hedcount Mohandssein')">
+          <div><span class="menu-title-en">Hedcount Mohandssein</span><span class="menu-title-ar">الهيدكاونت بالكامل</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cat-dropdown">
+      <button class="cat-btn" id="btn-cat-performance">
+        <span>📈 الأداء والعمليات</span>
+        <span>▼</span>
+      </button>
+      <div class="cat-menu">
+        <button class="cat-item-btn" onclick="switchPortalTab('Rider\'s daliy performance')">
+          <div><span class="menu-title-en">Rider's daliy performance</span><span class="menu-title-ar">الأداء اليومي للمناديب</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Rider\'s monthly performance')">
+          <div><span class="menu-title-en">Rider's monthly performance</span><span class="menu-title-ar">الأداء الشهري للمناديب</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Contract Follow up')">
+          <div><span class="menu-title-en">Contract Follow up</span><span class="menu-title-ar">متابعة تجديد العقود</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Report on cancelled orders')">
+          <div><span class="menu-title-en">Report on cancelled orders</span><span class="menu-title-ar">افادة الأوردرات الملغية</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cat-dropdown">
+      <button class="cat-btn" id="btn-cat-accounts">
+        <span>👥 التعيينات والحسابات</span>
+        <span>▼</span>
+      </button>
+      <div class="cat-menu">
+        <button class="cat-item-btn" onclick="switchPortalTab('New rider\'s accounts')">
+          <div><span class="menu-title-en">New rider's accounts</span><span class="menu-title-ar">حسابات المناديب الجدد</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Reactivation rider\'s accounts')">
+          <div><span class="menu-title-en">Reactivation rider's accounts</span><span class="menu-title-ar">حسابات المناديب الــ( معاد تنشيطها )</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cat-dropdown">
+      <button class="cat-btn" id="btn-cat-admin">
+        <span>💼 الشؤون الإدارية والمالية</span>
+        <span>▼</span>
+      </button>
+      <div class="cat-menu">
+        <button class="cat-item-btn" onclick="switchPortalTab('Wallet details')">
+          <div><span class="menu-title-en">Wallet details</span><span class="menu-title-ar">متابعه محافظ المناديب</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Equipment')">
+          <div><span class="menu-title-en">Equipment</span><span class="menu-title-ar">العهد والمعدات المسحوبه خلال الشهر</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cat-dropdown">
+      <button class="cat-btn" id="btn-cat-security">
+        <span>⚖️ الجودة والأمان</span>
+        <span>▼</span>
+      </button>
+      <div class="cat-menu">
+        <button class="cat-item-btn" onclick="switchPortalTab('Security Inquiry')">
+          <div><span class="menu-title-en">Security Inquiry</span><span class="menu-title-ar">الاستعلام والفحص الأمني</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Actions & Coaching')">
+          <div><span class="menu-title-en">Actions & Coaching</span><span class="menu-title-ar">الايقافات و الكوتشنج</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Legal Settlements')">
+          <div><span class="menu-title-en">Legal Settlements</span><span class="menu-title-ar">التصالحات القانونية</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+        <button class="cat-item-btn" onclick="switchPortalTab('Invalid hiring')">
+          <div><span class="menu-title-en">Invalid hiring</span><span class="menu-title-ar">الاستعلامات المرفوضة</span></div>
+          <span style="font-size:10px;">●</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="current-active-badge">
+      <span>الصفحة الحالية:</span>
+      <span id="active-sheet-indicator">Manual Assigned</span>
+    </div>
+  </nav>
+
+  <!-- الواجهة الرئيسية بعد تسجيل الدخول -->
+  <div id="portal-hub-view" class="hidden">
+    <div class="quran-header-banner">
+      <h2 class="quran-ayah">🤍 وَقُلْ رَبِّ زِدْنِي عِلْمًا 🤍</h2>
+    </div>
+
+    <div class="hub-header">
+      <span class="hub-crescent-icon">☪</span>
+      <h1 class="hub-main-title-en">Unified Operations &amp; Control Dashboard</h1>
+      <div class="hub-main-title-ar">لوحة التحكم والعمليات الموحدة</div>
+      <div class="hub-sub-title">اختر القسم والجدول المطلوب لبدء المتابعة والإدارة اللوجستية</div>
+    </div>
+
+    <div class="hub-categories-grid">
+      <div class="hub-category-card">
+        <div class="hub-cat-title"><span>🛵</span><span>عمليات الإسناد والتوزيع</span></div>
+        <div class="hub-sheets-list">
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Manual Assigned')">
+            <div><span class="btn-title-en">Manual Assigned</span><span class="btn-title-ar">الاصين و الاسناد</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Hedcount Mohandssein')">
+            <div><span class="btn-title-en">Hedcount Mohandssein</span><span class="btn-title-ar">الهيدكاونت بالكامل</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hub-category-card">
+        <div class="hub-cat-title"><span>📈</span><span>الأداء والعمليات</span></div>
+        <div class="hub-sheets-list">
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Rider\'s daliy performance')">
+            <div><span class="btn-title-en">Rider's daliy performance</span><span class="btn-title-ar">الأداء اليومي للمناديب</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Rider\'s monthly performance')">
+            <div><span class="btn-title-en">Rider's monthly performance</span><span class="btn-title-ar">الأداء الشهري للمناديب</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Contract Follow up')">
+            <div><span class="btn-title-en">Contract Follow up</span><span class="btn-title-ar">متابعة تجديد العقود</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Report on cancelled orders')">
+            <div><span class="btn-title-en">Report on cancelled orders</span><span class="btn-title-ar">افادة الأوردرات الملغية</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hub-category-card">
+        <div class="hub-cat-title"><span>👥</span><span>التعيينات والحسابات</span></div>
+        <div class="hub-sheets-list">
+          <button class="hub-sheet-btn" onclick="switchPortalTab('New rider\'s accounts')">
+            <div><span class="btn-title-en">New rider's accounts</span><span class="btn-title-ar">حسابات المناديب الجدد</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Reactivation rider\'s accounts')">
+            <div><span class="btn-title-en">Reactivation rider's accounts</span><span class="btn-title-ar">حسابات المناديب الــ( معاد تنشيطها )</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hub-category-card">
+        <div class="hub-cat-title"><span>💼</span><span>الشؤون الإدارية والمالية</span></div>
+        <div class="hub-sheets-list">
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Wallet details')">
+            <div><span class="btn-title-en">Wallet details</span><span class="btn-title-ar">متابعه محافظ المناديب</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Equipment')">
+            <div><span class="btn-title-en">Equipment</span><span class="btn-title-ar">العهد والمعدات المسحوبه خلال الشهر</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hub-category-card">
+        <div class="hub-cat-title"><span>⚖️</span><span>الجودة والأمان</span></div>
+        <div class="hub-sheets-list">
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Security Inquiry')">
+            <div><span class="btn-title-en">Security Inquiry</span><span class="btn-title-ar">الاستعلام والفحص الأمني</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Actions & Coaching')">
+            <div><span class="btn-title-en">Actions & Coaching</span><span class="btn-title-ar">الايقافات و الكوتشنج</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Legal Settlements')">
+            <div><span class="btn-title-en">Legal Settlements</span><span class="btn-title-ar">التصالحات القانونية</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+          <button class="hub-sheet-btn" onclick="switchPortalTab('Invalid hiring')">
+            <div><span class="btn-title-en">Invalid hiring</span><span class="btn-title-ar">الاستعلامات المرفوضة</span></div>
+            <span class="arrow-icon">◀</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="office-login-box" class="auth-wrapper">
+      <img class="login-brand-logo" src="logo.png" alt="Logo">
+      <h2 class="auth-title">تسجيل دخول المشرفين</h2>
+      <span class="signature-text">With regards : Engineer Abd el-rahman Magdy</span>
+      
+      <div class="form-group">
+        <label>① اختار اسم المشرف</label>
+        <select id="supervisor-user-select" class="custom-login-field"></select>
+      </div>
+
+      <div class="form-group">
+        <label>② أدخل الباسورد الخاص بك</label>
+        <input type="password" id="supervisor-pass" class="custom-pass-input" placeholder="••••••••">
+      </div>
+
+      <button class="btn-login-action" onclick="loginSupervisor()">تسجيل الدخول</button>
+      <div class="switch-link"><a onclick="showAdminLogin()">⚙ دخول المهندس / عبدالرحمن مجدي</a></div>
+    </div>
+
+    <div id="admin-login-box" class="auth-wrapper hidden">
+      <img class="login-brand-logo" src="logo.png" alt="Logo">
+      <h2 class="auth-title" style="direction: ltr; font-size: 20px;">Engineer Abdulrahman Magdy's Login Panel</h2>
+      <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 22px;">لوحة الإدارة والتحكم الشامل لكافة المناطق والمشرفين</p>
+
+      <div class="form-group">
+        <label>باسورد المسؤول</label>
+        <input type="password" id="admin-pass" class="custom-pass-input" placeholder="أدخل باسورد الإدارة...">
+      </div>
+
+      <button class="btn-login-action" onclick="loginAdmin()">دخول</button>
+      <div class="switch-link"><a onclick="showOfficeLogin()">← رجوع لتسجيل دخول المشرفين</a></div>
+    </div>
+
+    <!-- ================== 1. تبويب Manual Assigned ================== -->
+    <div id="view-manual-assigned" class="dashboard-portal-view hidden">
+      <div id="top-stats-container">
+        <div class="stats-section-block">
+          <div class="stats-block-header">
+            <div class="zone-title-tag"><span>🌐</span><span id="stats-header-scope">إحصائيات المناديب المسندين</span></div>
+            <span id="selected-day-badge" style="font-size: 12px; color: var(--border-accent); font-weight: bold;">اليوم (Today)</span>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card" style="border-right-color: var(--border-accent);">
+              <div class="stat-label" id="card-label-total">إجمالي الطيارين</div>
+              <div class="stat-val" id="total-riders">0</div>
+            </div>
+            <div class="stat-card" style="border-right-color: #22c55e;">
+              <div class="stat-label" id="card-label-published">المقبول (PUBLISHED & EVALUATED)</div>
+              <div class="stat-val" id="today-published">0</div>
+            </div>
+            <div class="stat-card" style="border-right-color: #ef4444;">
+              <div class="stat-label" id="card-label-not-chosen">غير مختار (NOT CHOSEN & NO_SHOW)</div>
+              <div class="stat-val" id="today-not-chosen">0</div>
+            </div>
+            <div class="stat-card" id="main-rate-card" style="border-right-color: var(--border-accent);">
+              <div class="stat-label" id="card-label-rate">Today: نسبة الإسناد (%)</div>
+              <div class="stat-val" id="selected-day-rate">0%</div>
+            </div>
+          </div>
+        </div>
+        <div id="zones-breakdown-stats"></div>
+      </div>
+
+      <div id="admin-report-card" class="card hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h3 style="margin: 0; font-size: 15px; color: var(--text-main);">📊 توزيع وإسناد الزونات للأيام الـ 3 مجتمعة</h3>
+            <span style="font-size: 12px; color: var(--text-muted);">الهيدر يحسب الإسناد الصافي (بدون الاستثناءات)، ونهاية كل جدول تعرض الإجمالي العام</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <!-- زر التبديل بين الترتيب المعتمد والأبجدي للمشرفين -->
+            <button id="sort-mode-btn" class="btn-sort-toggle" onclick="toggleSupervisorSort()">
+              🔤 الترتيب: معتمد
+            </button>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label style="margin: 0; font-size: 12px; font-weight: bold;">تصفية المشرف:</label>
+              <select id="report-supervisor-select" style="width: auto; padding: 6px 12px; font-size: 12px;" class="filter-select" onchange="renderSupervisorReport()">
+                <option value="all">كل المشرفين</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div id="zones-container"></div>
+      </div>
+
+      <div class="card">
+        <div class="table-header-tools" style="background: var(--bg-inner); padding: 12px; border-radius: 10px; border: 1px solid var(--border-subtle); display: flex; gap: 8px; flex-wrap: wrap;">
+          <input type="text" id="search-box" class="search-input" placeholder="🔍 بحث بالاسم، الـ ID، أو الهاتف..." onkeyup="renderTable()">
+          
+          <div class="multiselect-container" id="sv-multiselect-box">
+            <button type="button" class="multiselect-btn" onclick="toggleSvDropdown()">
+              <span id="sv-multiselect-label">كل المشرفين (S.V)</span>
+              <span style="font-size: 10px;">▼</span>
+            </button>
+            <div class="multiselect-dropdown" id="sv-dropdown-list">
+              <div class="multiselect-actions">
+                <button type="button" onclick="selectAllSupervisors(true)">تحديد الكل</button>
+                <button type="button" onclick="selectAllSupervisors(false)">إلغاء الكل</button>
+              </div>
+              <div id="sv-checkboxes-container"></div>
+            </div>
+          </div>
+
+          <select id="zone-filter" class="filter-select" onchange="renderTable()"><option value="all">كل المناطق (Zones)</option></select>
+          <select id="feedback-filter" class="filter-select" onchange="renderTable()"><option value="all">كل الـ Feedback</option></select>
+
+          <div class="multiselect-container" id="yesterday-multiselect-box">
+            <button type="button" class="multiselect-btn" onclick="toggleYesterdayDropdown()">
+              <span id="yesterday-multiselect-label">تشغيلة الأمس (الكل)</span>
+              <span style="font-size: 10px;">▼</span>
+            </button>
+            <div class="multiselect-dropdown" id="yesterday-dropdown-list">
+              <div class="multiselect-actions">
+                <button type="button" onclick="selectAllYesterday(true)">تحديد الكل</button>
+                <button type="button" onclick="selectAllYesterday(false)">إلغاء الكل</button>
+              </div>
+              <div id="yesterday-checkboxes-container"></div>
+            </div>
+          </div>
+
+          <select id="main-day-filter" class="filter-select" onchange="onMainDayFilterChange()">
+            <option value="today">اليوم (Today)</option>
+            <option value="tomorrow">الغد (Tomorrow)</option>
+            <option value="tomorrowLater">الغد لاحقاً (Tomorrow Later)</option>
+          </select>
+
+          <select id="today-filter" class="filter-select" onchange="renderTable()">
+            <option value="all">كل الحالات</option>
+            <option value="PUBLISHED_ONLY">PUBLISHED (أزرق)</option>
+            <option value="EVALUATED_ONLY">EVALUATED (أخضر)</option>
+            <option value="PUBLISHED">PUBLISHED & EVALUATED (المقبول كلياً)</option>
+            <option value="NOT_CHOSEN_ONLY">NOT CHOSEN (أحمر)</option>
+            <option value="NOT CHOSEN">NOT CHOSEN & NO_SHOW (غير مختار كلياً)</option>
+            <option value="NO_SHOW">NO_SHOW (أحمر داكن)</option>
+            <option value="Suspended">Suspended (أحمر داكن)</option>
+          </select>
+
+          <button class="btn btn-excel" onclick="exportToExcel()">📥 تصدير Excel</button>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th class="col-idx">#</th>
+                <th class="col-id">ID</th>
+                <th class="col-name">الاسم</th>
+                <th class="col-area">المنطقة</th>
+                <th class="col-phone">الهاتف</th>
+                <th class="col-yesterday">تشغيلة الأمس</th>
+                <th class="col-badge">اليوم (Today)</th>
+                <th class="col-badge">الغد (Tomorrow)</th>
+                <th class="col-badge">الغد لاحقاً</th>
+                <th class="col-fb">Feedback</th>
+                <th class="col-sv">المشرف (S.V)</th>
+              </tr>
+            </thead>
+            <tbody id="riders-tbody"></tbody>
+          </table>
+          <div id="loading-spinner" class="loading-state">⏳ جاري جلب البيانات من Google Sheets...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================== 2. الحاوية لباقي الـ 13 صفحة ================== -->
+    <div id="view-generic-portal" class="dashboard-portal-view hidden">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 14px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h3 id="generic-tab-title" style="margin: 0; font-size: 18px; color: var(--text-main);">📄 اسم الشيت</h3>
+            <span id="generic-tab-count" style="font-size: 12px; color: var(--text-muted);">إجمالي السجلات: 0</span>
+          </div>
+          <button class="btn btn-excel" onclick="exportGenericExcel()">📥 تصدير Excel</button>
+        </div>
+
+        <div class="table-header-tools" style="background: var(--bg-inner); padding: 12px; border-radius: 10px; border: 1px solid var(--border-subtle); display: flex; gap: 8px; flex-wrap: wrap;">
+          <input type="text" id="generic-search-box" class="search-input" placeholder="🔍 بحث شامل في هذا الجدول..." onkeyup="filterGenericTable()">
+          
+          <div class="multiselect-container" id="zone-multiselect-box">
+            <button type="button" class="multiselect-btn" onclick="toggleZoneDropdown()">
+              <span id="zone-multiselect-label">كل الـ Zone</span>
+              <span style="font-size: 10px;">▼</span>
+            </button>
+            <div class="multiselect-dropdown" id="zone-dropdown-list">
+              <div class="multiselect-actions">
+                <button type="button" onclick="selectAllZones(true)">تحديد الكل</button>
+                <button type="button" onclick="selectAllZones(false)">إلغاء الكل</button>
+              </div>
+              <div id="zone-checkboxes-container"></div>
+            </div>
+          </div>
+
+          <input type="text" id="gen-filter-phone" class="search-input" placeholder="📞 بحث برقم الهاتف..." onkeyup="filterGenericTable()" style="min-width: 150px; flex: 1;">
+          <select id="gen-filter-sv" class="filter-select" onchange="onSupervisorFilterChange()"><option value="all">كل المشرفين</option></select>
+          <select id="gen-filter-fb" class="filter-select" onchange="filterGenericTable()"><option value="all">كل الإفادة الحالية</option></select>
+          <select id="gen-filter-vehicle" class="filter-select" onchange="filterGenericTable()"><option value="all">كل الـ Vehicle</option></select>
+        </div>
+
+        <div class="table-container">
+          <table id="generic-portal-table">
+            <thead id="generic-table-head"></thead>
+            <tbody id="generic-table-body"></tbody>
+          </table>
+          <div id="generic-loading-spinner" class="loading-state">⏳ جاري جلب بيانات الشيت...</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRcAB39S8h26BgnCg3nvho8IIzqDWHzVJj0bJD_w3lDGeZgSwgRjFR2Ba0drZ1CIze/exec";
+
+    const SHEET_BILINGUAL_META = {
+      "Manual Assigned": { en: "Manual Assigned", ar: "الاصين و الاسناد" },
+      "Hedcount Mohandssein": { en: "Hedcount Mohandssein", ar: "الهيدكاونت بالكامل" },
+      "Rider's daliy performance": { en: "Rider's daliy performance", ar: "الأداء اليومي للمناديب" },
+      "Rider's monthly performance": { en: "Rider's monthly performance", ar: "الأداء الشهري للمناديب" },
+      "Contract Follow up": { en: "Contract Follow up", ar: "متابعة تجديد العقود" },
+      "Report on cancelled orders": { en: "Report on cancelled orders", ar: "افادة الأوردرات الملغية" },
+      "New rider's accounts": { en: "New rider's accounts", ar: "حسابات المناديب الجدد" },
+      "Reactivation rider's accounts": { en: "Reactivation rider's accounts", ar: "حسابات المناديب الــ( معاد تنشيطها )" },
+      "Wallet details": { en: "Wallet details", ar: "متابعه محافظ المناديب" },
+      "Equipment": { en: "Equipment", ar: "العهد والمعدات المسحوبه خلال الشهر" },
+      "Security Inquiry": { en: "Security Inquiry", ar: "الاستعلام والفحص الأمني" },
+      "Actions & Coaching": { en: "Actions & Coaching", ar: "الايقافات و الكوتشنج" },
+      "Legal Settlements": { en: "Legal Settlements", ar: "التصالحات القانونية" },
+      "Invalid hiring": { en: "Invalid hiring", ar: "الاستعلامات المرفوضة" }
+    };
+
+    const SUPERVISORS_DB = [
+      { name: "محمد طارق", pass: "1001" },
+      { name: "العادل ( دليفري أكس )", pass: "1002" },
+      { name: "فوكس ( علي نصر )", pass: "1003" },
+      { name: "( سكاي ) محمد خالد", pass: "1004" },
+      { name: "كرلس روماني", pass: "1005" },
+      { name: "احمد حفني", pass: "1006" },
+      { name: "حسن اسماعيل", pass: "1007" },
+      { name: "حسين صلاح", pass: "1008" },
+      { name: "اسماعيل علي", pass: "1009" },
+      { name: "عبدالرحمن حسين", pass: "1010" },
+      { name: "العادل ( روماني سامي )", pass: "1012" },
+      { name: "ريفو", pass: "1011" }
+    ];
+
+    let ridersData = [];
+    let currentRole = "";
+    let loggedInSupervisor = "";
+    let activeSheetTab = "";
+    let genericSheetData = [];
+    let genericSheetHeaders = [];
+    let selectedZonesSet = new Set();
+    let selectedManualSupervisorsSet = new Set();
+    let selectedYesterdaySet = new Set();
+
+    let supervisorSortMode = 'fixed';
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('dashboard_theme', theme);
+      const icon = document.getElementById('theme-icon');
+      const label = document.getElementById('theme-label');
+      if (theme === 'light') {
+        if (icon) icon.innerText = '🌙';
+        if (label) label.innerText = 'ليلي';
+      } else {
+        if (icon) icon.innerText = '☀️';
+        if (label) label.innerText = 'نهاري';
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    }
+
+    function hideIntro() {
+      const intro = document.getElementById('intro-screen');
+      if (intro) intro.classList.add('fade-out');
+    }
+    setTimeout(hideIntro, 2500);
+
+    function initSupervisorLoginDropdown() {
+      const select = document.getElementById('supervisor-user-select');
+      if (!select) return;
+      select.innerHTML = '<option value="" disabled selected>-- اختر اسم المشرف للدخول --</option>';
+      SUPERVISORS_DB.forEach(u => {
+        const opt = document.createElement('option');
+        opt.value = u.name;
+        opt.innerText = u.name;
+        select.appendChild(opt);
+      });
+    }
+
+    function copyToClipboard(text, event) {
+      if (event) event.stopPropagation();
+      const cleanText = (text || '').trim();
+      if (!cleanText || cleanText === '-') return;
+      navigator.clipboard.writeText(cleanText).then(() => {
+        const toast = document.getElementById("copy-toast");
+        const toastText = document.getElementById("toast-text");
+        if (toast && toastText) {
+          toastText.innerText = cleanText;
+          toast.classList.add("show");
+          setTimeout(() => { toast.classList.remove("show"); }, 2000);
+        }
+      });
+    }
+
+    function showAdminLogin() {
+      document.getElementById('office-login-box').classList.add('hidden');
+      document.getElementById('admin-login-box').classList.remove('hidden');
+    }
+
+    function showOfficeLogin() {
+      document.getElementById('admin-login-box').classList.add('hidden');
+      document.getElementById('office-login-box').classList.remove('hidden');
+    }
+
+    function loginSupervisor() {
+      const selectedSv = document.getElementById('supervisor-user-select').value;
+      const pass = document.getElementById('supervisor-pass').value.trim();
+      if (!selectedSv) return alert("برجاء اختيار اسم المشرف أولاً.");
+      const userObj = SUPERVISORS_DB.find(u => u.name === selectedSv);
+      if (userObj && userObj.pass === pass) {
+        currentRole = "supervisor";
+        loggedInSupervisor = selectedSv;
+        saveSession();
+        enterDashboard(`المشرف: ${selectedSv}`);
+      } else {
+        alert("كلمة المرور غير صحيحة الخاصة بهذا المشرف!");
+      }
+    }
+
+    function loginAdmin() {
+      const pass = document.getElementById('admin-pass').value.trim();
+      if (pass === "boda2002") {
+        currentRole = "admin";
+        loggedInSupervisor = "";
+        saveSession();
+        enterDashboard("المهندس / عبدالرحمن مجدي");
+      } else {
+        alert("كلمة مرور المسؤول غير صحيحة!");
+      }
+    }
+
+    function saveSession() {
+      localStorage.setItem('auth_role', currentRole);
+      localStorage.setItem('auth_supervisor', loggedInSupervisor);
+      if (activeSheetTab) {
+        localStorage.setItem('auth_active_tab', activeSheetTab);
+      }
+    }
+
+    function enterDashboard(title) {
+      document.getElementById('office-login-box').classList.add('hidden');
+      document.getElementById('admin-login-box').classList.add('hidden');
+      document.getElementById('user-pill').classList.remove('hidden');
+      document.getElementById('current-user-name').innerText = "👤 " + title;
+
+      const adminReport = document.getElementById('admin-report-card');
+      const scopeHeader = document.getElementById('stats-header-scope');
+      if (currentRole === "admin") {
+        if (adminReport) adminReport.classList.remove('hidden');
+        if (scopeHeader) scopeHeader.innerText = "إجمالي كافة المناطق مجمعة (All Zones)";
+      } else {
+        if (adminReport) adminReport.classList.add('hidden');
+        if (scopeHeader) scopeHeader.innerText = `إحصائيات مناديب المشرف (${loggedInSupervisor})`;
+      }
+
+      const savedTab = localStorage.getItem('auth_active_tab');
+      if (savedTab && savedTab !== "") {
+        switchPortalTab(savedTab);
+      } else {
+        openPortalHub();
+      }
+    }
+
+    function logout() {
+      currentRole = "";
+      loggedInSupervisor = "";
+      activeSheetTab = "";
+      localStorage.removeItem('auth_role');
+      localStorage.removeItem('auth_supervisor');
+      localStorage.removeItem('auth_active_tab');
+
+      document.getElementById('portal-nav-bar').classList.add('hidden');
+      document.getElementById('portal-hub-view').classList.add('hidden');
+      document.getElementById('view-manual-assigned').classList.add('hidden');
+      document.getElementById('view-generic-portal').classList.add('hidden');
+      document.getElementById('user-pill').classList.add('hidden');
+      const sigBanner = document.getElementById('top-engineer-banner');
+      if (sigBanner) sigBanner.classList.add('hidden');
+      document.getElementById('supervisor-pass').value = '';
+      document.getElementById('admin-pass').value = '';
+      showOfficeLogin();
+    }
+
+    function openPortalHub() {
+      activeSheetTab = "";
+      localStorage.setItem('auth_active_tab', "");
+      document.getElementById('portal-nav-bar').classList.add('hidden');
+      document.getElementById('view-manual-assigned').classList.add('hidden');
+      document.getElementById('view-generic-portal').classList.add('hidden');
+      document.getElementById('portal-hub-view').classList.remove('hidden');
+
+      const sigBanner = document.getElementById('top-engineer-banner');
+      if (sigBanner) sigBanner.classList.remove('hidden');
+    }
+
+    function refreshCurrentTab() {
+      if (!activeSheetTab || activeSheetTab === "") {
+        openPortalHub();
+      } else if (activeSheetTab === 'Manual Assigned') {
+        fetchManualAssignedData();
+      } else {
+        fetchGenericSheetData(activeSheetTab);
+      }
+    }
+
+    function switchPortalTab(sheetName) {
+      activeSheetTab = sheetName;
+      localStorage.setItem('auth_active_tab', sheetName);
+
+      const sigBanner = document.getElementById('top-engineer-banner');
+      if (sigBanner) sigBanner.classList.add('hidden');
+
+      document.getElementById('portal-hub-view').classList.add('hidden');
+      document.getElementById('portal-nav-bar').classList.remove('hidden');
+
+      const meta = SHEET_BILINGUAL_META[sheetName] || { en: sheetName, ar: "" };
+      const indicator = document.getElementById('active-sheet-indicator');
+      if (indicator) indicator.innerText = `${meta.en} (${meta.ar})`;
+
+      document.querySelectorAll('.cat-item-btn').forEach(btn => {
+        const onclickAttr = btn.getAttribute('onclick') || '';
+        btn.classList.toggle('active-item', onclickAttr.includes(`'${sheetName}'`));
+      });
+
+      document.querySelectorAll('.cat-dropdown').forEach(dropdown => {
+        const catBtn = dropdown.querySelector('.cat-btn');
+        const hasActiveItem = dropdown.querySelector('.cat-item-btn.active-item');
+        if (catBtn) catBtn.classList.toggle('has-active', !!hasActiveItem);
+      });
+
+      if (sheetName === 'Manual Assigned') {
+        document.getElementById('view-generic-portal').classList.add('hidden');
+        document.getElementById('view-manual-assigned').classList.remove('hidden');
+        fetchManualAssignedData();
+      } else {
+        document.getElementById('view-manual-assigned').classList.add('hidden');
+        document.getElementById('view-generic-portal').classList.remove('hidden');
+        document.getElementById('generic-tab-title').innerHTML = `<span>${meta.en}</span> <span style="font-size: 13px; color: var(--border-accent); font-weight: 700;">— ${meta.ar}</span>`;
+        document.getElementById('generic-search-box').value = '';
+        fetchGenericSheetData(sheetName);
+      }
+    }
+
+    function displaySheetLastUpdate(timestampStr) {
+      const el = document.getElementById('last-update-time');
+      if (!el) return;
+      if (timestampStr) {
+        el.innerText = `🕒 تحديث الشيت: ${timestampStr}`;
+      } else {
+        el.innerText = `🕒 تحديث الشيت: مسجل من واقع البيانات`;
+      }
+    }
+
+    function cleanDisplayValue(val) {
+      if (val === undefined || val === null) return '0.00';
+      const s = String(val).trim();
+      return (s === '' || s === '-' || s === 'null' || s === 'undefined') ? '0.00' : s;
+    }
+
+    function normalizeRider(raw) {
+      const getVal = (keys) => {
+        for (let k of keys) {
+          for (let rawKey of Object.keys(raw)) {
+            const cleanRaw = rawKey.trim().toLowerCase().replace(/[\s_\-]/g, '');
+            const cleanTarget = k.trim().toLowerCase().replace(/[\s_\-]/g, '');
+            if (cleanRaw === cleanTarget && raw[rawKey] !== undefined && raw[rawKey] !== null) {
+              const strVal = String(raw[rawKey]).trim();
+              if (strVal !== '') return strVal;
+            }
+          }
+        }
+        return '';
+      };
+
+      if (Array.isArray(raw)) {
+        return {
+          id: String(raw[0] || '').trim(),
+          name: String(raw[1] || '').trim(),
+          area: String(raw[2] || '').trim(),
+          phone: String(raw[3] || '').trim(),
+          yesterday: cleanDisplayValue(raw[4]),
+          today: String(raw[5] || '').trim(),
+          tomorrow: String(raw[6] || '').trim(),
+          tomorrowLater: String(raw[7] || '').trim(),
+          feedback: String(raw[8] || '').trim(),
+          supervisor: String(raw[9] || '').trim()
+        };
+      }
+
+      const yesterdayFound = getVal([
+        'تشغيلة الأمس', 'تشغيله الامس', 'تشغيله الأمس', 'تشغيلة الامس',
+        'الساعات الفعليه', 'الساعات الفعلية', 'ساعات العمل', 'الامس', 'الأمس', 'Yesterday'
+      ]);
+
+      return {
+        id: getVal(['ID', 'الكود', 'كود']),
+        name: getVal(['الاسم', 'Name']),
+        area: getVal(['المنطقة', 'Area', 'Zone', 'الزون']),
+        phone: getVal(['الهاتف', 'Phone', 'الموبايل', 'رقم الهاتف']),
+        yesterday: cleanDisplayValue(yesterdayFound),
+        today: getVal(['Today', 'اليوم']),
+        tomorrow: getVal(['Tomorrow', 'الغد']),
+        tomorrowLater: getVal(['Tomorrow Later', 'الغد لاحقاً']),
+        feedback: getVal(['Fedback', 'Feedback', 'فيدباك', 'الملاحظات', 'ملاحظات']),
+        supervisor: getVal(['S.V', 's.v', 'المشرف', 'المشرف (S.V)', 'Supervisor', 'SV'])
+      };
+    }
+
+    async function fetchManualAssignedData() {
+      const spinner = document.getElementById('loading-spinner');
+      if (spinner) { spinner.classList.remove('hidden'); spinner.innerText = "⏳ جاري جلب وتحديث البيانات..."; }
+      
+      try {
+        const res = await fetch(`${SCRIPT_URL}?sheet=Manual Assigned`);
+        const json = await res.json();
+        let rawRows = json.data || (Array.isArray(json) ? json : []);
+        
+        displaySheetLastUpdate(json.lastUpdated);
+
+        ridersData = rawRows.map(r => normalizeRider(r));
+        populateSupervisorsMultiSelect();
+        populateZonesDropdown();
+        populateYesterdayMultiSelect();
+        updateManualFeedbackDropdownOptions();
+        populateReportSupervisors();
+        renderTable();
+        if (currentRole === "admin") renderSupervisorReport();
+      } catch (err) {
+        console.error("Fetch Error:", err);
+        if (spinner) spinner.innerText = "⚠️ تعذر جلب البيانات. اضغط زر '🔄 تحديث البيانات'.";
+      } finally {
+        if (spinner && ridersData.length > 0) spinner.classList.add('hidden');
+      }
+    }
+
+    function isStatusPublished(statusStr) {
+      const s = (statusStr || '').toUpperCase();
+      return s.includes('PUBLISHED') || s.includes('EVALUATED');
+    }
+
+    function isStatusNotChosen(statusStr) {
+      const s = (statusStr || '').toUpperCase();
+      return s.includes('NOT CHOSEN') || s.includes('NO_SHOW') || s.includes('NOSHOW');
+    }
+
+    function isExcludedFeedback(fbText) {
+      const s = (fbText || '').trim().toLowerCase();
+      return s.includes('day by day') || s === 'day' || 
+             s.includes('remove') || s.includes('s.p') || 
+             s.includes('holiday');
+    }
+
+    function isRiderAssignedToSupervisor(r, svName) {
+      const target = (svName || '').trim().toLowerCase();
+      const sv = (r.supervisor || '').trim().toLowerCase();
+      const fb = (r.feedback || '').trim().toLowerCase();
+      return sv.includes(target) || fb.includes(target);
+    }
+
+    function getZoneColor(zoneName, index) {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const z = (zoneName || '').toLowerCase();
+      if (currentTheme === 'light') {
+        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#1d4ed8";
+        if (z.includes('hadayek') || z.includes('حدائق')) return "#2563eb";
+        if (z.includes('shobra') || z.includes('شبرا')) return "#475569";
+        return ["#1d4ed8", "#2563eb", "#475569", "#0f766e", "#334155"][index % 5];
+      } else {
+        if (z.includes('mohandiseen') || z.includes('مهندس')) return "#881337";
+        if (z.includes('hadayek') || z.includes('حدائق')) return "#9f1239";
+        if (z.includes('shobra') || z.includes('شبرا')) return "#fef3c7";
+        return ["#881337", "#9f1239", "#fef3c7", "#fb7185", "#d97706"][index % 5];
+      }
+    }
+
+    /* 3. قواعد تلوين النسب المئوية % المطلوبة:
+       - أقل من 70% بالأحمر
+       - من 70% إلى 80% بالأصفر
+       - أكبر من 80% بالأخضر
+    */
+    function getRateColor(rate) {
+      if (rate > 80) return "#22c55e";              /* أكبر من 80% أخضر */
+      if (rate >= 70 && rate <= 80) return "#eab308"; /* من 70% إلى 80% أصفر */
+      return "#ef4444";                             /* أقل من 70% أحمر */
+    }
+
+    function getBadgeClass(val) {
+      const s = (val || '').toUpperCase().trim();
+      if (s.includes('NO_SHOW') || s.includes('NOSHOW') || s.includes('SUSPENDED')) return 'badge-dark-red-highlight';
+      if (s.includes('EVALUATED')) return 'badge-evaluated';
+      if (s.includes('PUBLISHED')) return 'badge-published';
+      if (s.includes('NOT CHOSEN')) return 'badge-not-chosen';
+      return 'badge-default';
+    }
+
+    function renderYesterdayCell(val) {
+      const raw = (val || '').toString().trim();
+      const clean = raw.toLowerCase().replace(/[\s_\-]/g, '');
+
+      if (clean.includes('موقوفعنالعمل') || 
+          clean.includes('لميعملالامس') || clean.includes('لميعملالأمس') ||
+          clean.includes('غياب')) {
+        return `<span class="badge-yesterday-absence">${raw}</span>`;
+      }
+      return raw || '0.00';
+    }
+
+    function renderFeedbackCell(fb) {
+      const cleanFb = (fb || '').trim();
+      if (!cleanFb || cleanFb === '-') return '-';
+      const lower = cleanFb.toLowerCase();
+      if (lower.includes('holiday')) return `<span class="badge-fb-danger-red">${cleanFb}</span>`;
+      if (lower.includes('remove') || lower.includes('s.p')) return `<span class="badge-fb-danger-red">${cleanFb}</span>`;
+      if (lower.includes('day by day') || lower === 'day') return `<span class="badge-fb-day-green">${cleanFb}</span>`;
+      return `<span style="color: var(--border-accent); font-size: 13px; font-weight: bold;">${cleanFb}</span>`;
+    }
+
+    function renderSupervisorNameCell(name) {
+      const clean = (name || '').trim();
+      const lower = clean.toLowerCase();
+      if (lower.includes('holiday')) return `<span class="badge-fb-danger-red">${clean}</span>`;
+      if (lower.includes('remove') || lower.includes('s.p')) return `<span class="badge-fb-danger-red">${clean}</span>`;
+      if (lower.includes('day by day') || lower === 'day') return `<span class="badge-fb-day-green">${clean}</span>`;
+      return clean;
+    }
+
+    function toggleSvDropdown() {
+      const box = document.getElementById('sv-multiselect-box');
+      if (box) box.classList.toggle('open');
+    }
+
+    function updateSvMultiselectLabel() {
+      const label = document.getElementById('sv-multiselect-label');
+      if (!label) return;
+      if (selectedManualSupervisorsSet.size === 0) {
+        label.innerText = 'كل المشرفين (S.V)';
+      } else if (selectedManualSupervisorsSet.size === 1) {
+        label.innerText = Array.from(selectedManualSupervisorsSet)[0];
+      } else {
+        label.innerText = `تم اختيار (${selectedManualSupervisorsSet.size}) مشرفين`;
+      }
+    }
+
+    function selectAllSupervisors(select) {
+      const checkboxes = document.querySelectorAll('#sv-checkboxes-container input[type="checkbox"]');
+      selectedManualSupervisorsSet.clear();
+      checkboxes.forEach(cb => {
+        cb.checked = select;
+        if (select) selectedManualSupervisorsSet.add(cb.value);
+      });
+      updateSvMultiselectLabel();
+      updateManualFeedbackDropdownOptions();
+      renderTable();
+    }
+
+    function onSupervisorCheckboxChange(cb) {
+      if (cb.checked) {
+        selectedManualSupervisorsSet.add(cb.value);
+      } else {
+        selectedManualSupervisorsSet.delete(cb.value);
+      }
+      updateSvMultiselectLabel();
+      updateManualFeedbackDropdownOptions();
+      renderTable();
+    }
+
+    function populateSupervisorsMultiSelect() {
+      const container = document.getElementById('sv-checkboxes-container');
+      if (!container) return;
+      container.innerHTML = '';
+      selectedManualSupervisorsSet.clear();
+
+      if (currentRole === "supervisor") {
+        selectedManualSupervisorsSet.add(loggedInSupervisor);
+        const label = document.createElement('label');
+        label.className = 'multiselect-item';
+        label.innerHTML = `
+          <input type="checkbox" value="${loggedInSupervisor}" checked disabled>
+          <span>${loggedInSupervisor}</span>
+        `;
+        container.appendChild(label);
+        updateSvMultiselectLabel();
+        return;
+      }
+
+      const registeredNames = SUPERVISORS_DB.map(s => s.name);
+      const extraNames = [];
+      ridersData.forEach(r => {
+        const s = (r.supervisor || '').trim();
+        if (s && !registeredNames.includes(s) && !extraNames.includes(s)) {
+          extraNames.push(s);
+        }
+      });
+
+      let list = [...registeredNames, ...extraNames];
+      if (supervisorSortMode === 'alphabetical') {
+        list.sort((a,b) => a.localeCompare(b, 'ar'));
+      }
+
+      list.forEach(sv => {
+        const label = document.createElement('label');
+        label.className = 'multiselect-item';
+        label.innerHTML = `
+          <input type="checkbox" value="${sv}" onchange="onSupervisorCheckboxChange(this)">
+          <span>${sv}</span>
+        `;
+        container.appendChild(label);
+      });
+
+      updateSvMultiselectLabel();
+    }
+
+    function updateManualFeedbackDropdownOptions() {
+      const fbSelect = document.getElementById('feedback-filter');
+      if (!fbSelect) return;
+      const currentSelected = fbSelect.value;
+      fbSelect.innerHTML = '<option value="all">كل الـ Feedback</option>';
+
+      const fbSet = new Set();
+      ridersData.forEach(r => {
+        const rSv = (r.supervisor || '').trim();
+        const matchSv = (selectedManualSupervisorsSet.size === 0) || selectedManualSupervisorsSet.has(rSv);
+        if (matchSv) {
+          const f = (r.feedback || '').trim();
+          if (f && f !== '-') fbSet.add(f);
+        }
+      });
+
+      Array.from(fbSet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(f => {
+        const opt = document.createElement('option');
+        opt.value = f;
+        opt.innerText = f;
+        fbSelect.appendChild(opt);
+      });
+
+      if (fbSet.has(currentSelected)) {
+        fbSelect.value = currentSelected;
+      } else {
+        fbSelect.value = 'all';
+      }
+    }
+
+    function toggleYesterdayDropdown() {
+      const box = document.getElementById('yesterday-multiselect-box');
+      if (box) box.classList.toggle('open');
+    }
+
+    function updateYesterdayMultiselectLabel() {
+      const label = document.getElementById('yesterday-multiselect-label');
+      if (!label) return;
+      if (selectedYesterdaySet.size === 0) {
+        label.innerText = 'تشغيلة الأمس (الكل)';
+      } else if (selectedYesterdaySet.size === 1) {
+        label.innerText = Array.from(selectedYesterdaySet)[0];
+      } else {
+        label.innerText = `تم اختيار (${selectedYesterdaySet.size}) حالات`;
+      }
+    }
+
+    function selectAllYesterday(select) {
+      const checkboxes = document.querySelectorAll('#yesterday-checkboxes-container input[type="checkbox"]');
+      selectedYesterdaySet.clear();
+      checkboxes.forEach(cb => {
+        cb.checked = select;
+        if (select) selectedYesterdaySet.add(cb.value);
+      });
+      updateYesterdayMultiselectLabel();
+      renderTable();
+    }
+
+    function onYesterdayCheckboxChange(cb) {
+      if (cb.checked) {
+        selectedYesterdaySet.add(cb.value);
+      } else {
+        selectedYesterdaySet.delete(cb.value);
+      }
+      updateYesterdayMultiselectLabel();
+      renderTable();
+    }
+
+    function populateYesterdayMultiSelect() {
+      const container = document.getElementById('yesterday-checkboxes-container');
+      if (!container) return;
+      container.innerHTML = '';
+      selectedYesterdaySet.clear();
+
+      const ySet = new Set();
+      ridersData.forEach(r => {
+        const yVal = (r.yesterday || '').toString().trim();
+        if (yVal && yVal !== '') ySet.add(yVal);
+      });
+
+      Array.from(ySet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(yVal => {
+        const label = document.createElement('label');
+        label.className = 'multiselect-item';
+        label.innerHTML = `
+          <input type="checkbox" value="${yVal}" onchange="onYesterdayCheckboxChange(this)">
+          <span>${yVal}</span>
+        `;
+        container.appendChild(label);
+      });
+
+      updateYesterdayMultiselectLabel();
+    }
+
+    function populateZonesDropdown() {
+      const zoneSelect = document.getElementById('zone-filter');
+      zoneSelect.innerHTML = '<option value="all">كل المناطق (Zones)</option>';
+      const zoneSet = new Set();
+      ridersData.forEach(r => {
+        if (currentRole === "supervisor" && !isRiderAssignedToSupervisor(r, loggedInSupervisor)) return;
+        const z = (r.area || '').trim(); if (z && z !== '-') zoneSet.add(z);
+      });
+      Array.from(zoneSet).sort((a,b)=>a.localeCompare(b,'ar')).forEach(z => {
+        const opt = document.createElement('option'); opt.value = z; opt.innerText = z; zoneSelect.appendChild(opt);
+      });
+    }
+
+    function populateReportSupervisors() {
+      const repSelect = document.getElementById('report-supervisor-select');
+      repSelect.innerHTML = '<option value="all">كل المشرفين</option>';
+      
+      const fixedNames = SUPERVISORS_DB.map(s => s.name);
+      const extraNames = [];
+      ridersData.forEach(r => {
+        const f = (r.feedback || '').trim();
+        if (f && f !== '-' && !fixedNames.includes(f) && !extraNames.includes(f)) {
+          extraNames.push(f);
+        }
+      });
+
+      let list = [...fixedNames, ...extraNames];
+      if (supervisorSortMode === 'alphabetical') {
+        list.sort((a,b) => a.localeCompare(b, 'ar'));
+      }
+
+      list.forEach(sv => {
+        const opt = document.createElement('option');
+        opt.value = sv;
+        opt.innerText = sv;
+        repSelect.appendChild(opt);
+      });
+    }
+
+    function toggleSupervisorSort() {
+      supervisorSortMode = (supervisorSortMode === 'fixed') ? 'alphabetical' : 'fixed';
+      const btn = document.getElementById('sort-mode-btn');
+      if (btn) {
+        btn.innerText = supervisorSortMode === 'fixed' ? '🔤 الترتيب: معتمد' : '🔤 الترتيب: أبجدي';
+      }
+      populateSupervisorsMultiSelect();
+      populateReportSupervisors();
+      if (currentRole === "admin") {
+        renderSupervisorReport();
+      }
+    }
+
+    function updateStats(filteredData, selectedDayKey) {
+      const dayNames = { today: "اليوم (Today)", tomorrow: "الغد (Tomorrow)", tomorrowLater: "الغد لاحقاً" };
+      const dayTitle = dayNames[selectedDayKey] || "اليوم (Today)";
+      document.getElementById('selected-day-badge').innerText = dayTitle;
+
+      const total = filteredData.length;
+      let published = 0, notChosen = 0;
+      const zoneStats = {};
+
+      filteredData.forEach(r => {
+        const zone = (r.area || 'غير محدد').trim();
+        const status = (r[selectedDayKey] || '').toUpperCase();
+        if (!zoneStats[zone]) zoneStats[zone] = { total: 0, published: 0, notChosen: 0 };
+        zoneStats[zone].total++;
+        if (isStatusPublished(status)) { published++; zoneStats[zone].published++; }
+        if (isStatusNotChosen(status)) { notChosen++; zoneStats[zone].notChosen++; }
+      });
+
+      const totalRate = total > 0 ? Math.round((published / total) * 100) : 0;
+      const totalRateColor = getRateColor(totalRate);
+
+      document.getElementById('card-label-total').innerText = currentRole === 'supervisor' ? `إجمالي طيارين (${loggedInSupervisor})` : 'إجمالي الطيارين';
+      document.getElementById('total-riders').innerText = total;
+      document.getElementById('today-published').innerText = published;
+      document.getElementById('today-not-chosen').innerText = notChosen;
+      
+      const totalRateEl = document.getElementById('selected-day-rate');
+      totalRateEl.innerText = `${totalRate}%`;
+      totalRateEl.style.color = totalRateColor;
+      document.getElementById('main-rate-card').style.borderRightColor = totalRateColor;
+
+      const zonesContainer = document.getElementById('zones-breakdown-stats');
+      zonesContainer.innerHTML = '';
+
+      Object.keys(zoneStats).forEach((zoneName, index) => {
+        const zData = zoneStats[zoneName];
+        const zRate = zData.total > 0 ? Math.round((zData.published / zData.total) * 100) : 0;
+        const themeColor = getZoneColor(zoneName, index);
+        const rateColor = getRateColor(zRate);
+
+        const block = document.createElement('div');
+        block.className = 'stats-section-block';
+        block.innerHTML = `
+          <div class="stats-block-header" style="border-right-color: ${themeColor};">
+            <div class="zone-title-tag" style="color: ${themeColor};"><span>📍</span><span>منطقة: ${zoneName}</span></div>
+            <span style="font-size: 11px; color: ${themeColor}; font-weight: bold; border: 1px solid ${themeColor}40; padding: 2px 7px; border-radius: 5px;">إحصائيات ${dayTitle}</span>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card" style="border-right-color: ${themeColor};"><div class="stat-label">إجمالي طيارين المنطقة</div><div class="stat-val" style="color: ${themeColor};">${zData.total}</div></div>
+            <div class="stat-card" style="border-right-color: #22c55e;"><div class="stat-label">المقبول (PUBLISHED & EVALUATED)</div><div class="stat-val" style="color: #22c55e;">${zData.published}</div></div>
+            <div class="stat-card" style="border-right-color: #ef4444;"><div class="stat-label">غير مختار (NOT CHOSEN & NO_SHOW)</div><div class="stat-val" style="color: #ef4444;">${zData.notChosen}</div></div>
+            <div class="stat-card" style="border-right-color: ${rateColor};"><div class="stat-label">نسبة إسناد المنطقة (%)</div><div class="stat-val" style="color: ${rateColor};">${zRate}%</div></div>
+          </div>
+        `;
+        zonesContainer.appendChild(block);
+      });
+    }
+
+    function buildSingleDayCard(dayKey, dayTitle, zoneName, zoneThemeColor, selectedSupervisor) {
+      let totalAssignedNet = 0;
+      let totalTargetNet = 0;
+      let grandTotalAssigned = 0;
+      let grandTotalTarget = 0;
+      const svMap = {};
+
+      ridersData.forEach(r => {
+        const rZone = (r.area || 'غير محدد').trim();
+        if (rZone !== zoneName) return;
+
+        const fb = (r.feedback || '').trim();
+        if (!fb || fb === '-') return;
+
+        const isPublished = isStatusPublished(r[dayKey]);
+        const isExcluded = isExcludedFeedback(fb);
+
+        if (selectedSupervisor === 'all' || fb === selectedSupervisor) {
+          if (!svMap[fb]) {
+            svMap[fb] = { name: fb, published: 0, total: 0, isExcluded: isExcluded };
+          }
+
+          if (isPublished) svMap[fb].published += 1;
+          svMap[fb].total += 1;
+
+          if (!isExcluded) {
+            totalTargetNet += 1;
+            if (isPublished) totalAssignedNet += 1;
+          }
+
+          grandTotalTarget += 1;
+          if (isPublished) grandTotalAssigned += 1;
+        }
+      });
+
+      const overallNetRate = totalTargetNet > 0 ? Math.round((totalAssignedNet / totalTargetNet) * 100) : 0;
+      const overallNetColor = getRateColor(overallNetRate);
+      const grandRate = grandTotalTarget > 0 ? Math.round((grandTotalAssigned / grandTotalTarget) * 100) : 0;
+
+      let rowsHtml = '';
+      const svList = Object.values(svMap);
+      
+      const fixedSupervisorNames = SUPERVISORS_DB.map(s => s.name);
+      
+      svList.sort((a, b) => {
+        if (a.isExcluded && !b.isExcluded) return 1;
+        if (!a.isExcluded && b.isExcluded) return -1;
+        if (a.isExcluded && b.isExcluded) return a.name.localeCompare(b.name, 'ar');
+        
+        if (supervisorSortMode === 'alphabetical') {
+          return a.name.localeCompare(b.name, 'ar');
+        } else {
+          let indexA = fixedSupervisorNames.indexOf(a.name);
+          let indexB = fixedSupervisorNames.indexOf(b.name);
+          if (indexA === -1) indexA = 999;
+          if (indexB === -1) indexB = 999;
+          return indexA - indexB;
+        }
+      });
+
+      svList.forEach(sv => {
+        const rate = sv.total > 0 ? Math.round((sv.published / sv.total) * 100) : 0;
+        rowsHtml += `
+          <tr>
+            <td style="text-align: center !important; font-weight: bold; color: ${getRateColor(rate)};">${rate}%</td>
+            <td style="text-align: center !important; color: var(--text-muted);">${sv.total}</td>
+            <td style="text-align: center !important; font-weight: bold; color: ${zoneThemeColor};">${sv.published}</td>
+            <td style="text-align: center !important; font-weight: 600;" class="copyable" onclick="copyToClipboard('${sv.name}', event)">${renderSupervisorNameCell(sv.name)}</td>
+          </tr>
+        `;
+      });
+
+      if (svList.length === 0) {
+        rowsHtml = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:15px;">لا توجد بيانات مسجلة.</td></tr>';
+      }
+
+      const card = document.createElement('div');
+      card.className = 'day-column-card';
+      card.style.borderTop = `3px solid ${zoneThemeColor}`;
+
+      card.innerHTML = `
+        <div class="day-card-header
